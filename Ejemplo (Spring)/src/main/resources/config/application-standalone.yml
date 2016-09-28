@@ -1,0 +1,17 @@
+server:
+    port: 8001
+
+logging:
+    level:
+        com.culqi: DEBUG
+        # org.springframework: WARN
+        org.springframework.web.client: DEBUG
+culqi:
+    url:
+        mod_pago_suscripciones: https://integ-pago.culqi.com/api/v1/suscripciones
+        mod_pago_cargos: https://integ-pago.culqi.com/api/v1/cargos
+        mod_pago_tokens: https://integ-pago.culqi.com/api/v1/tokens
+    config:
+        codigoComercio: u3XvS7xeC8eU
+        llaveSecreta: FntKssmSKBhJKTTPSYYoN8MCnwE57KjRnhX0vNUN7DI=
+        servidorBase: https://integ-pago.culqi.com

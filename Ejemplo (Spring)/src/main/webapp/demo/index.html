@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<title>Ejemplo Culqi - Java</title>
+	<script src="https://integ-pago.culqi.com/js/v1"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body>
+
+<h1>Nueva Suscripción</h1>
+<br>
+<table id="tb_suscripcion">
+        <tr>
+            <td>Codigo del comercio:</td>
+            <td><input id="codigo_comercio" value="${codigo_comercio}" readonly="readonly"></td>
+        </tr>
+        <tr>
+            <td>Nombre:</td>
+            <td><input id="nombre"></td>
+        </tr>
+        <tr>
+            <td>Apellido:</td>
+            <td><input id="apellido"></td>
+        </tr>
+        <tr>
+            <td>Telefono:</td>
+            <td><input id="telefono"></td>
+        </tr>
+        <tr>
+            <td>Codigo del pais:</td>
+            <td><input id="codigo_pais"></td>
+        </tr>
+        <tr>
+            <td>Ciudad:</td>
+            <td><input id="ciudad"></td>
+        </tr>
+        <tr>
+            <td>Direccion:</td>
+            <td><input id="direccion"></td>
+        </tr>
+        <tr>
+            <td>Correo electronico:</td>
+            <td><input id="correo_electronico"></td>
+        </tr>
+        <tr>
+            <td>Usuario ID:</td>
+            <td><input id="usuario_id"></td>
+        </tr>
+        <tr>
+            <td>Plan ID:</td>
+            <td>
+                <select id="plan_id" name="plan_id">
+                  <option value="1">plan-201609121</option>
+                  <option value="2">plan-201609122</option>
+                  <option value="3">plan-201609123</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Cargos predefinidos:</td>
+            <td><input type="checkbox" id="cargos_predefinidos"></td>
+        </tr>
+    </table>
+<br>
+<button id="botonPagar">Pagar</button>
+
+<!-- Abre el checkout Culqi -->
+<script type="text/javascript">
+    $('#botonPagar').on('click', function(e){
+        Culqi.abrir();
+        e.preventDefault();
+    });
+</script>
+<!---->
+<!-- Asigna el código del comercio -->
+<script>  
+   Culqi.codigoComercio = "${codigo_comercio}";
+</script>
+<!---->
+<!-- Configuración del contenido del checkout Culqi -->
+<script>  
+    Culqi.configurar({
+        nombre: 'Comercio Prueba JAVA', 
+        orden: 'x123131', 
+        moneda: 'PEN',
+        descripcion: 'Pago',
+        monto: 100,
+        guardar: false
+    });
+</script>
+<!---->
+<!-- Obtenemos el token de la tarjeta -->
+<script>  
+// Recibimos Token del Culqi.js
+function culqi() {
+
+    if (Culqi.token) {
+      // Imprimir Token
+      console.log(Culqi.token.id);
+    }
+    else{
+      // Hubo un problema...
+      // Mostramos JSON de objeto error en consola
+      console.log(Culqi.error);
+      alert("Culqi.error.mensaje");
+    }
+
+};
+</script>
+<script>
+// Ejemplo: Tratando respuesta con AJAX (jQuery)
+function culqi() {
+
+    if(Culqi.error){
+       // Mostramos JSON de objeto error en consola
+       console.log(Culqi.error);
+
+       alert("Culqi.error.mensaje");
+    }
+    else{
+       $.post("/nueva-suscripcion", // Ruta hacia donde enviaremos el token vía POST
+        {
+            'codigo_comercio'    : document.getElementById("codigo_comercio").value,
+            'codigo_pais'        : document.getElementById("codigo_pais").value,
+            'direccion'          : document.getElementById("direccion").value,
+            'ciudad'             : document.getElementById("ciudad").value,
+            'telefono'           : document.getElementById("telefono").value,
+            'nombre'             : document.getElementById("nombre").value,
+            'correo_electronico' : document.getElementById("correo_electronico").value,
+            'apellido'           : document.getElementById("apellido").value,
+            'usuarioId'          : document.getElementById("usuario_id").value,
+            'plan_id'            : document.getElementById("plan_id").options[document.getElementById("plan_id").selectedIndex].text,
+            'token'              : Culqi.token.id,
+            'cargos_predefinidos': document.getElementById("cargos_predefinidos").checked
+        },
+        function(data, status){
+            if (data=='ok') {
+                alert('¡Todo en orden! Token enviado.');
+            } else {
+                alert('Error');
+            }
+        });
+       }
+};
+</script>
+<!---->
+</body>
+</html>
