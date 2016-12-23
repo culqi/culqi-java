@@ -1,33 +1,31 @@
 package controller;
 
-/**
- * Created by culqi on 12/21/16.
- */
-
 import com.fasterxml.jackson.databind.ObjectMapper;
+import model.Plan;
 import model.Secure;
-import model.Token;
-import modelreponse.ErrorResponse;
-import modelreponse.TokenResponse;
+import modelreponse.PlanResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import util.Util;
 
-public class Tokens {
+/**
+ * Created by culqi on 12/22/16.
+ */
+public class Plans {
 
-    private static final String URL = "/tokens/";
+    private static final String URL = "/plans/";
 
-    Token token = new Token();
+    Plan plan = new Plan();
 
     Util util = new Util();
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public String create(Secure secure, Token token) throws Exception {
+    public String createPlan(Secure secure, Plan plan) throws Exception {
         String message = "CODE STATUS NOT SUPPORTED";
         HttpResponse response;
-        String jsonData = mapper.writeValueAsString(token);
+        String jsonData = mapper.writeValueAsString(plan);
         response = util.response(secure, URL, jsonData);
         HttpEntity entity = response.getEntity();
         String statusCode = response.getStatusLine().toString();
@@ -39,8 +37,8 @@ public class Tokens {
             message = errorMessage;
         }
         if(statusCode.contains("201")) {
-            TokenResponse tokenResponse = mapper.readValue(jsonResult, TokenResponse.class);
-            message = tokenResponse.getId();
+            PlanResponse planResponse = mapper.readValue(jsonResult, PlanResponse.class);
+            message = planResponse.getAlias();
         }
         return message;
     }
