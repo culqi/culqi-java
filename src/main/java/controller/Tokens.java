@@ -12,20 +12,20 @@ import modelreponse.TokenResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
+import util.Result;
 import util.Util;
 
 public class Tokens {
 
     private static final String URL = "/tokens/";
 
-    Token token = new Token();
-
     Util util = new Util();
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public String create(Secure secure, Token token) throws Exception {
-        String message = "CODE STATUS NOT SUPPORTED";
+    public Result create(Secure secure, Token token) throws Exception {
+        Result result = new Result();
+        result.setMessage("CODE STATUS NOT SUPPORTED");
         HttpResponse response;
         String jsonData = mapper.writeValueAsString(token);
         response = util.response(secure, URL, jsonData);
@@ -36,13 +36,14 @@ public class Tokens {
         // convert json string to object
         String errorMessage = util.getErrorMessage(statusCode,jsonResult);
         if(!errorMessage.equals("")){
-            message = errorMessage;
+            result.setMessage(errorMessage);
         }
         if(statusCode.contains("201")) {
             TokenResponse tokenResponse = mapper.readValue(jsonResult, TokenResponse.class);
-            message = tokenResponse.getId();
+            result.setId(tokenResponse.getId());
+            result.setMessage(tokenResponse.getCard_number());
         }
-        return message;
+        return result;
     }
 
 }

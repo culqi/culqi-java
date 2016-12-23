@@ -3,11 +3,9 @@
  */
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import controller.Charges;
-import controller.Plans;
-import controller.Subscriptions;
-import controller.Tokens;
+import controller.*;
 import model.*;
+import util.Result;
 
 import java.util.UUID;
 
@@ -37,7 +35,7 @@ public class Main {
         token.setFirst_name("Willy");
 
         Tokens tokens = new Tokens();
-        String tokenID = tokens.create(secure,token);
+        String tokenID = tokens.create(secure,token).getId();
         System.out.println("tokenID " + tokenID);
 
         Charge charge = new Charge();
@@ -58,7 +56,9 @@ public class Main {
         charge.setToken_id(tokenID);
 
         Charges charges = new Charges();
-        System.out.println("Charge " + charges.createCharge(secure,charge));
+        Result resultCharge = charges.createCharge(secure,charge);
+        String chargeID = resultCharge.getId();
+        System.out.println("Charge " + resultCharge.getMessage());
 
         Plan plan = new Plan();
         plan.setAlias("plan-"+UUID.randomUUID().toString());
@@ -71,8 +71,9 @@ public class Main {
         plan.setTrial_days(30);
 
         Plans plans = new Plans();
-        String planID = plans.createPlan(secure,plan);
-        System.out.println("Plan Alias: " + planID);
+        Result resultPlan = plans.createPlan(secure,plan);
+        String planAlias = resultPlan.getMessage();
+        System.out.println("Plan Alias: " + planAlias);
 
         Subscription subscription = new Subscription();
         subscription.setAddress("Avenida Lima 123213");
@@ -82,11 +83,19 @@ public class Main {
         subscription.setLast_name("Muro");
         subscription.setFirst_name("William");
         subscription.setPhone_number(1234567789);
-        subscription.setPlan_alias(planID);
+        subscription.setPlan_alias(planAlias);
         subscription.setToken_id(tokenID);
 
         Subscriptions subscriptions = new Subscriptions();
         System.out.println(subscriptions.createSubscription(secure, subscription));
+
+        Refund refund = new Refund();
+        refund.setAmount(900);
+        refund.setCharge_id(chargeID);
+        refund.setReason("bought an incorrect product");
+
+        Refunds refunds = new Refunds();
+        System.out.println(refunds.createRefund(secure,refund).getMessage());
 
     }
 

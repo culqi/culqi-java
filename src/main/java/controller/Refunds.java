@@ -1,9 +1,9 @@
 package controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import model.Refund;
 import model.Secure;
-import model.Subscription;
-import modelreponse.SubscriptionResponse;
+import modelreponse.RefundResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -13,19 +13,19 @@ import util.Util;
 /**
  * Created by culqi on 12/23/16.
  */
-public class Subscriptions {
+public class Refunds {
 
-    private static final String URL = "/subscriptions/";
+    private static final String URL = "/refunds/";
 
     Util util = new Util();
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public Result createSubscription(Secure secure, Subscription subscription) throws Exception {
+    public Result createRefund(Secure secure, Refund refund) throws Exception {
         Result result = new Result();
         result.setMessage("CODE STATUS NOT SUPPORTED");
         HttpResponse response;
-        String jsonData = mapper.writeValueAsString(subscription);
+        String jsonData = mapper.writeValueAsString(refund);
         response = util.response(secure, URL, jsonData);
         HttpEntity entity = response.getEntity();
         String statusCode = response.getStatusLine().toString();
@@ -37,11 +37,11 @@ public class Subscriptions {
             result.setMessage(errorMessage);
         }
         if(statusCode.contains("201")) {
-            SubscriptionResponse subscriptionResponse = mapper.readValue(jsonResult, SubscriptionResponse.class);
-            result.setId(subscriptionResponse.getId());
-            result.setMessage(subscriptionResponse.getObject());
+            RefundResponse refundResponse = mapper.readValue(jsonResult, RefundResponse.class);
+            result.setId(refundResponse.getId());
+            result.setMessage(refundResponse.getReason());
         }
-        return result;
+        return  result;
     }
 
 }
