@@ -7,7 +7,7 @@ import lombok.Data;
  */
 
 @Data
-public class Error {
+public class ErrorResponse {
 
     private String code;
 

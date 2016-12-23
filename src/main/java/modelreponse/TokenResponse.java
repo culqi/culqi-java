@@ -10,7 +10,7 @@ import model.CardHolder;
 @Data
 public class TokenResponse {
 
-    private int id;
+    private String id;
 
     private String value;
 

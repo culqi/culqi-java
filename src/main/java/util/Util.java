@@ -1,7 +1,9 @@
 package util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Config;
 import model.Secure;
+import modelreponse.ErrorResponse;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -17,13 +19,20 @@ public class Util {
 
     Config config = new Config();
 
+    ObjectMapper mapper = new ObjectMapper();
+
     public HttpResponse response(Secure secure, String url, String jsonData) throws Exception {
 
         HttpClient client = new DefaultHttpClient();
 
         HttpPost post = new HttpPost(config.API_BASE+url);
 
-        post.setHeader("Authorization","Code " + secure.getCOD_ECOMERCE());
+        if (url.contains("tokens")) {
+            post.setHeader("Authorization","Code " + secure.getCOD_ECOMERCE());
+        } else {
+            post.setHeader("Authorization","Bearer " + secure.getAPI_KEY());
+        }
+
         post.setHeader("Content-Type","application/json");
 
         StringEntity entity = new StringEntity(jsonData);
@@ -33,6 +42,23 @@ public class Util {
 
         return httpClient.execute(post);
 
+    }
+
+    public String getErrorMessage(String statusCode, String jsonResult) throws Exception {
+        String message = "";
+        if(statusCode.contains("400")){
+            Error error = mapper.readValue(jsonResult, Error.class);
+            message = "STATUS CODE: 400 "+error.getMessage();
+        }
+        if(statusCode.contains("401")){
+            ErrorResponse errorResponse = mapper.readValue(jsonResult, ErrorResponse.class);
+            message = "STATUS CODE: 401 "+errorResponse.getMessage();
+        }
+        if(statusCode.contains("500")){
+            ErrorResponse errorResponse = mapper.readValue(jsonResult, ErrorResponse.class);
+            message = "STATUS CODE: 500 "+errorResponse.getMessage();
+        }
+        return message;
     }
 
 }

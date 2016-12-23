@@ -5,6 +5,6 @@ package model;
  */
 public class Config {
 
-    public static final String API_BASE = "http://192.168.0.110:8000/v2";
+    public static final String API_BASE = "https://api.culqi.com/v2";
 
 }

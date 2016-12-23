@@ -10,5 +10,6 @@ import lombok.Data;
 public class Secure {
 
     private String COD_ECOMERCE;
+    private String API_KEY;
 
 }
