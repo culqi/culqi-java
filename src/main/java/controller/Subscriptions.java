@@ -7,6 +7,7 @@ import modelreponse.SubscriptionResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
+import util.Result;
 import util.Util;
 
 /**
@@ -16,14 +17,13 @@ public class Subscriptions {
 
     private static final String URL = "/subscriptions/";
 
-    Subscription subscription = new Subscription();
-
     Util util = new Util();
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public String createSubscription(Secure secure, Subscription subscription) throws Exception {
-        String message = "CODE STATUS NOT SUPPORTED";
+    public Result createSubscription(Secure secure, Subscription subscription) throws Exception {
+        Result result = new Result();
+        result.setMessage("CODE STATUS NOT SUPPORTED");
         HttpResponse response;
         String jsonData = mapper.writeValueAsString(subscription);
         response = util.response(secure, URL, jsonData);
@@ -34,13 +34,14 @@ public class Subscriptions {
         // convert json string to object
         String errorMessage = util.getErrorMessage(statusCode,jsonResult);
         if(!errorMessage.equals("")){
-            message = errorMessage;
+            result.setMessage(errorMessage);
         }
         if(statusCode.contains("201")) {
             SubscriptionResponse subscriptionResponse = mapper.readValue(jsonResult, SubscriptionResponse.class);
-            message = subscriptionResponse.getId();
+            result.setId(subscriptionResponse.getId());
+            result.setMessage(subscriptionResponse.getObject());
         }
-        return message;
+        return result;
     }
 
 }

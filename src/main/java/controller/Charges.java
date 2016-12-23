@@ -7,6 +7,7 @@ import modelreponse.ChargeResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
+import util.Result;
 import util.Util;
 
 /**
@@ -16,14 +17,13 @@ public class Charges {
 
     private static final String URL = "/charges/";
 
-    Charge charge = new Charge();
-
     Util util = new Util();
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public String createCharge(Secure secure, Charge charge) throws Exception {
-        String message = "CODE STATUS NOT SUPPORTED";
+    public Result createCharge(Secure secure, Charge charge) throws Exception {
+        Result result = new Result();
+        result.setMessage("CODE STATUS NOT SUPPORTED");
         HttpResponse response;
         String jsonData = mapper.writeValueAsString(charge);
         response = util.response(secure, URL, jsonData);
@@ -34,13 +34,14 @@ public class Charges {
         // convert json string to object
         String errorMessage = util.getErrorMessage(statusCode,jsonResult);
         if(!errorMessage.equals("")){
-            message = errorMessage;
+            result.setMessage(errorMessage);
         }
         if(statusCode.contains("201")) {
             ChargeResponse chargeResponse = mapper.readValue(jsonResult, ChargeResponse.class);
-            message = chargeResponse.getMerchant_message();
+            result.setId(chargeResponse.getId());
+            result.setMessage(chargeResponse.getMerchant_message());
         }
-        return message;
+        return result;
     }
 
 }

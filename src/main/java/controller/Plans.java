@@ -7,6 +7,7 @@ import modelreponse.PlanResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
+import util.Result;
 import util.Util;
 
 /**
@@ -16,14 +17,13 @@ public class Plans {
 
     private static final String URL = "/plans/";
 
-    Plan plan = new Plan();
-
     Util util = new Util();
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public String createPlan(Secure secure, Plan plan) throws Exception {
-        String message = "CODE STATUS NOT SUPPORTED";
+    public Result createPlan(Secure secure, Plan plan) throws Exception {
+        Result result = new Result();
+        result.setMessage("CODE STATUS NOT SUPPORTED");
         HttpResponse response;
         String jsonData = mapper.writeValueAsString(plan);
         response = util.response(secure, URL, jsonData);
@@ -34,13 +34,14 @@ public class Plans {
         // convert json string to object
         String errorMessage = util.getErrorMessage(statusCode,jsonResult);
         if(!errorMessage.equals("")){
-            message = errorMessage;
+            result.setMessage(errorMessage);
         }
         if(statusCode.contains("201")) {
             PlanResponse planResponse = mapper.readValue(jsonResult, PlanResponse.class);
-            message = planResponse.getAlias();
+            result.setId(planResponse.getId());
+            result.setMessage(planResponse.getAlias());
         }
-        return message;
+        return result;
     }
 
 }
