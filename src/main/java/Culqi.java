@@ -1,0 +1,58 @@
+import controller.Charges;
+import controller.Tokens;
+import model.Charge;
+import model.Secure;
+import model.Token;
+
+/**
+ * Created by culqi on 12/23/16.
+ */
+public class Culqi {
+
+    Secure secure = new Secure();
+
+    public Culqi(String COD_ECOMERCE, String API_KEY){
+        secure.setCOD_ECOMERCE(COD_ECOMERCE);
+        secure.setAPI_KEY(API_KEY);
+    }
+
+    public String createToken(String card_number, String currency_code, String cvv, int expiration_month, int expiration_year,
+                              String fingerprint, String last_name, String email, String first_name) throws Exception {
+        Token token = new Token();
+        token.setCard_number(card_number);
+        token.setCurrency_code(currency_code);
+        token.setFingerprint(fingerprint);
+        token.setCvv(cvv);
+        token.setEmail(email);
+        token.setExpiration_month(expiration_month);
+        token.setExpiration_year(expiration_year);
+        token.setLast_name(last_name);
+        token.setFirst_name(first_name);
+        Tokens tokens = new Tokens();
+        return tokens.create(secure,token).getId();
+    }
+
+    public String createCharge(String address, String address_city, int amout, String country_code, String currency_code, String cvv, String email,
+                               String first_name, int installments, String last_name, String metadata, int order_id, int phone_number, String product_description,
+                               String toke_id) throws Exception {
+        Charge charge = new Charge();
+        charge.setAddress(address);
+        charge.setAddress_city(address_city);
+        charge.setAmount(amout);
+        charge.setCountry_code(country_code);
+        charge.setCurrency_code(currency_code);
+        charge.setCvv(cvv);
+        charge.setEmail(email);
+        charge.setFirst_name(first_name);
+        charge.setInstallments(installments);
+        charge.setLast_name(last_name);
+        charge.setMetadata(metadata);
+        charge.setOrder_id(order_id);
+        charge.setPhone_number(phone_number);
+        charge.setProduct_description(product_description);
+        charge.setToken_id(toke_id);
+        Charges charges = new Charges();
+        return charges.createCharge(secure,charge).getId();
+    }
+
+}
