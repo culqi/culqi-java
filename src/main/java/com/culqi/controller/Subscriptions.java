@@ -1,14 +1,14 @@
-package controller;
+package com.culqi.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.Secure;
-import model.Subscription;
-import modelreponse.SubscriptionResponse;
+import com.culqi.model.Secure;
+import com.culqi.model.Subscription;
+import com.culqi.modelreponse.SubscriptionResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
-import util.Result;
-import util.Util;
+import com.culqi.util.Result;
+import com.culqi.util.Util;
 
 /**
  * Created by culqi on 12/23/16.

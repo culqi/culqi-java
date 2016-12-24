@@ -1,4 +1,4 @@
-package modelreponse;
+package com.culqi.modelreponse;
 
 import lombok.Data;
 
@@ -36,5 +36,7 @@ public class SubscriptionResponse {
     private long next_billing_date;
 
     private String object;
+
+    private String charges;
 
 }

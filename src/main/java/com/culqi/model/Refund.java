@@ -1,4 +1,4 @@
-package model;
+package com.culqi.model;
 
 import lombok.Data;
 

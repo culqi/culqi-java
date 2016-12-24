@@ -1,8 +1,6 @@
-package model;
+package com.culqi.model;
 
 import lombok.Data;
-
-import java.math.BigInteger;
 
 /**
  * Created by culqi on 12/21/16.

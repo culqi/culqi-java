@@ -1,7 +1,7 @@
-package modelreponse;
+package com.culqi.modelreponse;
 
 import lombok.Data;
-import model.Client;
+import com.culqi.model.Client;
 
 /**
  * Created by culqi on 12/22/16.

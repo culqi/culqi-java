@@ -1,4 +1,4 @@
-package model;
+package com.culqi.model;
 
 /**
  * Created by culqi on 12/21/16.

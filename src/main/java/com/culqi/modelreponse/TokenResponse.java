@@ -1,7 +1,7 @@
-package modelreponse;
+package com.culqi.modelreponse;
 
 import lombok.Data;
-import model.CardHolder;
+import com.culqi.model.CardHolder;
 
 /**
  * Created by culqi on 12/21/16.
