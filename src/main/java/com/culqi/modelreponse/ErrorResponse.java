@@ -1,4 +1,4 @@
-package modelreponse;
+package com.culqi.modelreponse;
 
 import lombok.Data;
 

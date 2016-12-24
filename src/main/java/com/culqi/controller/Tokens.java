@@ -1,19 +1,18 @@
-package controller;
+package com.culqi.controller;
 
 /**
  * Created by culqi on 12/21/16.
  */
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.Secure;
-import model.Token;
-import modelreponse.ErrorResponse;
-import modelreponse.TokenResponse;
+import com.culqi.model.Secure;
+import com.culqi.model.Token;
+import com.culqi.modelreponse.TokenResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
-import util.Result;
-import util.Util;
+import com.culqi.util.Result;
+import com.culqi.util.Util;
 
 public class Tokens {
 

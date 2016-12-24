@@ -1,4 +1,4 @@
-package modelreponse;
+package com.culqi.modelreponse;
 
 import lombok.Data;
 
@@ -30,5 +30,7 @@ public class PlanResponse {
     private int trial_days;
 
     private String object;
+
+    private String subscriptions;
 
 }

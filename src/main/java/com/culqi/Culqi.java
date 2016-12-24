@@ -1,5 +1,8 @@
-import controller.*;
-import model.*;
+package com.culqi;
+
+import com.culqi.controller.*;
+import com.culqi.model.*;
+
 
 /**
  * Created by culqi on 12/23/16.

@@ -1,9 +1,9 @@
-package util;
+package com.culqi.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.Config;
-import model.Secure;
-import modelreponse.ErrorResponse;
+import com.culqi.model.Config;
+import com.culqi.model.Secure;
+import com.culqi.modelreponse.ErrorResponse;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
