@@ -46,17 +46,16 @@ public class Util {
 
     public String getErrorMessage(String statusCode, String jsonResult) throws Exception {
         String message = "";
-        if(statusCode.contains("400")){
+        if(statusCode.contains("400")) {
             Error error = mapper.readValue(jsonResult, Error.class);
             message = "STATUS CODE: 400 "+error.getMessage();
         }
-        if(statusCode.contains("401")){
+        if(statusCode.contains("401")) {
             ErrorResponse errorResponse = mapper.readValue(jsonResult, ErrorResponse.class);
             message = "STATUS CODE: 401 "+errorResponse.getMessage();
         }
-        if(statusCode.contains("500")){
-            ErrorResponse errorResponse = mapper.readValue(jsonResult, ErrorResponse.class);
-            message = "STATUS CODE: 500 "+errorResponse.getMessage();
+        if(statusCode.contains("500")) {
+            message = "STATUS CODE: 500 "+jsonResult;
         }
         return message;
     }
