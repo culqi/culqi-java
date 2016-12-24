@@ -23,53 +23,24 @@ public class Main {
 
         System.out.println(token_id);
 
-        String charge_id = culqi.createCharge("Avenida Lima 1232", "LIMA", 1000, "PE", "PEN", "123", "wmuro@me.com",
-                "William", 0, "Muro", "", order_id, 3333339, "Venta de prueba", token_id);
-
+        String charge_id = culqi.createCharge("Avenida Lima 1232", "LIMA", 1000, "PE", "PEN", "123", "waguirre@me.com",
+                "Willy", 0, "Aguirre", "", order_id, 3333339, "Venta de prueba", token_id);
 
         System.out.println("Charge " + charge_id);
 
-        /*Charges charges = new Charges();
-        Result resultCharge = charges.createCharge(secure,charge);
-        String chargeID = resultCharge.getId();
-        System.out.println("Charge " + resultCharge.getMessage());
+        String plan_alias = culqi.createPlan("plan-"+UUID.randomUUID().toString(), 1000, "PEN", "day", 2,10,
+                "Plan "+UUID.randomUUID().toString(), 30);
 
-        Plan plan = new Plan();
-        plan.setAlias("plan-"+UUID.randomUUID().toString());
-        plan.setAmount(1000);
-        plan.setCurrency_code("PEN");
-        plan.setInterval("day");
-        plan.setInterval_count(2);
-        plan.setLimit(10);
-        plan.setName("Plan "+UUID.randomUUID().toString());
-        plan.setTrial_days(30);
+        System.out.println("Plan Alias: " + plan_alias);
 
-        Plans plans = new Plans();
-        Result resultPlan = plans.createPlan(secure,plan);
-        String planAlias = resultPlan.getMessage();
-        System.out.println("Plan Alias: " + planAlias);
+        String subscription = culqi.createSubscription("Avenida Lima 123213", "LIMA", "PE", "waguirre@me.com", "Aguirre",
+                "Willy", 1234567789, plan_alias, token_id);
 
-        Subscription subscription = new Subscription();
-        subscription.setAddress("Avenida Lima 123213");
-        subscription.setAddress_city("LIMA");
-        subscription.setCountry_code("PE");
-        subscription.setEmail("wmuro@me.com");
-        subscription.setLast_name("Muro");
-        subscription.setFirst_name("William");
-        subscription.setPhone_number(1234567789);
-        subscription.setPlan_alias(planAlias);
-        subscription.setToken_id(tokenID);
+        System.out.println(subscription);
 
-        Subscriptions subscriptions = new Subscriptions();
-        System.out.println(subscriptions.createSubscription(secure, subscription));
+        String refund = culqi.createRefund(900, charge_id, "bought an incorrect product");
 
-        Refund refund = new Refund();
-        refund.setAmount(900);
-        refund.setCharge_id(chargeID);
-        refund.setReason("bought an incorrect product");
-
-        Refunds refunds = new Refunds();
-        System.out.println(refunds.createRefund(secure,refund).getMessage());*/
+        System.out.println(refund);
 
     }
 

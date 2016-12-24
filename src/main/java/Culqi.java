@@ -1,8 +1,5 @@
-import controller.Charges;
-import controller.Tokens;
-import model.Charge;
-import model.Secure;
-import model.Token;
+import controller.*;
+import model.*;
 
 /**
  * Created by culqi on 12/23/16.
@@ -11,7 +8,7 @@ public class Culqi {
 
     Secure secure = new Secure();
 
-    public Culqi(String COD_ECOMERCE, String API_KEY){
+    public Culqi(String COD_ECOMERCE, String API_KEY) {
         secure.setCOD_ECOMERCE(COD_ECOMERCE);
         secure.setAPI_KEY(API_KEY);
     }
@@ -51,8 +48,43 @@ public class Culqi {
         charge.setPhone_number(phone_number);
         charge.setProduct_description(product_description);
         charge.setToken_id(toke_id);
-        Charges charges = new Charges();
-        return charges.createCharge(secure,charge).getId();
+        return new Charges().createCharge(secure,charge).getId();
+    }
+
+    public String createPlan(String alias, int amount, String currency_code, String interval, int interval_count, int limit, String name,
+                             int trial_days) throws Exception {
+        Plan plan = new Plan();
+        plan.setAlias(alias);
+        plan.setAmount(amount);
+        plan.setCurrency_code(currency_code);
+        plan.setInterval(interval);
+        plan.setInterval_count(interval_count);
+        plan.setLimit(limit);
+        plan.setName(name);
+        return new Plans().createPlan(secure, plan).getMessage();
+    }
+
+    public String createSubscription(String address, String address_city, String country_code, String email, String last_name, String first_name,
+                                     int phone_number, String plan_alias, String token_id) throws Exception {
+        Subscription subscription = new Subscription();
+        subscription.setAddress(address);
+        subscription.setAddress_city(address_city);
+        subscription.setCountry_code(country_code);
+        subscription.setEmail(email);
+        subscription.setLast_name(last_name);
+        subscription.setFirst_name(first_name);
+        subscription.setPhone_number(phone_number);
+        subscription.setPlan_alias(plan_alias);
+        subscription.setToken_id(token_id);
+        return new Subscriptions().createSubscription(secure,subscription).getMessage();
+    }
+
+    public String createRefund(int amount, String charge_id, String reason) throws Exception {
+        Refund refund = new Refund();
+        refund.setAmount(amount);
+        refund.setCharge_id(charge_id);
+        refund.setReason(reason);
+        return new Refunds().createRefund(secure, refund).getMessage();
     }
 
 }
