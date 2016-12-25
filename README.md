@@ -64,6 +64,6 @@ $ mvn package
 
 # Licencia
 
-Copyright 2016 com.culqi.Culqi
+Copyright 2016 Culqi
 
 Licensed under the MIT License
