@@ -32,14 +32,17 @@ public class Charges {
         // get json result to string
         String jsonResult = EntityUtils.toString(entity,"UTF-8");
         // convert json string to object
-        String errorMessage = util.getErrorMessage(statusCode,jsonResult);
-        if(!errorMessage.equals("")){
-            result.setMessage(errorMessage);
+        Result resultError = util.getErrorMessage(statusCode,jsonResult);
+        if(!resultError.getMessage().equals("")){
+            result.setId(resultError.getId());
+            result.setMessage(resultError.getMessage());
+            result.setStatus(resultError.getStatus());
         }
         if(statusCode.contains("201")) {
             ChargeResponse chargeResponse = mapper.readValue(jsonResult, ChargeResponse.class);
             result.setId(chargeResponse.getId());
             result.setMessage(chargeResponse.getMerchant_message());
+            result.setStatus("201");
         }
         return result;
     }

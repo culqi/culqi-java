@@ -32,14 +32,17 @@ public class Plans {
         // get json result to string
         String jsonResult = EntityUtils.toString(entity,"UTF-8");
         // convert json string to object
-        String errorMessage = util.getErrorMessage(statusCode,jsonResult);
-        if(!errorMessage.equals("")){
-            result.setMessage(errorMessage);
+        Result resultError = util.getErrorMessage(statusCode,jsonResult);
+        if(!resultError.getMessage().equals("")){
+            result.setId(resultError.getId());
+            result.setMessage(resultError.getMessage());
+            result.setStatus(resultError.getStatus());
         }
         if(statusCode.contains("201")) {
             PlanResponse planResponse = mapper.readValue(jsonResult, PlanResponse.class);
             result.setId(planResponse.getId());
             result.setMessage(planResponse.getAlias());
+            result.setStatus("201");
         }
         return result;
     }
