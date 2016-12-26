@@ -7,11 +7,11 @@
     <groupId>com.culqi</groupId>
     <artifactId>culqi-java</artifactId>
     <version>1.0-BETA</version>
+    <packaging>jar</packaging>
 
-    <issueManagement>
-        <system>GitHub Issues</system>
-        <url>https://github.com/culqi/culqi-java/issues</url>
-    </issueManagement>
+    <name>Culqi Java</name>
+    <description>Una implementación de Culqi en Java https://developers.culqi.com</description>
+    <url>https://github.com/culqi/culqi-java</url>
 
     <licenses>
         <license>
@@ -24,6 +24,26 @@
         <name>Culqi</name>
         <url>http://culqi.com/</url>
     </organization>
+
+    <developers>
+        <developer>
+            <name>Willy Aguirre</name>
+            <email>willy.aguirre@culqi.com</email>
+            <organization>Culqi</organization>
+            <organizationUrl>http://culqi.com/</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/culqi/culqi-java.git</connection>
+        <developerConnection>scm:git:ssh://github.com:culqi/culqi-java.git</developerConnection>
+        <url>http://github.com/culqi/culqi-java/tree/master</url>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/culqi/culqi-java/issues</url>
+    </issueManagement>
 
     <dependencies>
         <dependency>
