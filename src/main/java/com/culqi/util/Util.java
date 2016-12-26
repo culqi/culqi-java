@@ -52,17 +52,19 @@ public class Util {
             result.setMessage("STATUS CODE: 400 "+errorResponse.getMessage());
             result.setId("400");
             result.setStatus("400");
-        }
-        if(statusCode.contains("401")) {
+        } else if(statusCode.contains("401")) {
             ErrorResponse errorResponse = mapper.readValue(jsonResult, ErrorResponse.class);
             result.setMessage("STATUS CODE: 401 "+errorResponse.getMessage());
             result.setId("401");
             result.setStatus("401");
-        }
-        if(statusCode.contains("500")) {
+        } else if(statusCode.contains("500")) {
             result.setMessage("STATUS CODE: 500 "+jsonResult);
             result.setId("500");
             result.setStatus("500");
+        } else {
+            result.setId("id");
+            result.setMessage(statusCode);
+            result.setStatus("status");
         }
         return result;
     }
