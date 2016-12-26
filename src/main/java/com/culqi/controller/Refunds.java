@@ -23,7 +23,6 @@ public class Refunds {
 
     public Result createRefund(Secure secure, Refund refund) throws Exception {
         Result result = new Result();
-        result.setMessage("CODE STATUS NOT SUPPORTED");
         HttpResponse response;
         String jsonData = mapper.writeValueAsString(refund);
         response = util.response(secure, URL, jsonData);

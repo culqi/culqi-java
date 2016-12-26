@@ -23,7 +23,6 @@ public class Charges {
 
     public Result createCharge(Secure secure, Charge charge) throws Exception {
         Result result = new Result();
-        result.setMessage("CODE STATUS NOT SUPPORTED");
         HttpResponse response;
         String jsonData = mapper.writeValueAsString(charge);
         response = util.response(secure, URL, jsonData);

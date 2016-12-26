@@ -24,7 +24,6 @@ public class Tokens {
 
     public Result create(Secure secure, Token token) throws Exception {
         Result result = new Result();
-        result.setMessage("CODE STATUS NOT SUPPORTED");
         HttpResponse response;
         String jsonData = mapper.writeValueAsString(token);
         response = util.response(secure, URL, jsonData);

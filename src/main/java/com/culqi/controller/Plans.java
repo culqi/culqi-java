@@ -23,7 +23,6 @@ public class Plans {
 
     public Result createPlan(Secure secure, Plan plan) throws Exception {
         Result result = new Result();
-        result.setMessage("CODE STATUS NOT SUPPORTED");
         HttpResponse response;
         String jsonData = mapper.writeValueAsString(plan);
         response = util.response(secure, URL, jsonData);

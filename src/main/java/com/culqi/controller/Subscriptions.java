@@ -23,7 +23,6 @@ public class Subscriptions {
 
     public Result createSubscription(Secure secure, Subscription subscription) throws Exception {
         Result result = new Result();
-        result.setMessage("CODE STATUS NOT SUPPORTED");
         HttpResponse response;
         String jsonData = mapper.writeValueAsString(subscription);
         response = util.response(secure, URL, jsonData);
