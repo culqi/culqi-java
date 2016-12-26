@@ -12,4 +12,7 @@ public class Result {
     private String id;
 
     private String message;
+
+    private String status;
+
 }

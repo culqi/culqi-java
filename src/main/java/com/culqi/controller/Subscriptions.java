@@ -32,14 +32,17 @@ public class Subscriptions {
         // get json result to string
         String jsonResult = EntityUtils.toString(entity,"UTF-8");
         // convert json string to object
-        String errorMessage = util.getErrorMessage(statusCode,jsonResult);
-        if(!errorMessage.equals("")){
-            result.setMessage(errorMessage);
+        Result resultError = util.getErrorMessage(statusCode,jsonResult);
+        if(!resultError.getMessage().equals("")){
+            result.setId(resultError.getId());
+            result.setMessage(resultError.getMessage());
+            result.setStatus(resultError.getStatus());
         }
         if(statusCode.contains("201")) {
             SubscriptionResponse subscriptionResponse = mapper.readValue(jsonResult, SubscriptionResponse.class);
             result.setId(subscriptionResponse.getId());
             result.setMessage(subscriptionResponse.getObject());
+            result.setStatus("201");
         }
         return result;
     }

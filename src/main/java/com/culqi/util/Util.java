@@ -45,20 +45,26 @@ public class Util {
 
     }
 
-    public String getErrorMessage(String statusCode, String jsonResult) throws Exception {
-        String message = "";
+    public Result getErrorMessage(String statusCode, String jsonResult) throws Exception {
+        Result result = new Result();
         if(statusCode.contains("400")) {
             ErrorResponse errorResponse = mapper.readValue(jsonResult, ErrorResponse.class);
-            message = "STATUS CODE: 400 "+errorResponse.getMessage();
+            result.setMessage("STATUS CODE: 400 "+errorResponse.getMessage());
+            result.setId("400");
+            result.setStatus("400");
         }
         if(statusCode.contains("401")) {
             ErrorResponse errorResponse = mapper.readValue(jsonResult, ErrorResponse.class);
-            message = "STATUS CODE: 401 "+errorResponse.getMessage();
+            result.setMessage("STATUS CODE: 401 "+errorResponse.getMessage());
+            result.setId("401");
+            result.setStatus("401");
         }
         if(statusCode.contains("500")) {
-            message = "STATUS CODE: 500 "+jsonResult;
+            result.setMessage("STATUS CODE: 500 "+jsonResult);
+            result.setId("500");
+            result.setStatus("500");
         }
-        return message;
+        return result;
     }
 
     public int ramdomNumber() {
