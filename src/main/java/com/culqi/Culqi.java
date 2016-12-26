@@ -2,6 +2,7 @@ package com.culqi;
 
 import com.culqi.controller.*;
 import com.culqi.model.*;
+import com.culqi.util.Result;
 
 
 /**
@@ -16,7 +17,7 @@ public class Culqi {
         secure.setAPI_KEY(API_KEY);
     }
 
-    public String createToken(String card_number, String currency_code, String cvv, int expiration_month, int expiration_year,
+    public Result createToken(String card_number, String currency_code, String cvv, int expiration_month, int expiration_year,
                               String fingerprint, String last_name, String email, String first_name) throws Exception {
         Token token = new Token();
         token.setCard_number(card_number);
@@ -29,10 +30,10 @@ public class Culqi {
         token.setLast_name(last_name);
         token.setFirst_name(first_name);
         Tokens tokens = new Tokens();
-        return tokens.create(secure,token).getId();
+        return tokens.create(secure,token);
     }
 
-    public String createCharge(String address, String address_city, int amout, String country_code, String currency_code, String cvv, String email,
+    public Result createCharge(String address, String address_city, int amout, String country_code, String currency_code, String cvv, String email,
                                String first_name, int installments, String last_name, String metadata, int order_id, int phone_number, String product_description,
                                String toke_id) throws Exception {
         Charge charge = new Charge();
@@ -51,10 +52,10 @@ public class Culqi {
         charge.setPhone_number(phone_number);
         charge.setProduct_description(product_description);
         charge.setToken_id(toke_id);
-        return new Charges().createCharge(secure,charge).getId();
+        return new Charges().createCharge(secure,charge);
     }
 
-    public String createPlan(String alias, int amount, String currency_code, String interval, int interval_count, int limit, String name,
+    public Result createPlan(String alias, int amount, String currency_code, String interval, int interval_count, int limit, String name,
                              int trial_days) throws Exception {
         Plan plan = new Plan();
         plan.setAlias(alias);
@@ -64,7 +65,7 @@ public class Culqi {
         plan.setInterval_count(interval_count);
         plan.setLimit(limit);
         plan.setName(name);
-        return new Plans().createPlan(secure, plan).getMessage();
+        return new Plans().createPlan(secure, plan);
     }
 
     public String createSubscription(String address, String address_city, String country_code, String email, String last_name, String first_name,
@@ -82,12 +83,12 @@ public class Culqi {
         return new Subscriptions().createSubscription(secure,subscription).getMessage();
     }
 
-    public String createRefund(int amount, String charge_id, String reason) throws Exception {
+    public Result createRefund(int amount, String charge_id, String reason) throws Exception {
         Refund refund = new Refund();
         refund.setAmount(amount);
         refund.setCharge_id(charge_id);
         refund.setReason(reason);
-        return new Refunds().createRefund(secure, refund).getMessage();
+        return new Refunds().createRefund(secure, refund);
     }
 
 }

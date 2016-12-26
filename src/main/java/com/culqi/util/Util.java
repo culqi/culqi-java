@@ -9,6 +9,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import java.util.UUID;
 
 /**
  * Created by culqi on 12/21/16.
@@ -58,6 +59,15 @@ public class Util {
             message = "STATUS CODE: 500 "+jsonResult;
         }
         return message;
+    }
+
+    public int ramdomNumber() {
+        String uuidNumber = String.valueOf(UUID.randomUUID().getMostSignificantBits()%2000);
+        return Integer.parseInt(uuidNumber.replace("-",""));
+    }
+
+    public String ramdonString() {
+        return UUID.randomUUID().toString();
     }
 
 }
