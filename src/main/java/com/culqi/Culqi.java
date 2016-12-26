@@ -68,7 +68,7 @@ public class Culqi {
         return new Plans().createPlan(secure, plan);
     }
 
-    public String createSubscription(String address, String address_city, String country_code, String email, String last_name, String first_name,
+    public Result createSubscription(String address, String address_city, String country_code, String email, String last_name, String first_name,
                                      int phone_number, String plan_alias, String token_id) throws Exception {
         Subscription subscription = new Subscription();
         subscription.setAddress(address);
@@ -80,7 +80,7 @@ public class Culqi {
         subscription.setPhone_number(phone_number);
         subscription.setPlan_alias(plan_alias);
         subscription.setToken_id(token_id);
-        return new Subscriptions().createSubscription(secure,subscription).getMessage();
+        return new Subscriptions().createSubscription(secure,subscription);
     }
 
     public Result createRefund(int amount, String charge_id, String reason) throws Exception {
