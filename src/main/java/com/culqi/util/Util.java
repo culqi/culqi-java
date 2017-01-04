@@ -50,12 +50,12 @@ public class Util {
         if(statusCode.contains("400")) {
             ErrorResponse errorResponse = mapper.readValue(jsonResult, ErrorResponse.class);
             result.setMessage("STATUS CODE: 400 "+errorResponse.getMessage());
-            result.setId("400");
+            result.setId(errorResponse.getObject());
             result.setStatus("400");
         } else if(statusCode.contains("401")) {
             ErrorResponse errorResponse = mapper.readValue(jsonResult, ErrorResponse.class);
             result.setMessage("STATUS CODE: 401 "+errorResponse.getMessage());
-            result.setId("401");
+            result.setId(errorResponse.getObject());
             result.setStatus("401");
         } else if(statusCode.contains("500")) {
             result.setMessage("STATUS CODE: 500 "+jsonResult);

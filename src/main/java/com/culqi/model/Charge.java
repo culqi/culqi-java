@@ -29,8 +29,6 @@ public class Charge {
 
     private String metadata;
 
-    private int order_id;
-
     private int phone_number;
 
     private String product_description;

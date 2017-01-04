@@ -34,7 +34,7 @@ public class Culqi {
     }
 
     public Result createCharge(String address, String address_city, int amout, String country_code, String currency_code, String email,
-                               String first_name, int installments, String last_name, String metadata, int order_id, int phone_number, String product_description,
+                               String first_name, int installments, String last_name, String metadata, int phone_number, String product_description,
                                String toke_id) throws Exception {
         Charge charge = new Charge();
         charge.setAddress(address);
@@ -47,7 +47,6 @@ public class Culqi {
         charge.setInstallments(installments);
         charge.setLast_name(last_name);
         charge.setMetadata(metadata);
-        charge.setOrder_id(order_id);
         charge.setPhone_number(phone_number);
         charge.setProduct_description(product_description);
         charge.setToken_id(toke_id);

@@ -13,6 +13,8 @@ public class Result {
 
     private String message;
 
+    private String object;
+
     private String status;
 
 }
