@@ -33,7 +33,7 @@ public class Culqi {
         return tokens.create(secure,token);
     }
 
-    public Result createCharge(String address, String address_city, int amout, String country_code, String currency_code, String cvv, String email,
+    public Result createCharge(String address, String address_city, int amout, String country_code, String currency_code, String email,
                                String first_name, int installments, String last_name, String metadata, int order_id, int phone_number, String product_description,
                                String toke_id) throws Exception {
         Charge charge = new Charge();
@@ -42,7 +42,6 @@ public class Culqi {
         charge.setAmount(amout);
         charge.setCountry_code(country_code);
         charge.setCurrency_code(currency_code);
-        charge.setCvv(cvv);
         charge.setEmail(email);
         charge.setFirst_name(first_name);
         charge.setInstallments(installments);
