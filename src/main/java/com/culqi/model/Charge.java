@@ -19,8 +19,6 @@ public class Charge {
 
     private String currency_code;
 
-    private String cvv;
-
     private String email;
 
     private String first_name;
