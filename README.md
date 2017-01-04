@@ -1,8 +1,13 @@
-# Culqi-Java
+# Culqi Java
 
-Biblioteca Java oficial de CULQI (BETA), pagos simples en tu sitio web.
+[![Latest Unstable Version](https://poser.pugx.org/culqi/culqi-php/v/unstable)](https://packagist.org/packages/culqi/culqi-php)
+[![License](https://poser.pugx.org/culqi/culqi-php/license)](https://packagist.org/packages/culqi/culqi-php)
 
-**Nota:** Esta biblioteca trabaja con la [v2.0](https://culqi.github.io/api-docs/) (BETA) de Culqi API.
+Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consume el Culqi API.
+
+| Versión actual|Culqi API|
+|----|----|
+| 0.1.0 (2017-01-04) |[v2](https://beta.culqi.com)|
 
 
 # Dependencias
@@ -58,8 +63,10 @@ public class Main {
 $ mvn package
 ```
 
-# Licencia
+## Autor
 
-Copyright 2016 Culqi
+Willy Aguirre ([@marti1125](https://github.com/marti1125) - Team Culqi) 
 
-Licensed under the MIT License
+## Licencia 
+
+El código fuente de culqi-java está distribuido bajo MIT License, revisar el archivo [LICENSE](https://github.com/culqi/culqi-java/blob/master/LICENSE).
