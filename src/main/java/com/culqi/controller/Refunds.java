@@ -1,14 +1,17 @@
 package com.culqi.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.culqi.model.Refund;
 import com.culqi.model.Secure;
-import com.culqi.modelreponse.RefundResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import com.culqi.util.Result;
 import com.culqi.util.Util;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by culqi on 12/23/16.
@@ -35,12 +38,14 @@ public class Refunds {
         if(!resultError.getMessage().equals("")){
             result.setId(resultError.getId());
             result.setMessage(resultError.getMessage());
+            result.setObject(resultError.getObject());
             result.setStatus(resultError.getStatus());
         }
         if(statusCode.contains("201")) {
-            RefundResponse refundResponse = mapper.readValue(jsonResult, RefundResponse.class);
-            result.setId(refundResponse.getId());
-            result.setMessage(refundResponse.getReason());
+            Map<String, Object> jsonObject = mapper.readValue(jsonResult, new TypeReference<HashMap<String, Object>>(){});
+            result.setId(jsonObject.get("id").toString());
+            result.setMessage(jsonObject.get("reason").toString());
+            result.setObject(jsonObject.get("object").toString());
             result.setStatus("201");
         }
         return  result;

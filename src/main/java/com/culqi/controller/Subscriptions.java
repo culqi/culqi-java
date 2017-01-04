@@ -1,14 +1,17 @@
 package com.culqi.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.culqi.model.Secure;
 import com.culqi.model.Subscription;
-import com.culqi.modelreponse.SubscriptionResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import com.culqi.util.Result;
 import com.culqi.util.Util;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by culqi on 12/23/16.
@@ -35,12 +38,14 @@ public class Subscriptions {
         if(!resultError.getMessage().equals("")){
             result.setId(resultError.getId());
             result.setMessage(resultError.getMessage());
+            result.setObject(resultError.getObject());
             result.setStatus(resultError.getStatus());
         }
         if(statusCode.contains("201")) {
-            SubscriptionResponse subscriptionResponse = mapper.readValue(jsonResult, SubscriptionResponse.class);
-            result.setId(subscriptionResponse.getId());
-            result.setMessage(subscriptionResponse.getObject());
+            Map<String, Object> jsonObject = mapper.readValue(jsonResult, new TypeReference<HashMap<String, Object>>(){});
+            result.setId(jsonObject.get("id").toString());
+            result.setMessage(jsonObject.get("object").toString());
+            result.setObject(jsonObject.get("object").toString());
             result.setStatus("201");
         }
         return result;

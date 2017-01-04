@@ -4,15 +4,18 @@ package com.culqi.controller;
  * Created by culqi on 12/21/16.
  */
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.culqi.model.Secure;
 import com.culqi.model.Token;
-import com.culqi.modelreponse.TokenResponse;
+import com.culqi.util.Result;
+import com.culqi.util.Util;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
-import com.culqi.util.Result;
-import com.culqi.util.Util;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Tokens {
 
@@ -36,12 +39,14 @@ public class Tokens {
         if(!resultError.getMessage().equals("")){
             result.setId(resultError.getId());
             result.setMessage(resultError.getMessage());
+            result.setObject(resultError.getObject());
             result.setStatus(resultError.getStatus());
         }
         if(statusCode.contains("201")) {
-            TokenResponse tokenResponse = mapper.readValue(jsonResult, TokenResponse.class);
-            result.setId(tokenResponse.getId());
-            result.setMessage(tokenResponse.getCard_number());
+            Map<String, Object> jsonObject = mapper.readValue(jsonResult, new TypeReference<HashMap<String, Object>>(){});
+            result.setId(jsonObject.get("id").toString());
+            result.setMessage("A Token was created successfully");
+            result.setObject(jsonObject.get("object").toString());
             result.setStatus("201");
         }
         return result;
