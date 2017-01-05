@@ -11,7 +11,7 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 
 ## Requisitos
 
-- Java 1.6+
+- Java 1.7+
 - Credenciales de comercio en Culqi (1).
 
 ## Ejemplo
