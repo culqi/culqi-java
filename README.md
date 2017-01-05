@@ -11,7 +11,7 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 
 ## Requisitos
 
-- Java 7.0+
+- Java 1.6+
 - Credenciales de comercio en Culqi (1).
 
 ## Ejemplo
@@ -67,8 +67,28 @@ Todos los cambios en las versiones de esta biblioteca están listados en [CHANGE
 ## Build
 
 ```bash
-$ mvn package
+mvn package
 ```
+
+## Testing
+
+Debes tener instalado Maven para poder ejecutar los tests
+
+```bash
+mvn test
+```
+
+Puede ejecutar estos unitarios independientemente
+
+```bash
+mvn test -D test=CulqiTest#test1ValidCreateToken
+mvn test -D test=CulqiTest#test2ValidCreateCharge
+mvn test -D test=CulqiTest#test3ValidCreatePlan
+mvn test -D test=CulqiTest#test4ValidCreateSubscription
+mvn test -D test=CulqiTest#test5ValidCreateRefund
+```
+
+El orden de los test
 
 ## Autor
 
