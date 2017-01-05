@@ -9,14 +9,12 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 |----|----|
 | 0.1.0 (2017-01-04) |[v2](https://beta.culqi.com)|
 
+## Requisitos
 
-# Dependencias
+- Java 7.0+
+- Credenciales de comercio en Culqi (1).
 
-- [Lombok](https://projectlombok.org/features/index.html)
-- [Apache HTTP Components](https://hc.apache.org/)
-- [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
-
-# Ejemplo
+## Ejemplo
 
 ```java
 import com.culqi.Culqi;
@@ -56,8 +54,17 @@ public class Main {
 
 }
 ```
+## Changelog
 
-# Build
+Todos los cambios en las versiones de esta biblioteca están listados en [CHANGELOG](CHANGELOG).
+
+## Dependencias para el desarrollo
+
+- [Lombok](https://projectlombok.org/features/index.html)
+- [Apache HTTP Components](https://hc.apache.org/)
+- [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
+
+## Build
 
 ```bash
 $ mvn package
@@ -65,8 +72,8 @@ $ mvn package
 
 ## Autor
 
-Willy Aguirre ([@marti1125](https://github.com/marti1125) - Team Culqi) 
+Willy Aguirre ([@marti1125](https://github.com/marti1125) - Team Culqi)
 
-## Licencia 
+## Licencia
 
 El código fuente de culqi-java está distribuido bajo MIT License, revisar el archivo [LICENSE](https://github.com/culqi/culqi-java/blob/master/LICENSE).
