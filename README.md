@@ -1,7 +1,8 @@
 # Culqi Java
 
-[![Latest Unstable Version](https://poser.pugx.org/culqi/culqi-php/v/unstable)](https://packagist.org/packages/culqi/culqi-php)
 [![License](https://poser.pugx.org/culqi/culqi-php/license)](https://packagist.org/packages/culqi/culqi-php)
+[![Latest Unstable Version](https://poser.pugx.org/culqi/culqi-php/v/unstable)](https://packagist.org/packages/culqi/culqi-php)
+[![Build Status](https://travis-ci.org/culqi/culqi-java.svg?branch=master)](https://travis-ci.org/culqi/culqi-java)
 
 Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consume el Culqi API.
 
