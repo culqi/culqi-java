@@ -60,6 +60,7 @@ System.out.println(resultToken.getId());
 |----|----|
 | address | String |
 | address_city | String |
+| amount | int |
 | country_code | String |
 | currency_code | String |
 | email | String |
