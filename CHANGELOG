@@ -1,7 +1,11 @@
+### 1.1 16-01-2017
+* Make simple events
+* Improve all the code
+
 ### 1.0 07-01-2017
-* Crear Token
-* Crear Cargo
-* Crear Plan
-* Crear Suscripción
-* Crear Devolución
-* Tests unitarios
+* Create Token
+* Create Charge
+* Create Plan
+* Create Subscription
+* Create Refund
+* Unit Tests
