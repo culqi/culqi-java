@@ -8,134 +8,125 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 
 | Versión actual|Culqi API|
 |----|----|
-| 0.1.0 (2017-01-04) |[v2](https://beta.culqi.com)|
+| 1.1 (2017-01-16) |[v2](https://beta.culqi.com)|
 
 ## Requisitos
 
 - Java 1.7+
 - Credenciales de comercio en Culqi (1).
 
-## Ejemplo
+## Ejemplos
 
 #### Imports
 
 ```java
 import com.culqi.Culqi;
-import com.culqi.util.Result;
-import com.culqi.util.Util;
+import com.culqi.model.*;
+import com.culqi.util.*;
 ```
 
 #### Inicialización
-| Parametros | Tipo de dato |
-|----|----|
-| COD_ECOMERCE | String |
-| API_KEY | String |
 
 ```java
-Culqi culqi = new Culqi("pk_test_vzMuTHoueOMlgUPj","sk_test_UTCQSGcXW8bCyU59");
+Security culqi = new Culqi().init("pk_test_vzMuTHoueOMlgUPj","sk_test_UTCQSGcXW8bCyU59");
 ```
 
 #### Crear Token
-| Parametros | Tipo de dato |
-|----|----|
-| card_number | String |
-| currency_code | String |
-| cvv | String |
-| expiration_month | int |
-| expiration_year | int |
-| fingerprint | String |
-| last_name | String |
-| email | String |
-| first_name | String |
 
 ```java
-Result resultToken = culqi.createToken("4111111111111111","PEN","123",9,2020,
-                     "q352454534","Aguirre","waguirre@me.com", "Willy");
+protected Map<String, Object> token() throws Exception {
+    Token token = new Token();
+    token.setCard_number("4111111111111111");
+    token.setCurrency_code("PEN");
+    token.setCvv("123");
+    token.setExpiration_month(9);
+    token.setExpiration_year(2020);
+    token.setFingerprint("q352454534");
+    token.setFirst_name("Willy");
+    token.setLast_name("Aguirre");
+    token.setEmail("waguirre@me.com");
+    return token.create(culqi);
+}
 
-System.out.println(resultToken.getId());
+System.out.println( token().get("id").toString() );
 ```
 
 #### Crear Cargo
-| Parametros | Tipo de dato |
-|----|----|
-| address | String |
-| address_city | String |
-| amount | int |
-| country_code | String |
-| currency_code | String |
-| email | String |
-| first_name | String |
-| installments | int |
-| last_name | String |
-| metadata | String |
-| phone_number | int |
-| product_description | String |
-| token_id | String |
 
 ```java
-Result resultCharge = culqi.createCharge("Avenida Lima 1232", "LIMA", 1000,
-                      "PE", "PEN", "waguirre@me.com","Willy", 0, "Aguirre", "",
-                      3333339, "Venta de prueba", resultToken.getId());
+protected Map<String, Object> charge() throws Exception {
+    Charge charge = new Charge();
+    charge.setAddress("Avenida Lima 1232");
+    charge.setAddress_city("LIMA");
+    charge.setAmount(1000);
+    charge.setCountry_code("PE");
+    charge.setCurrency_code("PEN");
+    charge.setEmail("waguirre@me.com");
+    charge.setFirst_name("Willy");
+    charge.setInstallments(0);
+    charge.setLast_name("Aguirre");
+    charge.setMetadata("");
+    charge.setPhone_number(3333339);
+    charge.setProduct_description("Venta de prueba");
+    charge.setToken_id(token().get("id").toString());
+    return charge.create(culqi);
+}
 
-System.out.println("Charge " + resultCharge.getId());
+System.out.println( charge().get("id").toString() );
 ```
 
 #### Crear Plan
-| Parametros | Tipo de dato |
-|----|----|
-| alias | String |
-| amount | int |
-| currency_code | String |
-| interval | String |
-| interval_count | int |
-| limit | int |
-| name | String |
-| trial_days | int |
 
 ```java
-Result resultAlias = culqi.createPlan("plan-"+new Util().ramdonString(), 1000,
-                    "PEN", "day", 2,10,"Plan "+new Util().ramdonString(), 30);
+rotected Map<String, Object> plan() throws Exception {
+    Plan plan = new Plan();
+    plan.setAlias("plan-"+new Util().ramdonString());
+    plan.setAmount(1000);
+    plan.setCurrency_code("PEN");
+    plan.setInterval("day");
+    plan.setInterval_count(2);
+    plan.setLimit(10);
+    plan.setName("Plan "+new Util().ramdonString());
+    plan.setTrial_days(30);
+    return plan.create(culqi);
+}
 
-System.out.println("Plan Alias: " + resultAlias.getMessage());
+System.out.println( plan().get("alias").toString() );
 ```
 
 #### Crear Suscripción
-| Parametros | Tipo de dato |
-|----|----|
-| address | String |
-| address_city | String |
-| country_code | String |
-| email | String |
-| first_name | String |
-| last_name | String |
-| phone_number | int |
-| plan_alias | String |
-| token_id | String |
 
 ```java
-Result resultSubscription = culqi.createSubscription("Avenida Lima 123213",
-                            "LIMA", "PE", "waguirre@me.com", "Aguirre",
-        "Willy", 1234567789, resultAlias.getMessage(), resultToken.getId());
+protected Map<String, Object> subscription() throws Exception {
+    Subscription subscription = new Subscription();
+    subscription.setAddress("Avenida Lima 123213");
+    subscription.setAddress_city("LIMA");
+    subscription.setCountry_code("PE");
+    subscription.setEmail("waguirre@me.com");
+    subscription.setLast_name("Aguirre");
+    subscription.setFirst_name("Willy");
+    subscription.setPhone_number(1234567789);
+    subscription.setPlan_alias(plan().get("alias").toString());
+    subscription.setToken_id(token().get("id").toString());
+    return subscription.create(culqi);
+}
 
-System.out.println(resultSubscription.getId());
+System.out.println( subscription().get("id").toString() );
 ```
 
 #### Crear Devolución
-| Parametros | Tipo de dato |
-|----|----|
-| amount | int |
-| charge_id | String |
-| reason | String |
 
 ```java
-Result resultRefund = culqi.createRefund(900, resultCharge.getId(), "bought an incorrect product");
+protected Map<String, Object> refund() throws Exception {
+    Refund refund = new Refund();
+    refund.setAmount(900);
+    refund.setCharge_id(charge().get("id").toString());
+    refund.setReason("give me my money back!");
+    return refund.create(culqi);
+}
 
-System.out.println(resultRefund.getMessage());
+System.out.println( refund().get("id").toString() );
 ```
-
-#### Clase Result
-
-Se utiliza como filtro y guarda el ID, Mensaje, Object(Token, Charge, Error, etc...), Status(201,401,500) de cada petición al API de Culqi.
 
 ## Changelog
 
@@ -146,12 +137,6 @@ Todos los cambios en las versiones de esta biblioteca están listados en [CHANGE
 - [Lombok](https://projectlombok.org/features/index.html)
 - [Apache HTTP Components](https://hc.apache.org/)
 - [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
-
-## Build
-
-```bash
-mvn package
-```
 
 ## Testing
 
