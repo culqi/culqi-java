@@ -1,6 +1,9 @@
 package com.culqi.model;
 
+import com.culqi.util.ObjectResult;
 import lombok.Data;
+
+import java.util.Map;
 
 /**
  * Created by culqi on 12/22/16.
@@ -8,6 +11,8 @@ import lombok.Data;
 
 @Data
 public class Plan {
+
+    private static final String URL = "/plans/";
 
     private String alias;
 
@@ -24,5 +29,9 @@ public class Plan {
     private String name;
 
     private int trial_days;
+
+    public Map<String, Object> create(Security security) throws Exception {
+        return new ObjectResult().run(security,this, URL);
+    }
 
 }
