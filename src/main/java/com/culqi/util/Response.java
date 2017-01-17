@@ -26,11 +26,9 @@ public class Response {
 
         HttpPost post = new HttpPost(config.API_BASE+url);
 
-        if (url.contains("tokens")) {
-            post.setHeader("Authorization","Code " + security.getCOD_ECOMMERCE());
-        } else {
-            post.setHeader("Authorization","Bearer " + security.getAPI_KEY());
-        }
+        String api_key = url.contains("tokens")? security.getCOD_ECOMMERCE() : security.getAPI_KEY();
+
+        post.setHeader("Authorization","Bearer " + api_key);
 
         post.setHeader("Content-Type","application/json");
 
