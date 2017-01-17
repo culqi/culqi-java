@@ -8,7 +8,7 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 
 | Versión actual|Culqi API|
 |----|----|
-| 1.1 (2017-01-16) |[v2](https://beta.culqi.com)|
+| 1.1.1 (2017-01-17) |[v2](https://beta.culqi.com)|
 
 ## Requisitos
 
