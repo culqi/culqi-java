@@ -33,7 +33,11 @@ public class Token {
     private String first_name;
 
     public Map<String, Object> create(Security security) throws Exception {
-        return new ObjectResult().run(security,this, URL);
+        return new ObjectResult().create(security,this, URL);
+    }
+
+    public Map<String, Object> get(Security security, String id) throws Exception {
+        return new ObjectResult().get_or_delete(security,URL, id, false);
     }
 
 }

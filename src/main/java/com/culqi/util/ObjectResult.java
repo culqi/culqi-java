@@ -1,13 +1,14 @@
 package com.culqi.util;
 
 import com.culqi.model.Security;
+import com.culqi.query.ChargeQuery;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.util.EntityUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,19 +16,27 @@ import java.util.Map;
  */
 public class ObjectResult {
 
-    public ObjectResult(){
+    public ObjectResult(){}
+
+    ObjectMapper mapper = new ObjectMapper();
+
+    public List<Map<String, Object>> list(Security security, String url, Object params) throws Exception {
+        String query = mapper.writeValueAsString(params);
+        String response = new ResponseHelper().list(security, url, query);
+        JsonNode node = mapper.readTree(response);
+        node = node.get("data");
+        return mapper.readValue(node.toString(), new TypeReference<List<HashMap<String, Object>>>(){});
     }
 
-    public Map<String, Object> run(Security security, Object object, String url) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        HttpResponse response;
+    public Map<String, Object> create(Security security, Object object, String url) throws Exception {
         String jsonData = mapper.writeValueAsString(object);
-        response = new Response().call(security, url, jsonData);
-        HttpEntity entity = response.getEntity();
-        String statusCode = response.getStatusLine().toString();
-        // get json result to string
-        String jsonResult = EntityUtils.toString(entity,"UTF-8");
-        return mapper.readValue(jsonResult, new TypeReference<HashMap<String, Object>>(){});
+        String response = new ResponseHelper().create(security, url, jsonData);
+        return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
+    }
+
+    public Map<String, Object> get_or_delete(Security security, String url, String id, boolean delete) throws Exception {
+        String response = new ResponseHelper().get_or_delete(security, url, id, delete);
+        return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
     }
 
 }
