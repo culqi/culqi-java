@@ -1,3 +1,8 @@
+### 1.1.2 25-01-2017
+* Remove Apache HTTP Component
+* Add OkHttp
+* Add List, Get, Delete
+
 ### 1.1.1 17-01-2017
 * Update Create Token
 
