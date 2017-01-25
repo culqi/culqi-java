@@ -1,11 +1,13 @@
 import com.culqi.Culqi;
 import com.culqi.model.*;
-import com.culqi.util.*;
+import com.culqi.query.ChargeQuery;
+import com.culqi.util.Util;
 import junit.framework.TestCase;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,8 +19,13 @@ public class CulqiTest extends TestCase {
 
     Security culqi = new Culqi().init("pk_test_vzMuTHoueOMlgUPj","sk_test_UTCQSGcXW8bCyU59");
 
+    Token token = new Token();
+
+    Charge charge = new Charge();
+
+    Subscription subscription = new Subscription();
+
     protected Map<String, Object> token() throws Exception {
-        Token token = new Token();
         token.setCard_number("4111111111111111");
         token.setCurrency_code("PEN");
         token.setCvv("123");
@@ -36,8 +43,13 @@ public class CulqiTest extends TestCase {
         assertEquals("token", token().get("object").toString());
     }
 
+    @Test
+    public void test2ValidFindToken() throws Exception {
+        Map<String, Object>  findToken = token.get(culqi,token().get("id").toString());
+        assertNotNull("Existe ", findToken);
+    }
+
     protected Map<String, Object> charge() throws Exception {
-        Charge charge = new Charge();
         charge.setAddress("Avenida Lima 1232");
         charge.setAddress_city("LIMA");
         charge.setAmount(1000);
@@ -55,8 +67,23 @@ public class CulqiTest extends TestCase {
     }
 
     @Test
-    public void test2ValidCreateCharge() throws Exception {
+    public void test3ValidCreateCharge() throws Exception {
         assertEquals("charge", charge().get("object").toString());
+    }
+
+    @Test
+    public void test4VListCharges() throws Exception {
+        ChargeQuery chargeQuery = new ChargeQuery();
+        chargeQuery.setMax_amount(500);
+        chargeQuery.setMin_amount(0);
+
+        List<Map<String, Object>> result = charge.list(culqi, chargeQuery);
+        boolean sizeData = false;
+        if(result.size() > 0){
+            sizeData = true;
+        }
+
+        assertTrue(sizeData);
     }
 
     protected Map<String, Object> plan() throws Exception {
@@ -73,12 +100,11 @@ public class CulqiTest extends TestCase {
     }
 
     @Test
-    public void test3ValidCreatePlan() throws Exception {
+    public void test5ValidCreatePlan() throws Exception {
         assertEquals("plan", plan().get("object").toString());
     }
 
     protected Map<String, Object> subscription() throws Exception {
-        Subscription subscription = new Subscription();
         subscription.setAddress("Avenida Lima 123213");
         subscription.setAddress_city("LIMA");
         subscription.setCountry_code("PE");
@@ -92,7 +118,8 @@ public class CulqiTest extends TestCase {
     }
 
     @Test
-    public void test4ValidCreateSubscription() throws Exception {
+    public void test6ValidCreateSubscription() throws Exception {
+        System.out.println(charge().get("id").toString());
         assertEquals("subscription", subscription().get("object").toString());
     }
 
@@ -104,9 +131,9 @@ public class CulqiTest extends TestCase {
         return refund.create(culqi);
     }
 
-    @Test
-    public void test5ValidCreateRefund() throws Exception {
+    /*@Test
+    public void test7ValidCreateRefund() throws Exception {
         assertEquals("refund", refund().get("object").toString());
-    }
+    }*/
 
 }
