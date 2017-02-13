@@ -33,4 +33,8 @@ public class Charge implements All, Create, Find, Update {
         return new ObjectResult().update(body, this.URL, id);
     }
 
+    public Map<String, Object> capture(String id) throws Exception {
+        return new ObjectResult().capture(this.URL, id);
+    }
+
 }

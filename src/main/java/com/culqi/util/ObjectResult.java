@@ -42,4 +42,9 @@ public class ObjectResult {
         return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
     }
 
+    public Map<String, Object> capture(String url, String id) throws Exception {
+        String response = new ResponseHelper().capture(url, id);
+        return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
+    }
+
 }

@@ -58,7 +58,7 @@ public class CulqiCreateTest extends TestCase {
         metadata.put("oder_id", "124");
         plan.put("amount",1000);
         plan.put("currency_code","PEN");
-        plan.put("interval","days");
+        plan.put("interval","dias");
         plan.put("interval_count",30);
         plan.put("limit", 4);
         plan.put("metadata", metadata);
@@ -112,6 +112,13 @@ public class CulqiCreateTest extends TestCase {
     @Test
     public void test6ValidCreateSubscription() throws Exception {
         assertEquals("subscription", subscription().get("object").toString());
+    }
+
+    @Test
+    public void test7ChargeCapture() throws Exception {
+        Map<String, Object> capture = culqi.charge.capture(charge().get("id").toString());
+        System.out.println(capture);
+        assertNotSame("charge", capture.get("object").toString());
     }
 
     /*protected Map<String, Object> refund() throws Exception {
