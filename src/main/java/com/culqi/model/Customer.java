@@ -4,16 +4,16 @@ import com.culqi.apioperation.All;
 import com.culqi.apioperation.Create;
 import com.culqi.apioperation.Find;
 import com.culqi.util.ObjectResult;
+
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by culqi on 12/21/16.
+ * Created by culqi on 12/02/17.
  */
+public class Customer implements All, Create, Find {
 
-public class Token implements All, Create, Find {
-
-    private static final String URL = "/tokens/";
+    private static final String URL = "/customers/";
 
     public List<Map<String, Object>> list(Map<String, Object> params) throws Exception {
         return new ObjectResult().list(this.URL, params);

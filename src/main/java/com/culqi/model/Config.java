@@ -11,4 +11,9 @@ public class Config {
 
     public static final String PATH = "/v2";
 
+    public static String COD_ECOMMERCE;
+
+    public static String API_KEY;
+
+
 }

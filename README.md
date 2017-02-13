@@ -149,11 +149,11 @@ mvn test
 Puede ejecutar estos unitarios independientemente
 
 ```bash
-mvn test -D test=CulqiTest#test1ValidCreateToken
-mvn test -D test=CulqiTest#test2ValidCreateCharge
-mvn test -D test=CulqiTest#test3ValidCreatePlan
-mvn test -D test=CulqiTest#test4ValidCreateSubscription
-mvn test -D test=CulqiTest#test5ValidCreateRefund
+mvn test -D test=CulqiCreateTest#test1ValidCreateToken
+mvn test -D test=CulqiCreateTest#test2ValidCreateCharge
+mvn test -D test=CulqiCreateTest#test3ValidCreatePlan
+mvn test -D test=CulqiCreateTest#test4ValidCreateSubscription
+mvn test -D test=CulqiCreateTest#test5ValidCreateRefund
 ```
 
 ## Autor
