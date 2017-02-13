@@ -1,9 +1,6 @@
 package com.culqi.model;
 
-import com.culqi.apioperation.All;
-import com.culqi.apioperation.Create;
-import com.culqi.apioperation.Delete;
-import com.culqi.apioperation.Find;
+import com.culqi.apioperation.*;
 import com.culqi.util.ObjectResult;
 
 import java.util.List;
@@ -12,7 +9,7 @@ import java.util.Map;
 /**
  * Created by culqi on 12/02/17.
  */
-public class Card implements All, Create, Delete, Find {
+public class Card implements All, Create, Delete, Find, Update {
 
     private static final String URL = "/cards/";
 
@@ -30,6 +27,10 @@ public class Card implements All, Create, Delete, Find {
 
     public Map<String, Object> delete(String id) throws Exception {
         return new ObjectResult().get_or_delete(this.URL, id, true);
+    }
+
+    public Map<String, Object> update(Map<String, Object> body, String id) throws Exception {
+        return new ObjectResult().update(body, this.URL, id);
     }
 
 }

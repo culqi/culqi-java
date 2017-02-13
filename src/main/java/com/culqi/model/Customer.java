@@ -3,6 +3,7 @@ package com.culqi.model;
 import com.culqi.apioperation.All;
 import com.culqi.apioperation.Create;
 import com.culqi.apioperation.Find;
+import com.culqi.apioperation.Update;
 import com.culqi.util.ObjectResult;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Map;
 /**
  * Created by culqi on 12/02/17.
  */
-public class Customer implements All, Create, Find {
+public class Customer implements All, Create, Find, Update {
 
     private static final String URL = "/customers/";
 
@@ -25,6 +26,10 @@ public class Customer implements All, Create, Find {
 
     public Map<String, Object> get(String id) throws Exception {
         return new ObjectResult().get_or_delete(this.URL, id, false);
+    }
+
+    public Map<String, Object> update(Map<String, Object> body, String id) throws Exception {
+        return new ObjectResult().update(body, this.URL, id);
     }
 
 }
