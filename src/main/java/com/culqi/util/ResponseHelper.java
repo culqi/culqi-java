@@ -1,7 +1,6 @@
 package com.culqi.util;
 
 import com.culqi.model.Config;
-import com.culqi.model.Security;
 import okhttp3.*;
 
 import java.util.HashMap;
@@ -22,7 +21,7 @@ public class ResponseHelper {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    public String list(Security security, String url, String params) throws Exception {
+    public String list(String url, String params) throws Exception {
 
         HashMap<String, Object> map = new HashMap<String, Object>();
 
@@ -49,15 +48,15 @@ public class ResponseHelper {
 
         Request request = new Request.Builder()
                 .url(urlquery)
-                .header("Authorization","Bearer " +  security.getAPI_KEY())
+                .header("Authorization","Bearer " +  Config.API_KEY)
                 .build();
 
         Response response = client.newCall(request).execute();
         return response.body().string();
     }
 
-    public String create(Security security, String url, String jsonData) throws Exception {
-        String api_key = url.contains("tokens")? security.getCOD_ECOMMERCE() : security.getAPI_KEY();
+    public String create(String url, String jsonData) throws Exception {
+        String api_key = url.contains("tokens")?  Config.COD_ECOMMERCE: Config.API_KEY;
         RequestBody body = RequestBody.create(JSON, jsonData);
         Request request = new Request.Builder()
                 .url(config.API_BASE+url)
@@ -68,10 +67,21 @@ public class ResponseHelper {
         return response.body().string();
     }
 
-    public String get_or_delete(Security security, String url, String id, boolean delete) throws Exception {
+    public String update(String url, String jsonData, String id) throws Exception {
+        RequestBody body = RequestBody.create(JSON, jsonData);
+        Request request = new Request.Builder()
+                .url(config.API_BASE+url+id)
+                .header("Authorization","Bearer " + Config.API_KEY)
+                .patch(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
+
+    public String get_or_delete(String url, String id, boolean delete) throws Exception {
         Request.Builder builder = new Request.Builder();
         builder.url(config.API_BASE+url+id);
-        builder.header("Authorization","Bearer " + security.getAPI_KEY());
+        builder.header("Authorization","Bearer " + Config.API_KEY);
 
         if(delete){
             builder.delete();

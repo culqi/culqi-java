@@ -1,9 +1,10 @@
 package com.culqi.model;
 
-import com.culqi.query.PlanQuery;
+import com.culqi.apioperation.All;
+import com.culqi.apioperation.Create;
+import com.culqi.apioperation.Find;
+import com.culqi.apioperation.Update;
 import com.culqi.util.ObjectResult;
-import lombok.Data;
-
 import java.util.List;
 import java.util.Map;
 
@@ -11,38 +12,24 @@ import java.util.Map;
  * Created by culqi on 12/22/16.
  */
 
-@Data
-public class Plan {
+public class Plan implements All, Create, Find, Update {
 
     private static final String URL = "/plans/";
 
-    private String alias;
-
-    private int amount;
-
-    private String currency_code;
-
-    private String interval;
-
-    private int interval_count;
-
-    private int limit;
-
-    private String name;
-
-    private int trial_days;
-
-    // pagination to implement
-    public List<Map<String, Object>> list(Security security, PlanQuery params) throws Exception {
-        return new ObjectResult().list(security,URL, params);
+    public List<Map<String, Object>> list(Map<String, Object> params) throws Exception {
+        return new ObjectResult().list(this.URL, params);
     }
 
-    public Map<String, Object> create(Security security) throws Exception {
-        return new ObjectResult().create(security,this, URL);
+    public Map<String, Object> create(Map<String, Object> body) throws Exception {
+        return new ObjectResult().create(body, this.URL);
     }
 
-    public Map<String, Object> get(Security security, String id) throws Exception {
-        return new ObjectResult().get_or_delete(security,URL, id, false);
+    public Map<String, Object> get(String id) throws Exception {
+        return new ObjectResult().get_or_delete(this.URL, id, false);
+    }
+
+    public Map<String, Object> update(Map<String, Object> body, String id) throws Exception {
+        return new ObjectResult().update(body, this.URL, id);
     }
 
 }

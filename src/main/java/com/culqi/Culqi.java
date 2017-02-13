@@ -1,6 +1,6 @@
 package com.culqi;
 
-import com.culqi.model.Security;
+import com.culqi.model.*;
 
 
 /**
@@ -8,17 +8,30 @@ import com.culqi.model.Security;
  */
 public class Culqi {
 
-    Security security = null;
+    // Resources
+    public Token token = new Token();
 
-    public Culqi(){
-    }
+    public Charge charge = new Charge();
 
-    public Security init(String COD_ECOMMERCE){
-        return new Security(COD_ECOMMERCE);
-    }
+    public Customer customer = new Customer();
 
-    public Security init(String COD_ECOMMERCE, String API_KEY){
-        return new Security(COD_ECOMMERCE, API_KEY);
+    public Card card = new Card();
+
+    public Event event = new Event();
+
+    public Iin iin = new Iin();
+
+    public Plan plan = new Plan();
+
+    public Refund refund = new Refund();
+
+    public Subscription subscription = new Subscription();
+
+    public Transfer transfer = new Transfer();
+
+    public Culqi(String COD_ECOMMERCE, String API_KEY) {
+        Config.COD_ECOMMERCE = COD_ECOMMERCE;
+        Config.API_KEY = API_KEY;
     }
 
 }

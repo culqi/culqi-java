@@ -1,43 +1,30 @@
 package com.culqi.model;
 
+import com.culqi.apioperation.All;
+import com.culqi.apioperation.Create;
+import com.culqi.apioperation.Find;
 import com.culqi.util.ObjectResult;
-import lombok.Data;
-
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by culqi on 12/21/16.
  */
 
-@Data
-public class Token {
+public class Token implements All, Create, Find {
 
     private static final String URL = "/tokens/";
 
-    private String card_number;
-
-    private String currency_code;
-
-    private String cvv;
-
-    private int expiration_month;
-
-    private int expiration_year;
-
-    private String fingerprint;
-
-    private String last_name;
-
-    private String email;
-
-    private String first_name;
-
-    public Map<String, Object> create(Security security) throws Exception {
-        return new ObjectResult().create(security,this, URL);
+    public List<Map<String, Object>> list(Map<String, Object> params) throws Exception {
+        return new ObjectResult().list(this.URL, params);
     }
 
-    public Map<String, Object> get(Security security, String id) throws Exception {
-        return new ObjectResult().get_or_delete(security,URL, id, false);
+    public Map<String, Object> create(Map<String, Object> body) throws Exception {
+        return new ObjectResult().create(body, this.URL);
+    }
+
+    public Map<String, Object> get(String id) throws Exception {
+        return new ObjectResult().get_or_delete(this.URL, id, false);
     }
 
 }
