@@ -93,4 +93,15 @@ public class ResponseHelper {
         return response.body().string();
     }
 
+    public String capture(String url, String id) throws Exception {
+        RequestBody body = RequestBody.create(JSON, "");
+        Request.Builder builder = new Request.Builder();
+        builder.url(config.API_BASE+url+id+"/capture/");
+        builder.header("Authorization","Bearer " + Config.API_KEY);
+        builder.post(body);
+        Request request = builder.build();
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
+
 }
