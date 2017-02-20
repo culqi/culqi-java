@@ -1,6 +1,5 @@
 # Culqi Java
 
-[![License](https://poser.pugx.org/culqi/culqi-php/license)](https://packagist.org/packages/culqi/culqi-php)
 [![Code Climate](https://codeclimate.com/github/culqi/culqi-java/badges/gpa.svg)](https://codeclimate.com/github/culqi/culqi-java)
 [![Build Status](https://travis-ci.org/culqi/culqi-java.svg?branch=master)](https://travis-ci.org/culqi/culqi-java)
 
@@ -8,7 +7,7 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 
 | Versión actual|Culqi API|
 |----|----|
-| 1.1.2 (2017-01-25) |[v2](https://beta.culqi.com)|
+| 1.1.3 (2017-02-17) |[v2](https://beta.culqi.com)|
 
 ## Requisitos
 
@@ -17,115 +16,102 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 
 ## Ejemplos
 
-#### Imports
-
-```java
-import com.culqi.Culqi;
-import com.culqi.model.*;
-import com.culqi.util.*;
-```
 
 #### Inicialización
 
 ```java
-Security culqi = new Culqi().init("pk_test_vzMuTHoueOMlgUPj","sk_test_UTCQSGcXW8bCyU59");
+ Culqi culqi = new Culqi("{LLAVE PUBLICA}","{LLAVE SECRETA}");
 ```
 
 #### Crear Token
 
 ```java
-protected Map<String, Object> token() throws Exception {
-    Token token = new Token();
-    token.setCard_number("4111111111111111");
-    token.setCurrency_code("PEN");
-    token.setCvv("123");
-    token.setExpiration_month(9);
-    token.setExpiration_year(2020);
-    token.setFingerprint("q352454534");
-    token.setFirst_name("Willy");
-    token.setLast_name("Aguirre");
-    token.setEmail("waguirre@me.com");
-    return token.create(culqi);
-}
+Map<String, Object> token = new HashMap<String, Object>();
+token.put("card_number", "4111111111111111");
+token.put("cvv", "123");
+token.put("email", "wm@wm.com");
+token.put("expiration_month", 9);
+token.put("expiration_year", 2020);
+Map<String, Object> token_created = culqi.token.create(token);
 
-System.out.println( token().get("id").toString() );
 ```
 
 #### Crear Cargo
 
 ```java
-protected Map<String, Object> charge() throws Exception {
-    Charge charge = new Charge();
-    charge.setAddress("Avenida Lima 1232");
-    charge.setAddress_city("LIMA");
-    charge.setAmount(1000);
-    charge.setCountry_code("PE");
-    charge.setCurrency_code("PEN");
-    charge.setEmail("waguirre@me.com");
-    charge.setFirst_name("Willy");
-    charge.setInstallments(0);
-    charge.setLast_name("Aguirre");
-    charge.setMetadata("");
-    charge.setPhone_number(3333339);
-    charge.setProduct_description("Venta de prueba");
-    charge.setToken_id(token().get("id").toString());
-    return charge.create(culqi);
-}
+Map<String, Object> charge = new HashMap<String, Object>();
+Map<String, Object> metadata = new HashMap<String, Object>();
+metadata.put("oder_id", "124");
+charge.put("amount",1000);
+charge.put("capture", true);
+charge.put("currency_code","PEN");
+charge.put("description","Venta de prueba");
+charge.put("email","test@culqi.com");
+charge.put("installments", 0);
+charge.put("metadata", metadata);
+charge.put("source_id", token_created.get("id").toString());
+Map<String, Object> charge_created = culqi.charge.create(charge);
 
-System.out.println( charge().get("id").toString() );
 ```
 
 #### Crear Plan
 
 ```java
-rotected Map<String, Object> plan() throws Exception {
-    Plan plan = new Plan();
-    plan.setAlias("plan-"+new Util().ramdonString());
-    plan.setAmount(1000);
-    plan.setCurrency_code("PEN");
-    plan.setInterval("day");
-    plan.setInterval_count(2);
-    plan.setLimit(10);
-    plan.setName("Plan "+new Util().ramdonString());
-    plan.setTrial_days(30);
-    return plan.create(culqi);
-}
-
-System.out.println( plan().get("alias").toString() );
+Map<String, Object> plan = new HashMap<String, Object>();
+Map<String, Object> metadata = new HashMap<String, Object>();
+metadata.put("oder_id", "124");
+plan.put("amount",1000);
+plan.put("currency_code","PEN");
+plan.put("interval","dias");
+plan.put("interval_count",30);
+plan.put("limit", 4);
+plan.put("metadata", metadata);
+plan.put("name", "plan-test");
+plan.put("trial_days", 15);
+Map<String, Object> plan_created =  culqi.plan.create(plan);
 ```
+
+#### Crear Cliente
+
+```java
+Map<String, Object> customer = new HashMap<String, Object>();
+customer.put("address","Av Lima 123");
+customer.put("address_city","Lima");
+customer.put("country_code","PE");
+customer.put("email","tst@culqi.com");
+customer.put("first_name","Test");
+customer.put("last_name","Cuqli");
+customer.put("phone_number",99004356);
+Map<String, Object> customer_created = culqi.customer.create(customer);
+```
+
+#### Crear Tarjeta
+
+```java
+Map<String, Object> card = new HashMap<String, Object>();
+card.put("customer_id",customer_created.get("id").toString());
+card.put("token_id",token_created.get("id").toString());
+Map<String, Object> card_created = culqi.card.create(card);
+```
+
 
 #### Crear Suscripción
 
 ```java
-protected Map<String, Object> subscription() throws Exception {
-    Subscription subscription = new Subscription();
-    subscription.setAddress("Avenida Lima 123213");
-    subscription.setAddress_city("LIMA");
-    subscription.setCountry_code("PE");
-    subscription.setEmail("waguirre@me.com");
-    subscription.setLast_name("Aguirre");
-    subscription.setFirst_name("Willy");
-    subscription.setPhone_number(1234567789);
-    subscription.setPlan_alias(plan().get("alias").toString());
-    subscription.setToken_id(token().get("id").toString());
-    return subscription.create(culqi);
-}
-
-System.out.println( subscription().get("id").toString() );
+Map<String, Object> subscription = new HashMap<String, Object>();
+subscription.put("card_id",card_created.get("id").toString());
+subscription.put("plan_id",plan_created.get("id").toString());
+Map<String, Object> suscription_created = culqi.subscription.create(subscription);
 ```
 
 #### Crear Devolución
 
 ```java
-protected Map<String, Object> refund() throws Exception {
-    Refund refund = new Refund();
-    refund.setAmount(900);
-    refund.setCharge_id(charge().get("id").toString());
-    refund.setReason("give me my money back!");
-    return refund.create(culqi);
-}
-
-System.out.println( refund().get("id").toString() );
+Map<String, Object> refund = new HashMap<String, Object>();
+refund.put("amount",900);
+refund.put("charge_id",charge_created.get("id").toString());
+refund.put("reason","give me my money back!");
+Map<String, Object> refund_created = culqi.refund.create(refund);
 ```
 
 ## Changelog
@@ -134,8 +120,7 @@ Todos los cambios en las versiones de esta biblioteca están listados en [CHANGE
 
 ## Dependencias para el desarrollo
 
-- [Lombok](https://projectlombok.org/features/index.html)
-- [Apache HTTP Components](https://hc.apache.org/)
+- [okhttp3](http://square.github.io/okhttp/)
 - [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
 
 ## Testing
