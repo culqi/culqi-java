@@ -15,7 +15,12 @@ import java.util.Map;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CulqiCreateTest extends TestCase {
 
-    Culqi culqi = new Culqi("pk_test_vzMuTHoueOMlgUPj","sk_test_UTCQSGcXW8bCyU59");
+    public Culqi init(){
+        Culqi culqi = new Culqi();
+        culqi.public_key = "pk_test_vzMuTHoueOMlgUPj";
+        culqi.secret_key = "sk_test_UTCQSGcXW8bCyU59";
+        return culqi;
+    }
 
     protected Map<String, Object> token() throws Exception {
         Map<String, Object> token = new HashMap<String, Object>();
@@ -24,7 +29,7 @@ public class CulqiCreateTest extends TestCase {
         token.put("email", "wm@wm.com");
         token.put("expiration_month", 9);
         token.put("expiration_year", 2020);
-        return culqi.token.create(token);
+        return init().token.create(token);
     }
 
     @Test
@@ -44,7 +49,7 @@ public class CulqiCreateTest extends TestCase {
         charge.put("installments", 0);
         charge.put("metadata", metadata);
         charge.put("source_id", token().get("id").toString());
-        return culqi.charge.create(charge);
+        return init().charge.create(charge);
     }
 
     @Test
@@ -64,12 +69,11 @@ public class CulqiCreateTest extends TestCase {
         plan.put("metadata", metadata);
         plan.put("name", "plan-"+new Util().ramdonString());
         plan.put("trial_days", 15);
-        return culqi.plan.create(plan);
+        return init().plan.create(plan);
     }
 
     @Test
     public void test3ValidCreatePlan() throws Exception {
-        System.out.println(plan());
         assertEquals("plan", plan().get("object").toString());
     }
 
@@ -82,7 +86,7 @@ public class CulqiCreateTest extends TestCase {
         customer.put("first_name","Test");
         customer.put("last_name","Cuqli");
         customer.put("phone_number",99004356);
-        return culqi.customer.create(customer);
+        return init().customer.create(customer);
     }
 
     @Test
@@ -94,7 +98,7 @@ public class CulqiCreateTest extends TestCase {
         Map<String, Object> card = new HashMap<String, Object>();
         card.put("customer_id",customer().get("id").toString());
         card.put("token_id",token().get("id").toString());
-        return culqi.card.create(card);
+        return init().card.create(card);
     }
 
     @Test
@@ -106,7 +110,7 @@ public class CulqiCreateTest extends TestCase {
         Map<String, Object> subscription = new HashMap<String, Object>();
         subscription.put("card_id",card().get("id").toString());
         subscription.put("plan_id",plan().get("id").toString());
-        return culqi.subscription.create(subscription);
+        return init().subscription.create(subscription);
     }
 
     @Test
@@ -116,8 +120,7 @@ public class CulqiCreateTest extends TestCase {
 
     @Test
     public void test7ChargeCapture() throws Exception {
-        Map<String, Object> capture = culqi.charge.capture(charge().get("id").toString());
-        System.out.println(capture);
+        Map<String, Object> capture = init().charge.capture(charge().get("id").toString());
         assertNotSame("charge", capture.get("object").toString());
     }
 

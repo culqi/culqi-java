@@ -7,7 +7,7 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 
 | Versión actual|Culqi API|
 |----|----|
-| 1.1.3 (2017-02-17) |[v2](https://beta.culqi.com)|
+| 1.1.4 (2017-02-22) |[v2](https://culqi.com/api/#/)|
 
 ## Requisitos
 
@@ -20,7 +20,9 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 #### Inicialización
 
 ```java
- Culqi culqi = new Culqi("{LLAVE PUBLICA}","{LLAVE SECRETA}");
+Culqi culqi = new Culqi();
+culqi.public_key = "{LLAVE PUBLICA}";
+culqi.secret_key =  "{LLAVE SECRETA}"
 ```
 
 #### Crear Token

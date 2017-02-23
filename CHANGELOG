@@ -1,3 +1,7 @@
+### 1.1.4 22-02-2017
+* Change the default timeout of GET method 120 to 180
+* set public_key and secret_key
+
 ### 1.1.3 13-02-2017
 * Add Card
 * Add Customer

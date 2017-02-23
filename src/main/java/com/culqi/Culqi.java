@@ -8,6 +8,10 @@ import com.culqi.model.*;
  */
 public class Culqi {
 
+    public static String public_key;
+
+    public static String secret_key;
+
     // Resources
     public Token token = new Token();
 
@@ -29,9 +33,6 @@ public class Culqi {
 
     public Transfer transfer = new Transfer();
 
-    public Culqi(String COD_ECOMMERCE, String API_KEY) {
-        Config.COD_ECOMMERCE = COD_ECOMMERCE;
-        Config.API_KEY = API_KEY;
-    }
+    public Culqi() {}
 
 }
