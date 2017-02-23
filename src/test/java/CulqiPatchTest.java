@@ -14,14 +14,19 @@ import java.util.Map;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CulqiPatchTest extends TestCase {
 
-    Culqi culqi = new Culqi("","INSERTE_SU_LLAVE_PRIVADA");
+    public Culqi init(){
+        Culqi culqi = new Culqi();
+        culqi.public_key = "INSERTE_SU_LLAVE_PUBLICA";
+        culqi.secret_key = "INSERTE_SU_LLAVE_PRIVADA";
+        return culqi;
+    }
 
     protected Map<String, Object> updateplan() throws Exception {
         Map<String, Object> plan = new HashMap<String, Object>();
         Map<String, Object> metadata = new HashMap<String, Object>();
         metadata.put("oder_id", "899");
         plan.put("metadata", metadata);
-        return culqi.plan.update(plan, "pln_test_pLFzcWkwj33xFGF1");
+        return init().plan.update(plan, "pln_test_pLFzcWkwj33xFGF1");
     }
 
     @Test
