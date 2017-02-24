@@ -17,12 +17,10 @@ public class ObjectResult {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public List<Map<String, Object>> list(String url, Object params) throws Exception {
+    public Map<String, Object> list(String url, Object params) throws Exception {
         String query = mapper.writeValueAsString(params);
         String response = new ResponseHelper().list(url, query);
-        JsonNode node = mapper.readTree(response);
-        node = node.get("data");
-        return mapper.readValue(node.toString(), new TypeReference<List<HashMap<String, Object>>>(){});
+        return mapper.readValue(response.toString(), new TypeReference<HashMap<String, Object>>(){});
     }
 
     public Map<String, Object> create(Map<String, Object> body, String url) throws Exception {
