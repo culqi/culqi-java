@@ -15,7 +15,7 @@ import java.util.Map;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CulqiCreateTest extends TestCase {
 
-    public Culqi init(){
+    public Culqi init() {
         Culqi culqi = new Culqi();
         culqi.public_key = "pk_test_vzMuTHoueOMlgUPj";
         culqi.secret_key = "sk_test_UTCQSGcXW8bCyU59";
@@ -124,17 +124,87 @@ public class CulqiCreateTest extends TestCase {
         assertNotSame("charge", capture.get("object").toString());
     }
 
-    /*protected Map<String, Object> refund() throws Exception {
+    protected Map<String, Object> refund() throws Exception {
         Map<String, Object> refund = new HashMap<String, Object>();
-        refund.put("amount",900);
+        refund.put("amount",500);
         refund.put("charge_id",charge().get("id").toString());
-        refund.put("reason","give me my money back!");
-        return culqi.refund.create(refund);
+        refund.put("reason","solicitud_comprador");
+        return init().refund.create(refund);
     }
 
     @Test
     public void test7ValidCreateRefund() throws Exception {
         assertEquals("refund", refund().get("object").toString());
-    }*/
+    }
+
+    // CONSULTAR RECURSOS
+
+    @Test
+    public void test8FindToken() throws Exception {
+        Map<String, Object> tokenFound = init().token.get(token().get("id").toString());
+        assertEquals("token", tokenFound.get("object").toString());
+    }
+
+    @Test
+    public void test9FindCharge() throws Exception {
+        Map<String, Object> chargeFound = init().charge.get(charge().get("id").toString());
+        assertEquals("charge", chargeFound.get("object").toString());
+    }
+
+    @Test
+    public void test10FindCustomer() throws Exception {
+        Map<String, Object> customerFound = init().customer.get(customer().get("id").toString());
+        assertEquals("customer", customerFound.get("object").toString());
+    }
+
+    @Test
+    public void test11FindCard() throws Exception {
+        Map<String, Object> cardFound = init().card.get(card().get("id").toString());
+        assertEquals("card", cardFound.get("object").toString());
+    }
+
+    @Test
+    public void test12FindPlan() throws Exception {
+        Map<String, Object> planFound = init().plan.get(plan().get("id").toString());
+        assertEquals("plan", planFound.get("object").toString());
+    }
+
+    @Test
+    public void test13FindSubscription() throws Exception {
+        Map<String, Object> subscriptionFound = init().subscription.get(subscription().get("id").toString());
+        assertEquals("subscription", subscriptionFound.get("object").toString());
+    }
+
+    @Test
+    public void test14FindRefund() throws Exception {
+        Map<String, Object> refundFound = init().refund.get(refund().get("id").toString());
+        assertEquals("refund", refundFound.get("object").toString());
+    }
+
+    // ELIMINAR RECURSOS
+
+    @Test
+    public void test15DeleteSubscription() throws Exception {
+        Map<String, Object> subscriptionDeleted = init().subscription.delete(subscription().get("id").toString());
+        assertTrue(Boolean.valueOf(subscriptionDeleted.get("deleted").toString()));
+    }
+
+    @Test
+    public void test16DeletePlan() throws Exception {
+        Map<String, Object> planDeleted = init().plan.delete(plan().get("id").toString());
+        assertTrue(Boolean.valueOf(planDeleted.get("deleted").toString()));
+    }
+
+    @Test
+    public void test17DeleteCard() throws Exception {
+        Map<String, Object> cardDeleted = init().card.delete(card().get("id").toString());
+        assertTrue(Boolean.valueOf(cardDeleted.get("deleted").toString()));
+    }
+
+    @Test
+    public void test18DeleteCustomer() throws Exception {
+        Map<String, Object> customerDeleted = init().customer.delete(customer().get("id").toString());
+        assertTrue(Boolean.valueOf(customerDeleted.get("deleted").toString()));
+    }
 
 }

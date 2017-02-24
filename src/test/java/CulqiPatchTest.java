@@ -14,7 +14,7 @@ import java.util.Map;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CulqiPatchTest extends TestCase {
 
-    public Culqi init(){
+    public Culqi init() {
         Culqi culqi = new Culqi();
         culqi.public_key = "pk_test_vzMuTHoueOMlgUPj";
         culqi.secret_key = "sk_test_UTCQSGcXW8bCyU59";

@@ -7,7 +7,7 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 
 | Versión actual|Culqi API|
 |----|----|
-| 1.1.4 (2017-02-22) |[v2](https://culqi.com/api/#/)|
+| 1.1.5 (2017-02-24) |[v2](https://culqi.com/api/)|
 
 ## Requisitos
 
@@ -112,9 +112,13 @@ Map<String, Object> suscription_created = culqi.subscription.create(subscription
 Map<String, Object> refund = new HashMap<String, Object>();
 refund.put("amount",900);
 refund.put("charge_id",charge_created.get("id").toString());
-refund.put("reason","give me my money back!");
+refund.put("reason","solicitud_comprador");
 Map<String, Object> refund_created = culqi.refund.create(refund);
 ```
+
+## Documentación
+¿Necesitas más información para integrar `culqi-java`? La documentación completa se encuentra en [https://culqi.com/docs/](https://culqi.com/docs/)
+
 
 ## Changelog
 

@@ -14,7 +14,7 @@ public class Iin implements All, Find {
 
     private static final String URL = "/iins/";
 
-    public List<Map<String, Object>> list(Map<String, Object> params) throws Exception {
+    public Map<String, Object> list(Map<String, Object> params) throws Exception {
         return new ObjectResult().list(this.URL, params);
     }
 

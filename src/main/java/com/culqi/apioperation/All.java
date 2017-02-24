@@ -8,6 +8,6 @@ import java.util.Map;
  */
 public interface All {
 
-    List<Map<String, Object>> list(Map<String, Object> params) throws Exception;
+    Map<String, Object> list(Map<String, Object> params) throws Exception;
 
 }

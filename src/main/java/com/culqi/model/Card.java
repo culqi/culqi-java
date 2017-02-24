@@ -13,7 +13,7 @@ public class Card implements All, Create, Delete, Find, Update {
 
     private static final String URL = "/cards/";
 
-    public List<Map<String, Object>> list(Map<String, Object> params) throws Exception {
+    public Map<String, Object> list(Map<String, Object> params) throws Exception {
         return new ObjectResult().list(this.URL, params);
     }
 

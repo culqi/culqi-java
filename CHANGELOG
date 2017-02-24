@@ -1,3 +1,6 @@
+### 1.1.5 24-02-2017
+* Fix: list method
+
 ### 1.1.4 22-02-2017
 * Change the default timeout of GET method 120 to 180
 * set public_key and secret_key
