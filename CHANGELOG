@@ -1,3 +1,8 @@
+### 1.1.6 28-02-2017
+* Fix Transfer URL
+* List Method all resource befault limit 50
+* List Method valid is null and also empty
+
 ### 1.1.5 24-02-2017
 * Fix: list method
 

@@ -1,6 +1,8 @@
 import com.culqi.Culqi;
 import junit.framework.TestCase;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.Map;
 /**
  * Created by culqi on 24/02/17.
  */
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CulqiAllTest extends TestCase {
 
     public Culqi init() {
@@ -32,7 +36,7 @@ public class CulqiAllTest extends TestCase {
     protected Map<String, Object> plans() throws Exception {
         Map<String, Object> plan = new HashMap<String, Object>();
         plan.put("limit", 50);
-        return init().plan.list(plan);
+        return init().plan.list();
     }
 
     protected Map<String, Object> customers() throws Exception {
@@ -53,65 +57,72 @@ public class CulqiAllTest extends TestCase {
         return init().subscription.list(subscription);
     }
 
+    protected Map<String, Object> refunds() throws Exception {
+        Map<String, Object> refund = new HashMap<String, Object>();
+        refund.put("limit", 50);
+        return init().refund.list(refund);
+    }
+
+    protected Map<String, Object> events() throws Exception {
+        return init().event.list();
+    }
+
+    protected Map<String, Object> transfers() throws Exception {
+        return init().transfer.list();
+    }
+
     @Test
     public void test1AllTokens() throws Exception {
         List<Map<String, Object>> data = (List<Map<String,Object>>) tokens().get("data");
-        boolean valid = false;
-        if(data.size() >= 0){
-            valid = true;
-        }
-        assertTrue(valid);
+        assert(data.size() >= 0);
     }
 
     @Test
     public void test2AllCharge() throws Exception {
         List<Map<String, Object>> data = (List<Map<String,Object>>) charges().get("data");
-        boolean valid = false;
-        if(data.size() >= 0){
-            valid = true;
-        }
-        assertTrue(valid);
+        assert(data.size() >= 0);
     }
 
     @Test
     public void test3AllPlan() throws Exception {
         List<Map<String, Object>> data = (List<Map<String,Object>>) plans().get("data");
-        boolean valid = false;
-        if(data.size() >= 0){
-            valid = true;
-        }
-        assertTrue(valid);
+        assert(data.size() >= 0);
     }
 
     @Test
     public void test4AllCustomers() throws Exception {
         List<Map<String, Object>> data = (List<Map<String,Object>>) customers().get("data");
-        boolean valid = false;
-        if(data.size() >= 0){
-            valid = true;
-        }
-        assertTrue(valid);
+        assert(data.size() >= 0);
     }
 
     @Test
     public void test5AllCards() throws Exception {
         List<Map<String, Object>> data = (List<Map<String,Object>>) cards().get("data");
-        boolean valid = false;
-        if(data.size() >= 0){
-            valid = true;
-        }
-        assertTrue(valid);
+        assert(data.size() >= 0);
     }
 
     @Test
     public void test5AllSubscriptions() throws Exception {
         List<Map<String, Object>> data = (List<Map<String,Object>>) subscriptions().get("data");
-        boolean valid = false;
-        if(data.size() >= 0){
-            valid = true;
-        }
-        assertTrue(valid);
+        assert(data.size() >= 0);
     }
 
+    @Test
+    public void test6AllRefunds() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String,Object>>) refunds().get("data");
+        assert(data.size() >= 0);
+    }
+
+    @Test
+    public void test7AllEvents() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String,Object>>) events().get("data");
+        assert(data.size() >= 0);
+    }
+
+    @Test
+    public void test7AllTransfers() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String,Object>>) transfers().get("data");
+        assert(data.size() >= 0);
+    }
 
 }

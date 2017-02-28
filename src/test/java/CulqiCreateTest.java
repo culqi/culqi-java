@@ -204,6 +204,7 @@ public class CulqiCreateTest extends TestCase {
     @Test
     public void test18DeleteCustomer() throws Exception {
         Map<String, Object> customerDeleted = init().customer.delete(customer().get("id").toString());
+        System.out.println(customerDeleted);
         assertTrue(Boolean.valueOf(customerDeleted.get("deleted").toString()));
     }
 
