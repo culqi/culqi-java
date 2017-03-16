@@ -1,3 +1,9 @@
+### 1.1.7 15-03-2017
+* Improved method List data for all resources
+* Fixex Timeout for List data
+* Added Enum CurrencyCode with the following values: PEN, USD
+* Added Enum Reason with the following values: duplicado, fraudulento, solicitud_comprador
+
 ### 1.1.6 28-02-2017
 * Fix Transfer URL
 * List Method all resource befault limit 50

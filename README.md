@@ -7,7 +7,7 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 
 | Versión actual|Culqi API|
 |----|----|
-| 1.1.5 (2017-02-24) |[v2](https://culqi.com/api/)|
+| 1.1.7 (2017-03-16) |[v2](https://culqi.com/api/)|
 
 ## Requisitos
 
@@ -46,7 +46,7 @@ Map<String, Object> metadata = new HashMap<String, Object>();
 metadata.put("oder_id", "124");
 charge.put("amount",1000);
 charge.put("capture", true);
-charge.put("currency_code","PEN");
+charge.put("currency_code",CurrencyCode.PEN);
 charge.put("description","Venta de prueba");
 charge.put("email","test@culqi.com");
 charge.put("installments", 0);
@@ -63,7 +63,7 @@ Map<String, Object> plan = new HashMap<String, Object>();
 Map<String, Object> metadata = new HashMap<String, Object>();
 metadata.put("oder_id", "124");
 plan.put("amount",1000);
-plan.put("currency_code","PEN");
+plan.put("currency_code",CurrencyCode.PEN);
 plan.put("interval","dias");
 plan.put("interval_count",30);
 plan.put("limit", 4);
@@ -112,7 +112,7 @@ Map<String, Object> suscription_created = culqi.subscription.create(subscription
 Map<String, Object> refund = new HashMap<String, Object>();
 refund.put("amount",900);
 refund.put("charge_id",charge_created.get("id").toString());
-refund.put("reason","solicitud_comprador");
+refund.put("reason",Reason.solicitud_comprador);
 Map<String, Object> refund_created = culqi.refund.create(refund);
 ```
 

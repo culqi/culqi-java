@@ -1,4 +1,6 @@
 import com.culqi.Culqi;
+import com.culqi.util.CurrencyCode;
+import com.culqi.util.Reason;
 import com.culqi.util.Util;
 import junit.framework.TestCase;
 import org.junit.FixMethodOrder;
@@ -42,8 +44,8 @@ public class CulqiCreateTest extends TestCase {
         Map<String, Object> metadata = new HashMap<String, Object>();
         metadata.put("oder_id", "124");
         charge.put("amount",1000);
-        charge.put("capture", true);
-        charge.put("currency_code","PEN");
+        charge.put("capture",true);
+        charge.put("currency_code",CurrencyCode.PEN);
         charge.put("description","Venta de prueba");
         charge.put("email","test@culqi.com");
         charge.put("installments", 0);
@@ -62,7 +64,7 @@ public class CulqiCreateTest extends TestCase {
         Map<String, Object> metadata = new HashMap<String, Object>();
         metadata.put("oder_id", "124");
         plan.put("amount",1000);
-        plan.put("currency_code","PEN");
+        plan.put("currency_code",CurrencyCode.PEN);
         plan.put("interval","dias");
         plan.put("interval_count",30);
         plan.put("limit", 4);
@@ -128,7 +130,7 @@ public class CulqiCreateTest extends TestCase {
         Map<String, Object> refund = new HashMap<String, Object>();
         refund.put("amount",500);
         refund.put("charge_id",charge().get("id").toString());
-        refund.put("reason","solicitud_comprador");
+        refund.put("reason", Reason.solicitud_comprador);
         return init().refund.create(refund);
     }
 
@@ -204,7 +206,6 @@ public class CulqiCreateTest extends TestCase {
     @Test
     public void test18DeleteCustomer() throws Exception {
         Map<String, Object> customerDeleted = init().customer.delete(customer().get("id").toString());
-        System.out.println(customerDeleted);
         assertTrue(Boolean.valueOf(customerDeleted.get("deleted").toString()));
     }
 

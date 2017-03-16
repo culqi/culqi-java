@@ -18,7 +18,7 @@ public class ObjectResult {
     ObjectMapper mapper = new ObjectMapper();
 
     public Map<String, Object> list(String url, Object params) throws Exception {
-        String query = mapper.writeValueAsString(params);
+        String query = (params != null)? mapper.writeValueAsString(params) : null;
         String response = new ResponseHelper().list(url, query);
         return mapper.readValue(response.toString(), new TypeReference<HashMap<String, Object>>(){});
     }
