@@ -3,7 +3,6 @@ package com.culqi.model;
 import com.culqi.apioperation.*;
 import com.culqi.util.ObjectResult;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -15,20 +14,12 @@ public class Plan implements All, Create, Find, Update, Delete {
     private static final String URL = "/plans/";
 
     public Map<String, Object> list(Map<String, Object> params) throws Exception {
-        if (params == null) {
-            params = new HashMap<String, Object>();
-            params.put("limit", 50);
-        }
-        if(params != null && params.size() == 0) {
-            params.put("limit", 50);
-        }
+        params = (params == null || params.size() == 0) ? null: params;
         return new ObjectResult().list(this.URL, params);
     }
 
     public Map<String, Object> list() throws Exception {
-        Map<String, Object> defaultParam = new HashMap<String, Object>();
-        defaultParam.put("limit", 50);
-        return new ObjectResult().list(this.URL, defaultParam);
+        return new ObjectResult().list(this.URL, null);
     }
 
     public Map<String, Object> create(Map<String, Object> body) throws Exception {

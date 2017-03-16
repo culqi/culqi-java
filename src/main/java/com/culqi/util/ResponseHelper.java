@@ -18,31 +18,37 @@ public class ResponseHelper {
 
     Config config = new Config();
 
-    OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).build();
+    OkHttpClient client = new OkHttpClient.Builder().connectTimeout(180, TimeUnit.SECONDS)
+                          .readTimeout(180, TimeUnit.SECONDS).build();
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     public String list(String url, String params) throws Exception {
 
-        HashMap<String, Object> map = new HashMap<String, Object>();
-
-        String[] pairs = params.replace("{","").replace("}","").split(",");
-        for (int i=0;i<pairs.length;i++) {
-            String pair = pairs[i];
-            String[] keyValue = pair.split(":");
-            map.put(keyValue[0], keyValue[1]);
-        }
-
         HttpUrl.Builder builder = new HttpUrl.Builder();
 
         builder.scheme("https").host(Config.DOMAIN).addPathSegment(Config.PATH+url);
 
-        Iterator it = map.entrySet().iterator();
+        if(params != null) {
 
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            builder.addQueryParameter(pair.getKey().toString(), pair.getValue().toString());
-            it.remove();
+            HashMap<String, Object> map = new HashMap<String, Object>();
+
+            String[] pairs = params.replace("{","").replace("}","").split(",");
+
+            for (int i=0;i<pairs.length;i++) {
+                String pair = pairs[i];
+                String[] keyValue = pair.split(":");
+                map.put(keyValue[0], keyValue[1]);
+            }
+
+            Iterator it = map.entrySet().iterator();
+
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                builder.addQueryParameter(pair.getKey().toString(), pair.getValue().toString());
+                it.remove();
+            }
+
         }
 
         HttpUrl urlquery =  builder.build();
