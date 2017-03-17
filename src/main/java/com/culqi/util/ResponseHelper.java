@@ -27,15 +27,15 @@ public class ResponseHelper {
 
         HttpUrl.Builder builder = new HttpUrl.Builder();
 
-        builder.scheme("https").host(Config.DOMAIN).addPathSegment(Config.PATH+url);
+        builder.scheme("https").host(Config.DOMAIN).addPathSegment("v2/" + url);
 
-        if(params != null) {
+        if (params != null) {
 
             HashMap<String, Object> map = new HashMap<String, Object>();
 
-            String[] pairs = params.replace("{","").replace("}","").split(",");
+            String[] pairs = params.replace("{", "").replace("}", "").split(",");
 
-            for (int i=0;i<pairs.length;i++) {
+            for (int i = 0; i < pairs.length; i++) {
                 String pair = pairs[i];
                 String[] keyValue = pair.split(":");
                 map.put(keyValue[0], keyValue[1]);
@@ -44,17 +44,19 @@ public class ResponseHelper {
             Iterator it = map.entrySet().iterator();
 
             while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
+                Map.Entry pair = (Map.Entry) it.next();
                 builder.addQueryParameter(pair.getKey().toString(), pair.getValue().toString());
                 it.remove();
             }
 
         }
 
-        HttpUrl urlquery =  builder.build();
+        HttpUrl urlquery = builder.build();
+
+        String finalURL = Config.API_BASE+"/"+url+"?"+urlquery.url().getQuery().replace("%22","");
 
         Request request = new Request.Builder()
-                .url(urlquery)
+                .url(finalURL)
                 .header("Authorization","Bearer " + Culqi.secret_key)
                 .build();
 

@@ -32,6 +32,7 @@ public class CulqiAllTest extends TestCase {
     protected Map<String, Object> charges() throws Exception {
         Map<String, Object> charge = new HashMap<String, Object>();
         charge.put("currency_code", CurrencyCode.PEN);
+        charge.put("limit",1);
         return init().charge.list(charge);
     }
 
