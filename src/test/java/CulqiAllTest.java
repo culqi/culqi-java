@@ -91,7 +91,6 @@ public class CulqiAllTest extends TestCase {
     @Test
     public void test3AllPlan() throws Exception {
         List<Map<String, Object>> data = (List<Map<String,Object>>) plans().get("data");
-        System.out.println(data);
         assert(data.size() >= 0);
     }
 
