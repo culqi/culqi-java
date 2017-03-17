@@ -18,11 +18,11 @@ public class Charge implements All, Create, Find, Update {
 
     public Map<String, Object> list(Map<String, Object> params) throws Exception {
         params = (params == null || params.size() == 0) ? null: params;
-        return new ObjectResult().list("charges", params);
+        return new ObjectResult().list(this.URL.replace("/",""), params);
     }
 
     public Map<String, Object> list() throws Exception {
-        return new ObjectResult().list("charges", null);
+        return new ObjectResult().list(this.URL.replace("/",""), null);
     }
 
     public Map<String, Object> create(Map<String, Object> body) throws Exception {

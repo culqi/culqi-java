@@ -53,7 +53,9 @@ public class ResponseHelper {
 
         HttpUrl urlquery = builder.build();
 
-        String finalURL = Config.API_BASE+"/"+url+"?"+urlquery.url().getQuery().replace("%22","");
+        String queryParams = (urlquery.url().getQuery() != null) ? "?"+urlquery.url().getQuery().replace("%22","") : "";
+
+        String finalURL = Config.API_BASE+"/"+url+queryParams;
 
         Request request = new Request.Builder()
                 .url(finalURL)
