@@ -7,7 +7,7 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 
 | Versión actual|Culqi API|
 |----|----|
-| 1.1.7 (2017-03-16) |[v2](https://culqi.com/api/)|
+| 1.1.8 (2017-03-17) |[v2](https://culqi.com/api/)|
 
 ## Requisitos
 
@@ -128,6 +128,12 @@ Todos los cambios en las versiones de esta biblioteca están listados en [CHANGE
 
 - [okhttp3](http://square.github.io/okhttp/)
 - [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
+
+## Build
+
+```bash
+mvn package -DskipTests
+```
 
 ## Testing
 
