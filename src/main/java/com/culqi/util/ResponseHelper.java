@@ -38,32 +38,25 @@ public class ResponseHelper {
             for (int i = 0; i < pairs.length; i++) {
                 String pair = pairs[i];
                 String[] keyValue = pair.split(":");
-                map.put(keyValue[0], keyValue[1]);
+                map.put(keyValue[0].replace("\"",""), keyValue[1].replace("\"",""));
             }
 
-            Iterator it = map.entrySet().iterator();
-
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                builder.addQueryParameter(pair.getKey().toString(), pair.getValue().toString());
-                it.remove();
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                builder.addQueryParameter(entry.getKey(), entry.getValue().toString());
             }
 
         }
 
         HttpUrl urlquery = builder.build();
 
-        String queryParams = (urlquery.url().getQuery() != null) ? "?"+urlquery.url().getQuery().replace("%22","") : "";
-
-        String finalURL = Config.API_BASE+"/"+url+queryParams;
-
         Request request = new Request.Builder()
-                .url(finalURL)
+                .url(urlquery)
                 .header("Authorization","Bearer " + Culqi.secret_key)
                 .build();
 
         Response response = client.newCall(request).execute();
         return response.body().string();
+
     }
 
     public String create(String url, String jsonData) throws Exception {
