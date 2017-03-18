@@ -3,7 +3,6 @@ package com.culqi.model;
 import com.culqi.apioperation.*;
 import com.culqi.util.ObjectResult;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

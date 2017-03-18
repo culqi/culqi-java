@@ -35,4 +35,7 @@ public class Culqi {
 
     public Culqi() {}
 
+    public static void main(String[] args) {
+    }
+
 }

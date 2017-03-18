@@ -5,7 +5,6 @@ import com.culqi.model.Config;
 import okhttp3.*;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
