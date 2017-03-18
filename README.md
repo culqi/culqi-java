@@ -155,6 +155,23 @@ mvn test -D test=CulqiCreateTest#test6ValidCreateSubscription
 mvn test -D test=CulqiCreateTest#test7ChargeCapture
 ```
 
+## ¿Cómo instalar el jar de Culqi en un proyecto Maven? 
+
+```bash
+mvn install:install-file -Dfile={dir}/culqi-java-1.1.8.jar  -DgroupId=com.culqi -DartifactId=culqi-java -Dversion={version} -Dpackaging=jar
+```
+
+
+Luego agregas la siguiente dependencia en el pom.xml
+
+```xml
+<dependency>
+    <groupId>com.culqi</groupId>
+    <artifactId>culqi-java</artifactId>
+    <version>{version}</version>
+</dependency>
+```
+
 ## Autor
 
 Willy Aguirre ([@marti1125](https://github.com/marti1125) - Team Culqi)
