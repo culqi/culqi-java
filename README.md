@@ -11,7 +11,7 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 
 ## Requisitos
 
-- Java 1.7+
+- Java 1.6+
 - Credenciales de comercio en Culqi (1).
 
 ## Ejemplos
@@ -158,7 +158,7 @@ mvn test -D test=CulqiCreateTest#test7ChargeCapture
 ## ¿Cómo instalar el jar de Culqi en un proyecto Maven? 
 
 ```bash
-mvn install:install-file -Dfile={dir}/culqi-java-1.1.8.jar  -DgroupId=com.culqi -DartifactId=culqi-java -Dversion={version} -Dpackaging=jar
+mvn install:install-file -Dfile={dir}/culqi-java-forjava1.6.jar  -DgroupId=com.culqi -DartifactId=culqi-java -Dversion={version} -Dpackaging=jar
 ```
 
 
