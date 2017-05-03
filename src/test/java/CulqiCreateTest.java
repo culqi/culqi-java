@@ -19,8 +19,8 @@ public class CulqiCreateTest extends TestCase {
 
     public Culqi init() {
         Culqi culqi = new Culqi();
-        culqi.public_key = "pk_test_vzMuTHoueOMlgUPj";
-        culqi.secret_key = "sk_test_UTCQSGcXW8bCyU59";
+        culqi.public_key = "pk_test_Rp2uV5dXI3quFq2X";
+        culqi.secret_key = "sk_test_8GC9UJfifciOurwW";
         return culqi;
     }
 
@@ -76,6 +76,7 @@ public class CulqiCreateTest extends TestCase {
 
     @Test
     public void test3ValidCreatePlan() throws Exception {
+        System.out.println(plan());
         assertEquals("plan", plan().get("object").toString());
     }
 

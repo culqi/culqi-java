@@ -16,8 +16,8 @@ public class CulqiPatchTest extends TestCase {
 
     public Culqi init() {
         Culqi culqi = new Culqi();
-        culqi.public_key = "pk_test_vzMuTHoueOMlgUPj";
-        culqi.secret_key = "sk_test_UTCQSGcXW8bCyU59";
+        culqi.public_key = "";
+        culqi.secret_key = "sk_test_8GC9UJfifciOurwW";
         return culqi;
     }
 
@@ -26,7 +26,7 @@ public class CulqiPatchTest extends TestCase {
         Map<String, Object> metadata = new HashMap<String, Object>();
         metadata.put("oder_id", "899");
         plan.put("metadata", metadata);
-        return init().plan.update(plan, "pln_test_pLFzcWkwj33xFGF1");
+        return init().plan.update(plan, "pln_test_MAPZtB8ePBPOkOGs");
     }
 
     @Test

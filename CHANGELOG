@@ -1,9 +1,13 @@
+### forjava1.6 03-05-2017
+* add unirest
+* rewrite util/ResponseHelper for add support java >= 1.6
+
 ### 1.1.8 16-03-2017
 * Fixed url query params for List data
 
 ### 1.1.7 15-03-2017
 * Improved method List data for all resources
-* Fixex Timeout for List data
+* Fixed Timeout for List data
 * Added Enum CurrencyCode with the following values: PEN, USD
 * Added Enum Reason with the following values: duplicado, fraudulento, solicitud_comprador
 
