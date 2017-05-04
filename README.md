@@ -168,7 +168,7 @@ Luego agregas la siguiente dependencia en el pom.xml
 <dependency>
     <groupId>com.culqi</groupId>
     <artifactId>culqi-java</artifactId>
-    <version>{version}</version>
+    <version>forjava1.6</version>
 </dependency>
 ```
 
