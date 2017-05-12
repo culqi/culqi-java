@@ -14,6 +14,31 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 - Java 1.6+
 - Credenciales de comercio en Culqi (1).
 
+## Instalación
+
+Instalación usando Maven:
+Solo necesita agregar el siguiente repositorio en el pom.xml
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+
+Y Luego agregar la dependencia
+
+```xml
+<dependency>
+    <groupId>com.github.culqi</groupId>
+    <artifactId>culqi-java</artifactId>
+    <version>dev_java_1_6-SNAPSHOT</version>
+</dependency>
+```
+
+
 ## Ejemplos
 
 
@@ -126,7 +151,7 @@ Todos los cambios en las versiones de esta biblioteca están listados en [CHANGE
 
 ## Dependencias para el desarrollo
 
-- [okhttp3](http://square.github.io/okhttp/)
+- [unirest](http://unirest.io/java.html)
 - [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
 
 ## Build
