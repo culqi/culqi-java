@@ -14,8 +14,31 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 - Java 1.7+
 - Credenciales de comercio en Culqi (1).
 
-## Ejemplos
+## Instalación
 
+Instalación usando Maven:
+Solo necesita agregar el siguiente repositorio en el pom.xml
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+
+Y Luego agregar la dependencia
+
+```xml
+<dependency>
+    <groupId>com.github.culqi</groupId>
+    <artifactId>culqi-java</artifactId>
+    <version>v1.1.8</version>
+</dependency>
+```
+
+## Ejemplos
 
 #### Inicialización
 
