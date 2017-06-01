@@ -7,7 +7,7 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 
 | Versión actual|Culqi API|
 |----|----|
-| 1.1.8 (2017-03-17) |[v2](https://culqi.com/api/)|
+| 1.1.9 (2017-05-31) |[v2](https://culqi.com/api/)|
 
 ## Requisitos
 
@@ -34,7 +34,7 @@ Y Luego agregar la dependencia
 <dependency>
     <groupId>com.github.culqi</groupId>
     <artifactId>culqi-java</artifactId>
-    <version>v1.1.8</version>
+    <version>v1.1.9</version>
 </dependency>
 ```
 
