@@ -84,6 +84,7 @@ public class CulqiAllTest extends TestCase {
 
     @Test
     public void test2AllCharge() throws Exception {
+        System.out.println("charge..." + charges());
         List<Map<String, Object>> data = (List<Map<String,Object>>) charges().get("data");
         assert(data.size() >= 0);
     }

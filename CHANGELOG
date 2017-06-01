@@ -1,3 +1,6 @@
+### 1.1.9 31-05-2017
+* Add TimeOut Exception
+
 ### 1.1.8 16-03-2017
 * Fixed url query params for List data
 
