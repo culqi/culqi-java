@@ -65,6 +65,13 @@ Map<String, Object> token_created = culqi.token.create(token);
 
 ```java
 Map<String, Object> charge = new HashMap<String, Object>();
+Map<String, Object> antifraudDetails = new HashMap<String, Object>();
+antifraudDetails.put("address", "Calle Narciso de Colina 421 Miraflores");
+antifraudDetails.put("address_city", "LIMA");
+antifraudDetails.put("country_code", "PE");
+antifraudDetails.put("first_name", "Willy");
+antifraudDetails.put("last_name", "Aguirre");
+antifraudDetails.put("phone_number", "012767623");
 Map<String, Object> metadata = new HashMap<String, Object>();
 metadata.put("oder_id", "124");
 charge.put("amount",1000);
@@ -73,6 +80,7 @@ charge.put("currency_code",CurrencyCode.PEN);
 charge.put("description","Venta de prueba");
 charge.put("email","test@culqi.com");
 charge.put("installments", 0);
+charge.put("antifraud_details", antifraudDetails);
 charge.put("metadata", metadata);
 charge.put("source_id", token_created.get("id").toString());
 Map<String, Object> charge_created = culqi.charge.create(charge);
