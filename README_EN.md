@@ -186,7 +186,7 @@ mvn test -D test=CulqiCreateTest#test6ValidCreateSubscription
 mvn test -D test=CulqiCreateTest#test7ChargeCapture
 ```
 
-## How install the Culpi's jar in a Maven project?
+## How install the Culqi's jar in a Maven project?
 
 ```bash
 mvn install:install-file -Dfile={dir}/culqi-java-1.1.8.jar  -DgroupId=com.culqi -DartifactId=culqi-java -Dversion={version} -Dpackaging=jar
