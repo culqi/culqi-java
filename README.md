@@ -17,7 +17,8 @@ Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consum
 ## Instalación
 
 Instalación usando Maven:
-Solo necesita agregar el siguiente repositorio en el pom.xml
+
+Solo necesita agregar el siguiente repositorio en el archivo pom.xml
 
 ```xml
 <repositories>
@@ -28,7 +29,7 @@ Solo necesita agregar el siguiente repositorio en el pom.xml
 </repositories>
 ```
 
-Y Luego agregar la dependencia
+Luego agregar la dependencia:
 
 ```xml
 <dependency>
