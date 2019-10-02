@@ -174,7 +174,7 @@ You must have installed Maven to run the tests
 mvn test
 ```
 
-You can run these units independently
+You can run these unit tests independently
 
 ```bash
 mvn test -D test=CulqiCreateTest#test1ValidCreateToken
