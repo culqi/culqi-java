@@ -1,8 +1,8 @@
 language: java
+dist: trusty
 
 jdk:
   - openjdk7
-  - oraclejdk7
   - oraclejdk8
 
 install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
