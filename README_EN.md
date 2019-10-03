@@ -3,22 +3,21 @@
 [![Code Climate](https://codeclimate.com/github/culqi/culqi-java/badges/gpa.svg)](https://codeclimate.com/github/culqi/culqi-java)
 [![Build Status](https://travis-ci.org/culqi/culqi-java.svg?branch=master)](https://travis-ci.org/culqi/culqi-java)
 
-Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consume el Culqi API.
+Library of CULQI for the Java language, simple payments in your website. Use the Culqi API.
 
-| Versión actual|Culqi API|
+| Current version |Culqi API|
 |----|----|
 | 1.1.9 (2017-05-31) |[v2](https://culqi.com/api/)|
 
-## Requisitos
+## Requirements
 
 - Java 1.7+
-- Credenciales de comercio en Culqi (1).
+- Trade credentials in Culqi (1).
 
-## Instalación
+## Installation
 
-Instalación usando Maven:
-
-Solo necesita agregar el siguiente repositorio en el archivo pom.xml
+Installation using Maven:
+Just need to add the following repository in the pom.xml
 
 ```xml
 <repositories>
@@ -29,7 +28,7 @@ Solo necesita agregar el siguiente repositorio en el archivo pom.xml
 </repositories>
 ```
 
-Luego agregar la dependencia:
+Then add the dependency
 
 ```xml
 <dependency>
@@ -39,17 +38,17 @@ Luego agregar la dependencia:
 </dependency>
 ```
 
-## Ejemplos
+## Examples
 
-#### Inicialización
+#### Initialization
 
 ```java
 Culqi culqi = new Culqi();
-culqi.public_key = "{LLAVE PUBLICA}";
-culqi.secret_key =  "{LLAVE SECRETA}"
+culqi.public_key = "{PUBLIC_KEY}";
+culqi.secret_key =  "{SECRET_KEY}"
 ```
 
-#### Crear Token
+#### Create Token
 
 ```java
 Map<String, Object> token = new HashMap<String, Object>();
@@ -62,7 +61,7 @@ Map<String, Object> token_created = culqi.token.create(token);
 
 ```
 
-#### Crear Cargo
+#### Create Charge
 
 ```java
 Map<String, Object> charge = new HashMap<String, Object>();
@@ -78,7 +77,7 @@ metadata.put("oder_id", "124");
 charge.put("amount",1000);
 charge.put("capture", true);
 charge.put("currency_code",CurrencyCode.PEN);
-charge.put("description","Venta de prueba");
+charge.put("description","Sale Test");
 charge.put("email","test@culqi.com");
 charge.put("installments", 0);
 charge.put("antifraud_details", antifraudDetails);
@@ -88,7 +87,7 @@ Map<String, Object> charge_created = culqi.charge.create(charge);
 
 ```
 
-#### Crear Plan
+#### Create Plan
 
 ```java
 Map<String, Object> plan = new HashMap<String, Object>();
@@ -105,7 +104,7 @@ plan.put("trial_days", 15);
 Map<String, Object> plan_created =  culqi.plan.create(plan);
 ```
 
-#### Crear Cliente
+#### Create Client
 
 ```java
 Map<String, Object> customer = new HashMap<String, Object>();
@@ -119,7 +118,7 @@ customer.put("phone_number",99004356);
 Map<String, Object> customer_created = culqi.customer.create(customer);
 ```
 
-#### Crear Tarjeta
+#### Create Card
 
 ```java
 Map<String, Object> card = new HashMap<String, Object>();
@@ -129,7 +128,7 @@ Map<String, Object> card_created = culqi.card.create(card);
 ```
 
 
-#### Crear Suscripción
+#### Create Subscription
 
 ```java
 Map<String, Object> subscription = new HashMap<String, Object>();
@@ -138,7 +137,7 @@ subscription.put("plan_id",plan_created.get("id").toString());
 Map<String, Object> suscription_created = culqi.subscription.create(subscription);
 ```
 
-#### Crear Devolución
+#### Create Refund
 
 ```java
 Map<String, Object> refund = new HashMap<String, Object>();
@@ -148,15 +147,15 @@ refund.put("reason",Reason.solicitud_comprador);
 Map<String, Object> refund_created = culqi.refund.create(refund);
 ```
 
-## Documentación
-¿Necesitas más información para integrar `culqi-java`? La documentación completa se encuentra en [https://culqi.com/docs/](https://culqi.com/docs/)
+## Documentation
+Do you need more info about integration `culqi-java` The complete documentation is in [https://culqi.com/docs/](https://culqi.com/docs/)
 
 
 ## Changelog
 
-Todos los cambios en las versiones de esta biblioteca están listados en [CHANGELOG](CHANGELOG).
+All changes in the version of this library are listed in [CHANGELOG](CHANGELOG).
 
-## Dependencias para el desarrollo
+## Dependence for the development
 
 - [okhttp3](http://square.github.io/okhttp/)
 - [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
@@ -169,13 +168,13 @@ mvn package -DskipTests
 
 ## Testing
 
-Debes tener instalado Maven para poder ejecutar los tests
+You must have installed Maven to run the tests
 
 ```bash
 mvn test
 ```
 
-Puede ejecutar estos unitarios independientemente
+You can run these unit tests independently
 
 ```bash
 mvn test -D test=CulqiCreateTest#test1ValidCreateToken
@@ -187,14 +186,13 @@ mvn test -D test=CulqiCreateTest#test6ValidCreateSubscription
 mvn test -D test=CulqiCreateTest#test7ChargeCapture
 ```
 
-## ¿Cómo instalar el jar de Culqi en un proyecto Maven? 
+## How install the Culqi's jar in a Maven project?
 
 ```bash
 mvn install:install-file -Dfile={dir}/culqi-java-1.1.8.jar  -DgroupId=com.culqi -DartifactId=culqi-java -Dversion={version} -Dpackaging=jar
 ```
 
-
-Luego agregas la siguiente dependencia en el pom.xml
+The add the following dependency in the pom.xml
 
 ```xml
 <dependency>
@@ -204,10 +202,10 @@ Luego agregas la siguiente dependencia en el pom.xml
 </dependency>
 ```
 
-## Autor
+## Author
 
 Willy Aguirre ([@marti1125](https://github.com/marti1125) - Team Culqi)
 
-## Licencia
+## License
 
-El código fuente de culqi-java está distribuido bajo MIT License, revisar el archivo [LICENSE](https://github.com/culqi/culqi-java/blob/master/LICENSE).
+The source code of culqi-java is distribuited under MIT License, check the file [LICENSE](https://github.com/culqi/culqi-java/blob/master/LICENSE).

@@ -15,11 +15,11 @@ public class Event implements All, Find {
 
     public Map<String, Object> list(Map<String, Object> params) throws Exception {
         params = (params == null || params.size() == 0) ? null: params;
-        return new ObjectResult().list(this.URL, params);
+        return new ObjectResult().list(this.URL.replace("/",""), params);
     }
 
     public Map<String, Object> list() throws Exception {
-        return new ObjectResult().list(this.URL, null);
+        return new ObjectResult().list(this.URL.replace("/",""), null);
     }
 
     public Map<String, Object> get(String id) throws Exception {
