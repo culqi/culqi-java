@@ -35,7 +35,7 @@ public class ResponseHelper {
 
             HttpUrl.Builder builder = new HttpUrl.Builder();
 
-            builder.scheme("https").host(Config.DOMAIN).addPathSegment("v2/" + url);
+            builder.scheme("https").host(Config.DOMAIN).addPathSegment("v2").addPathSegment(url);
 
             if (params != null) {
 
@@ -56,7 +56,6 @@ public class ResponseHelper {
             }
 
             HttpUrl urlquery = builder.build();
-
             Request request = new Request.Builder()
                     .url(urlquery)
                     .header("Authorization","Bearer " + Culqi.secret_key)
@@ -74,10 +73,11 @@ public class ResponseHelper {
     public String create(String url, String jsonData) {
         String result = "";
         try {
-            String api_key = url.contains("tokens")?  Culqi.public_key: Culqi.secret_key;
+            String api_key = url.contains("tokens") ? Culqi.public_key : Culqi.secret_key;
+            String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
             RequestBody body = RequestBody.create(JSON, jsonData);
             Request request = new Request.Builder()
-                    .url(config.API_BASE+url)
+                    .url(base_url+url)
                     .header("Authorization","Bearer " + api_key)
                     .post(body)
                     .build();
@@ -110,9 +110,10 @@ public class ResponseHelper {
         String result = "";
         try {
             Request.Builder builder = new Request.Builder();
-            builder.url(config.API_BASE+url+id);
+            builder.url(config.API_BASE + url + id);
+            System.out.println(config.API_BASE + url + id);
             builder.header("Authorization","Bearer " + Culqi.secret_key);
-            if(delete){
+            if (delete) {
                 builder.delete();
             }
             Request request = builder.build();

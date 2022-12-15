@@ -7,6 +7,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,18 +21,20 @@ public class CulqiCreateTest extends TestCase {
 
     public Culqi init() {
         Culqi culqi = new Culqi();
-        culqi.public_key = "pk_test_Rp2uV5dXI3quFq2X";
-        culqi.secret_key = "sk_test_8GC9UJfifciOurwW";
+        culqi.public_key = "";
+        culqi.secret_key = "";
         return culqi;
     }
 
     protected Map<String, Object> token() throws Exception {
         Map<String, Object> token = new HashMap<String, Object>();
-        token.put("card_number", "4111111111111111");
-        token.put("cvv", "123");
-        token.put("email", "wm@wm.com");
-        token.put("expiration_month", 9);
-        token.put("expiration_year", 2020);
+        Calendar date = new GregorianCalendar();
+        int year = date.get(Calendar.YEAR);  
+        token.put("card_number", "5200000000001096");
+        token.put("cvv", "111");
+        token.put("email", "test@culqi.com");
+        token.put("expiration_month", 7);
+        token.put("expiration_year", year + 1);
         return init().token.create(token);
     }
 
@@ -39,10 +43,73 @@ public class CulqiCreateTest extends TestCase {
         assertEquals("token", token().get("object").toString());
     }
 
+    protected Map<String, Object> tokenYape() throws Exception {
+        Map<String, Object> token = new HashMap<String, Object>();
+         Map<String, Object> metadata = new HashMap<String, Object>();
+        metadata.put("dni", "71702935"); 
+        token.put("number_phone", "900000001");
+        token.put("otp", "425251");
+        token.put("amount", 700);
+        token.put("metadata", metadata);
+        return init().token.createYape(token);
+    }
+
+    @Test
+    public void test1ValidCreateTokenYape() throws Exception {
+        System.out.println(tokenYape().get("id"));
+        assertEquals("token", tokenYape().get("object").toString());
+    }
+
+    protected Map<String, Object> order(Boolean confirm) throws Exception {
+        Map<String, Object> order = new HashMap<String, Object>();
+        Map<String, Object> metadata = new HashMap<String, Object>();
+        Map<String, Object> client_details = new HashMap<String, Object>();
+        metadata.put("dni", "70000000");
+        client_details.put("first_name", "prueba firstname");
+        client_details.put("last_name", "prueba lastname");
+        client_details.put("email", "prueba@gmail.com");
+        client_details.put("phone_number", "51945145222");
+        order.put("amount", 60000);
+        order.put("currency_code", CurrencyCode.PEN);
+        order.put("description", "Venta de prueba");
+        order.put("order_number", "pedido-" + new Util().ramdomNumber());
+        order.put("client_details", client_details);
+        order.put("metadata", metadata);
+        order.put("expiration_date", (System.currentTimeMillis() / 1000) + 24 * 60 * 60);
+        order.put("confirm", confirm);
+        return init().order.create(order);
+    }
+    
+    @Test
+    public void test2ValidCreateOrder() throws Exception {
+        Map<String, Object> order = order(true);
+        System.out.println(order);
+        assertEquals("order", order.get("object").toString());
+    }
+
+    protected Map<String, Object> confirmOrderType() throws Exception {
+        Map<String, Object> order = new HashMap<String, Object>();
+        String[] order_types = { "cuotealo", "cip" };
+        order.put("order_id", order(false).get("id").toString());
+        order.put("order_types", order_types);
+
+        System.out.println(order);
+
+        return init().order.confirm_order_type(order);
+    }
+    
+    @Test
+    public void test2ValidConfirmOrderType() throws Exception {
+        Map<String, Object> confirmOrderType = confirmOrderType();
+        System.out.println(confirmOrderType);
+        assertEquals("order", confirmOrderType.get("object").toString());
+    }
+
+
     protected Map<String, Object> charge() throws Exception {
         Map<String, Object> charge = new HashMap<String, Object>();
         Map<String, Object> metadata = new HashMap<String, Object>();
-        metadata.put("oder_id", "124");
+        metadata.put("oder_id", "1234");
         charge.put("amount",1000);
         charge.put("capture",true);
         charge.put("currency_code",CurrencyCode.PEN);
@@ -148,6 +215,12 @@ public class CulqiCreateTest extends TestCase {
     }
 
     @Test
+    public void test9FindOrder() throws Exception {
+        Map<String, Object> orderFound = init().order.get(order(true).get("id").toString());
+        assertEquals("order", orderFound.get("object").toString());
+    }
+    
+    @Test
     public void test9FindCharge() throws Exception {
         Map<String, Object> chargeFound = init().charge.get(charge().get("id").toString());
         assertEquals("charge", chargeFound.get("object").toString());
@@ -207,6 +280,12 @@ public class CulqiCreateTest extends TestCase {
     public void test18DeleteCustomer() throws Exception {
         Map<String, Object> customerDeleted = init().customer.delete(customer().get("id").toString());
         assertTrue(Boolean.valueOf(customerDeleted.get("deleted").toString()));
+    }
+
+    @Test
+    public void test19DeleteOrder() throws Exception {
+        Map<String, Object> orderDeleted = init().order.delete(order(true).get("id").toString());
+        assertTrue(Boolean.valueOf(orderDeleted.get("deleted").toString()));
     }
 
 }
