@@ -45,7 +45,7 @@ public class ObjectResult {
     }
     
     public Map<String, Object> confirm(String url, String id) throws Exception {
-        String response = new ResponseHelper().capture(url, id);
+        String response = new ResponseHelper().confirm(url, id);
         return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
     }
 
