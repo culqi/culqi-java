@@ -130,8 +130,25 @@ public class ResponseHelper {
         try {
             RequestBody body = RequestBody.create(JSON, "");
             Request.Builder builder = new Request.Builder();
-            builder.url(config.API_BASE+url+id+"/capture/");
-            builder.header("Authorization","Bearer " + Culqi.secret_key);
+            builder.url(config.API_BASE + url + id + "/capture/");
+            builder.header("Authorization", "Bearer " + Culqi.secret_key);
+            builder.post(body);
+            Request request = builder.build();
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            result = exceptionError();
+        }
+        return result;
+    }
+    
+    public String confirm(String url, String id) throws Exception {
+        String result = "";
+        try {
+            RequestBody body = RequestBody.create(JSON, "");
+            Request.Builder builder = new Request.Builder();
+            builder.url(config.API_BASE+url+id+"/confirm/");
+            builder.header("Authorization","Bearer " + Culqi.public_key);
             builder.post(body);
             Request request = builder.build();
             Response response = client.newCall(request).execute();
