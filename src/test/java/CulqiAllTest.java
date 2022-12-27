@@ -29,6 +29,10 @@ public class CulqiAllTest extends TestCase {
         return init().token.list(token);
     }
 
+    protected Map<String, Object> orders() throws Exception {
+        return init().order.list();
+    }
+
     protected Map<String, Object> charges() throws Exception {
         Map<String, Object> charge = new HashMap<String, Object>();
         charge.put("currency_code", CurrencyCode.PEN);
@@ -78,13 +82,19 @@ public class CulqiAllTest extends TestCase {
 
     @Test
     public void test1AllTokens() throws Exception {
-        List<Map<String, Object>> data = (List<Map<String,Object>>) tokens().get("data");
+        List<Map<String, Object>> data = (List<Map<String, Object>>) tokens().get("data");
         assert(data.size() >= 0);
     }
 
     @Test
+    public void test1AllOrders() throws Exception {
+        System.out.println(orders());
+        List<Map<String, Object>> data = (List<Map<String, Object>>) orders().get("data");
+        assert (data.size() >= 0);
+    }
+    
+    @Test
     public void test2AllCharge() throws Exception {
-        System.out.println("charge..." + charges());
         List<Map<String, Object>> data = (List<Map<String,Object>>) charges().get("data");
         assert(data.size() >= 0);
     }

@@ -14,9 +14,10 @@ import java.util.Map;
 public class Token implements All, Create, Find {
 
     private static final String URL = "/tokens/";
+    private static final String URL_YAPE = "/tokens/yape";
 
     public Map<String, Object> list(Map<String, Object> params) throws Exception {
-        params = (params == null || params.size() == 0) ? null: params;
+        params = (params == null || params.size() == 0) ? null : params;
         return new ObjectResult().list(this.URL.replace("/",""), params);
     }
 
@@ -26,6 +27,10 @@ public class Token implements All, Create, Find {
 
     public Map<String, Object> create(Map<String, Object> body) throws Exception {
         return new ObjectResult().create(body, this.URL);
+    }
+
+    public Map<String, Object> createYape(Map<String, Object> body) throws Exception {
+        return new ObjectResult().create(body, this.URL_YAPE);
     }
 
     public Map<String, Object> get(String id) throws Exception {
