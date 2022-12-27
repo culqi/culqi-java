@@ -19,7 +19,7 @@ public class CulqiAllTest extends TestCase {
 
     public Culqi init() {
         Culqi culqi = new Culqi();
-        culqi.secret_key = "sk_test_UTCQSGcXW8bCyU59";
+        culqi.secret_key = "sk_test_1573b0e8079863ff";
         return culqi;
     }
 
@@ -27,6 +27,10 @@ public class CulqiAllTest extends TestCase {
         Map<String, Object> token = new HashMap<String, Object>();
         token.put("bin", "411111");
         return init().token.list(token);
+    }
+
+    protected Map<String, Object> orders() throws Exception {
+        return init().order.list();
     }
 
     protected Map<String, Object> charges() throws Exception {
@@ -78,13 +82,19 @@ public class CulqiAllTest extends TestCase {
 
     @Test
     public void test1AllTokens() throws Exception {
-        List<Map<String, Object>> data = (List<Map<String,Object>>) tokens().get("data");
+        List<Map<String, Object>> data = (List<Map<String, Object>>) tokens().get("data");
         assert(data.size() >= 0);
     }
 
     @Test
+    public void test1AllOrders() throws Exception {
+        System.out.println(orders());
+        List<Map<String, Object>> data = (List<Map<String, Object>>) orders().get("data");
+        assert (data.size() >= 0);
+    }
+    
+    @Test
     public void test2AllCharge() throws Exception {
-        System.out.println("charge..." + charges());
         List<Map<String, Object>> data = (List<Map<String,Object>>) charges().get("data");
         assert(data.size() >= 0);
     }

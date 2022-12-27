@@ -16,7 +16,7 @@ public class ObjectResult {
     ObjectMapper mapper = new ObjectMapper();
 
     public Map<String, Object> list(String url, Object params) throws Exception {
-        String query = (params != null)? mapper.writeValueAsString(params) : null;
+        String query = (params != null) ? mapper.writeValueAsString(params) : null;
         String response = new ResponseHelper().list(url, query);
         return mapper.readValue(response.toString(), new TypeReference<HashMap<String, Object>>(){});
     }
@@ -40,6 +40,12 @@ public class ObjectResult {
 
     public Map<String, Object> capture(String url, String id) throws Exception {
         String response = new ResponseHelper().capture(url, id);
+        return mapper.readValue(response, new TypeReference<HashMap<String, Object>>() {
+        });
+    }
+    
+    public Map<String, Object> confirm(String url, String id) throws Exception {
+        String response = new ResponseHelper().confirm(url, id);
         return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
     }
 

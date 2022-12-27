@@ -15,6 +15,8 @@ public class Culqi {
     // Resources
     public Token token = new Token();
 
+    public Order order = new Order();
+
     public Charge charge = new Charge();
 
     public Customer customer = new Customer();
