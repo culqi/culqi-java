@@ -7,7 +7,7 @@ Nuestra Biblioteca JAVA oficial de CULQI, es compatible con la [v2.0](https://cu
 
 | Versión actual|Culqi API|
 |----|----|
-| 2.0.0 (2017-05-31) |[v2.0](https://culqi.com/api/)|
+| 2.0.0  |[v2.0](https://culqi.com/api/)|
 
 ## Requisitos
 
