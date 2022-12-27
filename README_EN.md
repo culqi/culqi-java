@@ -7,12 +7,19 @@ Library of CULQI for the Java language, simple payments in your website. Use the
 
 | Current version |Culqi API|
 |----|----|
-| 1.1.9 (2017-05-31) |[v2](https://culqi.com/api/)|
+| 2.0.0 |[v2.0](https://culqi.com/api/)|
 
 ## Requirements
 
 - Java 1.7+
-- Trade credentials in Culqi (1).
+- Afiliate [aquí](https://afiliate.culqi.com/).
+- Si vas a realizar pruebas obtén tus llaves desde [aquí](https://integ-panel.culqi.com/#/registro), si vas a realizar transacciones reales obtén tus llaves desde [aquí](https://panel.culqi.com/#/registro).
+
+> Recuerda que para obtener tus llaves debes ingresar a tu CulqiPanel > Desarrollo > ***API Keys***.
+
+![alt tag](http://i.imgur.com/NhE6mS9.png)
+
+> Recuerda que las credenciales son enviadas al correo que registraste en el proceso de afiliación.
 
 ## Installation
 
