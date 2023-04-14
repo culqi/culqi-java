@@ -89,6 +89,26 @@ public class ResponseHelper {
         return result;
     }
 
+    public String createEncrypt(String url, String jsonData) {
+        String result = "";
+        try {
+            String api_key = url.contains("tokens") ? Culqi.public_key : Culqi.secret_key;
+            String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
+            RequestBody body = RequestBody.create(JSON, jsonData);
+            Request request = new Request.Builder()
+                    .url(base_url+url)
+                    .header("Authorization","Bearer " + api_key)
+                    .header("x-culqi-rsa-id","5c8360d5-6aca-4961-9278-2ce9721d3536")
+                    .post(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            result = exceptionError();
+        }
+        return result;
+    }
+
     public String update(String url, String jsonData, String id) {
         String result = "";
         try {
