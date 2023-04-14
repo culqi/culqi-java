@@ -21,8 +21,8 @@ public class CulqiCreateTest extends TestCase {
 
     public Culqi init() {
         Culqi culqi = new Culqi();
-        culqi.public_key = "";
-        culqi.secret_key = "";
+        culqi.public_key = "pk_live_889113cd74ecfc55";
+        culqi.secret_key = "sk_live_34a07dcb6d4c7e39";
         return culqi;
     }
 
@@ -41,6 +41,24 @@ public class CulqiCreateTest extends TestCase {
     @Test
     public void test1ValidCreateToken() throws Exception {
         assertEquals("token", token().get("object").toString());
+    }
+
+    protected Map<String, Object> tokenEncrypt() throws Exception {
+        Map<String, Object> token = new HashMap<String, Object>();
+        Calendar date = new GregorianCalendar();
+        int year = date.get(Calendar.YEAR);
+        token.put("card_number", "5200000000001096");
+        token.put("cvv", "111");
+        token.put("email", "test@culqi.com");
+        token.put("expiration_month", 7);
+        token.put("expiration_year", year + 1);
+        return init().token.createEncrypt(token);
+    }
+
+    @Test
+    public void test1ValidCreateTokenEncrypt() throws Exception {
+
+        assertEquals("token", tokenEncrypt().get("object").toString());
     }
 
     protected Map<String, Object> tokenYape() throws Exception {

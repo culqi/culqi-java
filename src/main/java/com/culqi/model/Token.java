@@ -29,6 +29,10 @@ public class Token implements All, Create, Find {
         return new ObjectResult().create(body, this.URL);
     }
 
+    public Map<String, Object> createEncrypt(Map<String, Object> body) throws Exception {
+        return new ObjectResult().createEncrypt(body, this.URL);
+    }
+
     public Map<String, Object> createYape(Map<String, Object> body) throws Exception {
         return new ObjectResult().create(body, this.URL_YAPE);
     }
