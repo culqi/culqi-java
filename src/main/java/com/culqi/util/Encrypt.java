@@ -8,17 +8,12 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.StringReader;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyFactory;
-import java.security.PublicKey;
-import java.security.SecureRandom;
-import java.security.Security;
-import java.security.spec.RSAKeyGenParameterSpec;
-import java.security.spec.RSAPublicKeySpec;
-import java.security.spec.X509EncodedKeySpec;
+import java.security.*;
+import java.security.spec.*;
 import java.util.Base64;
 import java.util.Map;
 import com.google.gson.Gson;
-import java.security.spec.PKCS8EncodedKeySpec;
+
 import java.io.IOException;
 import org.bouncycastle.asn1.*;
 import org.bouncycastle.asn1.pkcs.*;
@@ -29,7 +24,8 @@ import org.json.JSONObject;
 
 
 public class Encrypt {
-
+    private static final int KEY_SIZE = 2048;
+    private static final String CIPHER_ALGORITHM = "RSA/ECB/PKCS1Padding";
     public String getJsonEncryptAESRSA(String json, String publicKeyString, Boolean isJson) throws Exception {
         String publicKey2 = "MIGJAoGBAM7CA3cWPn6OmLjCnYGyo8otEhi6pXrXL7WaPPT1yeEbnlhEAUv0XosXChTYawytFQAM+ZY9OPWqZy2PUrkuSs8HYd4eILUPbBGk8nLAcp1XDGmnncWg3E245dZR1D/H5s4XDr6ZyxqVMqUq7M9/tTMlsk6JPiriy7X43Xo+2GP9AgMBAAE=";
         byte[] publicKeyBytes = Base64.getDecoder().decode(publicKey2);
@@ -40,11 +36,7 @@ public class Encrypt {
         byte[] keyBytes = new byte[32];
         SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(keyBytes);
-        //SecretKeySpec secretKeySpec = new SecretKeySpec(keyBytes, "AES");
-
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        keyGenerator.init(256);
-        SecretKey secretKeySpec = keyGenerator.generateKey();
+        SecretKeySpec secretKeySpec = new SecretKeySpec(keyBytes, "AES");
 
         byte[] ivBytes = new byte[16];
         secureRandom.nextBytes(ivBytes);
@@ -57,7 +49,7 @@ public class Encrypt {
 
         String encryptedData =  Base64.getEncoder().encodeToString(encryptedBytes);
 
-        Cipher cipherRSA = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        Cipher cipherRSA = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding");
         cipherRSA.init(Cipher.ENCRYPT_MODE, publicKey);
         byte[] encryptedKeyBytes = cipherRSA.doFinal(keyBytes);
         String encryptedKey = Base64.getEncoder().encodeToString(encryptedKeyBytes);
@@ -70,6 +62,18 @@ public class Encrypt {
         jsonObject.put("encrypted_iv", encryptedIv);
 
         return jsonObject.toString();
+    }
+
+    public static byte[] encrypt(byte[] input, PublicKey publicKey) throws Exception {
+        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        return cipher.doFinal(input);
+    }
+
+    public static byte[] decrypt(byte[] input, PrivateKey privateKey) throws Exception {
+        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        return cipher.doFinal(input);
     }
 
 }
