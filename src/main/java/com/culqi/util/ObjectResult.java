@@ -2,9 +2,6 @@ package com.culqi.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
-
-import java.security.spec.ECField;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,26 +26,28 @@ public class ObjectResult {
         return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
     }
 
-    public Map<String, Object> createEncrypt(Map<String, Object> body, String url) throws Exception {
+    public Map<String, Object> create(Map<String, Object> body, String url, String rsaPublicKey, String rsaId ) throws Exception {
         String jsonData = mapper.writeValueAsString(body);
 
-        String publicKey = "-----BEGIN RSA PUBLIC KEY-----\n" +
-                "MIGJAoGBALKb1HSgZO0EPSZrZ2NqaI3oDG1I7S7xUk5h9Ey7WvjM3WtfqwmOeMfF\n" +
-                "xImHe75GO9lA5K+qj+EU6vrdNe5fQ0ZBvLbagccVSM9yqQ7Hq4vpCw6wQeR/Lf7w\n" +
-                "XZqZWLsZ7f4/C3T+Sw9CF/1Z+i1rE+hyLTUIg2ZI4nFISVz5UGsDAgMBAAE=\n" +
-                "-----END RSA PUBLIC KEY-----";
+        EncryptAESRSA encryptAESRSA = new EncryptAESRSA();        
+        jsonData = encryptAESRSA.getJsonEncryptAESRSA(jsonData, rsaPublicKey);
 
-        Encrypt encrypt = new Encrypt();
-        JSONObject jsonObj = new JSONObject(jsonData);
-
-
-        jsonData = String.valueOf(encrypt.getJsonEncryptAESRSA(jsonData, publicKey, true));
-        String response = new ResponseHelper().createEncrypt(url, jsonData);
+        String response = new ResponseHelper().create(url, jsonData, rsaId);
         return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
     }
 
     public Map<String, Object> update(Map<String, Object> body, String url, String id) throws Exception {
         String jsonData = mapper.writeValueAsString(body);
+        String response = new ResponseHelper().update(url, jsonData, id);
+        return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
+    }
+    
+    public Map<String, Object> update(Map<String, Object> body, String url, String id, String rsaPublicKey, String rsaId) throws Exception {
+        String jsonData = mapper.writeValueAsString(body);
+        
+        EncryptAESRSA encryptAESRSA = new EncryptAESRSA();        
+        jsonData = encryptAESRSA.getJsonEncryptAESRSA(jsonData, rsaPublicKey);
+        
         String response = new ResponseHelper().update(url, jsonData, id);
         return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
     }

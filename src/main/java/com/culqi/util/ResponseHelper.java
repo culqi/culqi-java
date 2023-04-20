@@ -89,7 +89,7 @@ public class ResponseHelper {
         return result;
     }
 
-    public String createEncrypt(String url, String jsonData) {
+    public String create(String url, String jsonData, String rsaId) {
         String result = "";
         try {
             String api_key = url.contains("tokens") ? Culqi.public_key : Culqi.secret_key;
@@ -98,7 +98,7 @@ public class ResponseHelper {
             Request request = new Request.Builder()
                     .url(base_url+url)
                     .header("Authorization","Bearer " + api_key)
-                    .header("x-culqi-rsa-id","5c8360d5-6aca-4961-9278-2ce9721d3536")
+                    .header("x-culqi-rsa-id", rsaId)
                     .post(body)
                     .build();
             Response response = client.newCall(request).execute();
@@ -116,6 +116,24 @@ public class ResponseHelper {
             Request request = new Request.Builder()
                     .url(config.API_BASE+url+id)
                     .header("Authorization","Bearer " + Culqi.secret_key)
+                    .patch(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            result = exceptionError();
+        }
+        return result;
+    }
+    
+    public String update(String url, String jsonData, String id,  String rsaId) {
+        String result = "";
+        try {
+            RequestBody body = RequestBody.create(JSON, jsonData);
+            Request request = new Request.Builder()
+                    .url(config.API_BASE+url+id)
+                    .header("Authorization","Bearer " + Culqi.secret_key)
+                    .header("x-culqi-rsa-id", rsaId)
                     .patch(body)
                     .build();
             Response response = client.newCall(request).execute();
