@@ -1,37 +1,54 @@
-import com.culqi.Culqi;
 import junit.framework.TestCase;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import java.util.HashMap;
-import java.util.Map;
 
-/**
- * Created by culqi on 13/02/17.
- */
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CulqiPatchTest extends TestCase {
 
-    public Culqi init() {
-        Culqi culqi = new Culqi();
-        culqi.public_key = "pk_test_vzMuTHoueOMlgUPj";
-        culqi.secret_key = "sk_test_UTCQSGcXW8bCyU59";
-        return culqi;
-    }
+	CulqiCRUD culqiCRUD = new CulqiCRUD();
 
-    protected Map<String, Object> updateplan() throws Exception {
-        Map<String, Object> plan = new HashMap<String, Object>();
-        Map<String, Object> metadata = new HashMap<String, Object>();
-        metadata.put("oder_id", "899");
-        plan.put("metadata", metadata);
-        return init().plan.update(plan, "pln_test_pLFzcWkwj33xFGF1");
-    }
 
-    @Test
-    public void test1UpdatePlan() throws Exception {
-        assertEquals("plan", updateplan().get("object").toString());
+	@Test
+    public void test01_updateToken() throws Exception {
+        assertEquals("token", culqiCRUD.updateToken().get("object").toString());
+    }
+	
+	@Test
+    public void test02_updateCharge() throws Exception {
+        assertEquals("charge", culqiCRUD.updateCharge().get("object").toString());
+    }
+	 
+	@Test
+    public void test03_updateRefund() throws Exception {
+        assertEquals("refund", culqiCRUD.updateCharge().get("object").toString());
+    }
+	
+	@Test
+    public void test04_updateCustomer() throws Exception {
+        assertEquals("customer", culqiCRUD.updateCustomer().get("object").toString());
+    }
+	
+	@Test
+    public void test05_updateCard() throws Exception {
+        assertEquals("card", culqiCRUD.updateCard().get("object").toString());
+    }
+	
+	@Test
+    public void test06_updatePlan() throws Exception {
+        assertEquals("plan", culqiCRUD.updatePlan().get("object").toString());
+    }
+	
+	@Test
+    public void test07_updateSubscription() throws Exception {
+        assertEquals("subscription", culqiCRUD.updateSubscription().get("object").toString());
+    }
+	
+	@Test
+    public void test08_updateOrder() throws Exception {
+        assertEquals("order", culqiCRUD.updateOrder().get("object").toString());
     }
 
 }
