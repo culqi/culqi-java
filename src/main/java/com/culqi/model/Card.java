@@ -6,7 +6,7 @@ package com.culqi.model;
  */
 public class Card extends Generic {
 
-    private static final String URL = "/cards";
+    private static final String URL = "/cards/";
     
     public Card() {
     	super(URL);

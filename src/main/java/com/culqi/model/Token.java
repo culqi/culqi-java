@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Token extends Generic {
 
-    private static final String URL = "/tokens";
+    private static final String URL = "/tokens/";
     private static final String URL_YAPE = "/tokens/yape";
     
     public Token() {
