@@ -3,10 +3,10 @@ import java.util.Map;
 import com.culqi.Culqi;
 
 public class CulqiCRUD {
-
+			
 	String rsaPublicKey = "INSERTE_SU_LLAVE_RSA";
 	
-	String rsaId = "INSERTE_SU_RSA_ID";
+	String rsaId = "INSERTE_SU_RSA_ID"; 
 	
 	JsonData jsondata = new JsonData();
 
@@ -27,7 +27,7 @@ public class CulqiCRUD {
         return init().token.update(jsondata.jsonUpdateToken(), id);
     }
 
-    protected Map<String, Object> tokenEncrypt() throws Exception {
+    protected Map<String, Object> createTokenEncrypt() throws Exception {
         return init().token.create(jsondata.jsonToken(), rsaPublicKey, rsaId);
     }
 
@@ -37,6 +37,10 @@ public class CulqiCRUD {
 
     protected Map<String, Object> createOrder(Boolean confirm) throws Exception {
         return init().order.create(jsondata.jsonOrder(confirm));
+    }
+    
+    protected Map<String, Object> createOrderEncrypt(Boolean confirm) throws Exception {
+        return init().order.create(jsondata.jsonOrder(confirm), rsaPublicKey, rsaId);
     }
     
     protected Map<String, Object> updateOrder() throws Exception {
@@ -52,6 +56,11 @@ public class CulqiCRUD {
     protected Map<String, Object> createCharge() throws Exception {
         String source_id = createToken().get("id").toString();
         return init().charge.create(jsondata.jsonCharge(source_id));
+    }
+    
+    protected Map<String, Object> createChargeEncrypt() throws Exception {
+    	String source_id = createToken().get("id").toString();
+        return init().charge.create(jsondata.jsonCharge(source_id), rsaPublicKey, rsaId);
     }
     
     protected Map<String, Object> updateCharge() throws Exception {
