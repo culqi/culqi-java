@@ -13,11 +13,11 @@ public class JsonData {
 		Map<String, Object> token = new HashMap<String, Object>();
 		Calendar date = new GregorianCalendar();
 		int year = date.get(Calendar.YEAR);
-		token.put("card_number", "4634030112546604");
-		token.put("cvv", "111");
-		token.put("email", "test@culqi.com");
-		token.put("expiration_month", 7);
-		token.put("expiration_year", year + 1);
+		token.put("card_number", "4111111111111111");
+		token.put("cvv", "123");
+		token.put("email", "prueba_paul@culqi.com");
+		token.put("expiration_month", "09");
+		token.put("expiration_year", "2025");
 		return token;
 	}
 	
@@ -53,7 +53,7 @@ public class JsonData {
 		metadata.put("dni", "70000000");
 		client_details.put("first_name", "prueba firstname");
 		client_details.put("last_name", "prueba lastname");
-		client_details.put("email", "prueba@gmail.com");
+		client_details.put("email", "prueba_paul2@gmail.com");
 		client_details.put("phone_number", "51945145222");
 		order.put("amount", 60000);
 		order.put("currency_code", CurrencyCode.PEN);
@@ -86,11 +86,11 @@ public class JsonData {
 		Map<String, Object> charge = new HashMap<String, Object>();
 		Map<String, Object> metadata = new HashMap<String, Object>();
 		metadata.put("oder_id", "1234");
-		charge.put("amount", 1000);
+		charge.put("amount", 300);
 		charge.put("capture", true);
 		charge.put("currency_code", CurrencyCode.PEN);
 		charge.put("description", "Venta de prueba");
-		charge.put("email", "test@culqi.com");
+		charge.put("email", "prueba45@culqi.com");
 		charge.put("installments", 0);
 		charge.put("metadata", metadata);
 		charge.put("source_id", source_id);

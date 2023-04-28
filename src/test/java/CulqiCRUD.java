@@ -3,22 +3,22 @@ import java.util.Map;
 import com.culqi.Culqi;
 
 public class CulqiCRUD {
-
+			
 	String rsaPublicKey = "-----BEGIN PUBLIC KEY-----\n"
-			+ "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDuCmwMoEzvBk++m4rZUlZL4pDD\n"
-			+ "W++NV1tSjAOJsRv5Ermg3/ygjINNhi1gfMbfSiWloc85tJBZhXzD7JpOd7JxOOg7\n"
-			+ "CicgbZKGF/sq2geoVw4+n4j4vUZx0+a1PgStwR+BeZn2I+eAn9xOrHJD6/baJqIO\n"
-			+ "/ifGJ1e5jHeQXIR4IwIDAQAB\n"
+			+ "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDADka0Pt4SuWlHRA6kcJIwDde\n"
+			+ "o67OYBEgQDEelmmixs9AlB/1bv446XOOE8eTJSridll2ZAn2nze7Gl2vQs0yW+4A\n"
+			+ "XmszJwugM0lxTDiPdTXdbrA4VXiXDG29VLQCAxt1+/c7bE84hMS6cymWgEjYoa6I\n"
+			+ "xX8u0ncLyiRUdZC2cwIDAQAB\n"
 			+ "-----END PUBLIC KEY-----";
 	
-	String rsaId = "30b83fd0-8709-4fe4-86c1-fef042c3c2c3";
+	String rsaId = "5243bad7-1d88-49c0-9699-f8ae156da58f"; 
 	
 	JsonData jsondata = new JsonData();
 
     public Culqi init() {
         Culqi culqi = new Culqi();
-        culqi.public_key = "pk_live_da33560a681ff246";
-        culqi.secret_key = "sk_live_93fd5e4babc0f7a6";
+        culqi.public_key = "pk_test_5b8339daffcda28d";
+        culqi.secret_key = "sk_test_81832c3e76540e75";
         return culqi;
     }
     
@@ -32,7 +32,7 @@ public class CulqiCRUD {
         return init().token.update(jsondata.jsonUpdateToken(), id);
     }
 
-    protected Map<String, Object> tokenEncrypt() throws Exception {
+    protected Map<String, Object> createTokenEncrypt() throws Exception {
         return init().token.create(jsondata.jsonToken(), rsaPublicKey, rsaId);
     }
 
@@ -42,6 +42,10 @@ public class CulqiCRUD {
 
     protected Map<String, Object> createOrder(Boolean confirm) throws Exception {
         return init().order.create(jsondata.jsonOrder(confirm));
+    }
+    
+    protected Map<String, Object> createOrderEncrypt(Boolean confirm) throws Exception {
+        return init().order.create(jsondata.jsonOrder(confirm), rsaPublicKey, rsaId);
     }
     
     protected Map<String, Object> updateOrder() throws Exception {
@@ -57,6 +61,11 @@ public class CulqiCRUD {
     protected Map<String, Object> createCharge() throws Exception {
         String source_id = createToken().get("id").toString();
         return init().charge.create(jsondata.jsonCharge(source_id));
+    }
+    
+    protected Map<String, Object> createChargeEncrypt() throws Exception {
+    	String source_id = createToken().get("id").toString();
+        return init().charge.create(jsondata.jsonCharge(source_id), rsaPublicKey, rsaId);
     }
     
     protected Map<String, Object> updateCharge() throws Exception {

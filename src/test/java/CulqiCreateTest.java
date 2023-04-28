@@ -18,7 +18,7 @@ public class CulqiCreateTest extends TestCase {
 
     @Test
     public void test02_createTokenEncrypt() throws Exception {
-        assertEquals("token", culqiCRUD.tokenEncrypt().get("object").toString());
+        assertEquals("token", culqiCRUD.createTokenEncrypt().get("object").toString());
     }
 
     @Test
@@ -29,6 +29,11 @@ public class CulqiCreateTest extends TestCase {
     @Test
     public void test04_createCharge() throws Exception {
         assertEquals("charge", culqiCRUD.createCharge().get("object").toString());
+    }
+    
+    @Test
+    public void test04_createChargeEncrypt() throws Exception {
+        assertEquals("charge", culqiCRUD.createChargeEncrypt().get("object").toString());
     }
 
 
@@ -61,6 +66,13 @@ public class CulqiCreateTest extends TestCase {
     @Test
     public void test10_createRefund() throws Exception {
         assertEquals("refund", culqiCRUD.createRefund().get("object").toString());
+    }
+    
+    @Test
+    public void test11_createOrderEncrypt() throws Exception {
+        Map<String, Object> order = culqiCRUD.createOrderEncrypt(false);
+        System.out.println(order);
+        assertEquals("order", order.get("object").toString());
     }
     
     @Test
