@@ -166,45 +166,4 @@ public class AESUtil {
     */
     ///
     
-   /*
-    
-    static String givenString_whenEncrypt_thenSuccess()
-            throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException,
-            BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException, UnsupportedEncodingException {
-            // given
-            String input = "{\n"
-            		+ "    \"card_number\": \"4280830037564013\",\n"
-            		+ "    \"cvv\": \"102\",\n"
-            		+ "    \"expiration_month\": \"04\",\n"
-            		+ "    \"expiration_year\": \"2024\",\n"
-            		+ "    \"email\": \"josecalderon@culqi.com\",\n"
-            		+ "    \"metadata\": {\n"
-            		+ "        \"coment\": \"Tarjeta de prueba jose\"\n"
-            		+ "    }\n"
-            		+ "}";
-            
-            SecretKey key = AESUtil.generateKey(256);
-            IvParameterSpec ivParameterSpec = AESUtil.generateIv();
-            
-
-            String cipherText = AESUtil.encryptCulqi(input, key, ivParameterSpec);
-            
-        	String publicKeyContent = "INSERTE_SU_LLAVE_RSA";
-        	
-            JSONObject jsonObject = new JSONObject();
-    
-    			
-			RSAUtil rsaUtil = new RSAUtil();
-
-			String encryptedKey = rsaUtil.encriptarByte(key.getEncoded(), publicKeyContent);
-			String encryptedIv = rsaUtil.encriptarByte(ivParameterSpec.getIV(), publicKeyContent);
-			
-			jsonObject.put("encrypted_data", cipherText);
-	        jsonObject.put("encrypted_key", encryptedKey);
-	        jsonObject.put("encrypted_iv", encryptedIv);
-   
-            return jsonObject.toString();
-
-        }
-    */
 }
