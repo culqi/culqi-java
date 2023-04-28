@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Charge extends Generic {
 
-    private static final String URL = "/charges";
+    private static final String URL = "/charges/";
     
     public Charge() {
     	super(URL);

@@ -6,24 +6,28 @@ import org.slf4j.LoggerFactory;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.MGF1ParameterSpec;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
+import javax.crypto.spec.OAEPParameterSpec;
+import javax.crypto.spec.PSource;
 
 public class RSAUtil {
 
 
 	private static final Logger logger = LoggerFactory.getLogger(RSAUtil.class);
 
-	
+	/*
 	public byte[] encriptar(String mensaje, String pubKey) {
 		 try {
 			 
-			 Cipher rsaCipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding");
+			 Cipher rsaCipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
 			 RSAKeysLoader rsaKeysLoader = new RSAKeysLoader();
 			 RSAPublicKey publicKeyRSA = rsaKeysLoader.getPublicKeyPKCS1Format(pubKey);
 
-			 rsaCipher.init(Cipher.ENCRYPT_MODE, publicKeyRSA);
+			 rsaCipher.init(Cipher.ENCRYPT_MODE, publicKeyRSA, new OAEPParameterSpec("SHA-256", "MGF1", new MGF1ParameterSpec("SHA-256"), PSource.PSpecified.DEFAULT));
+			 //rsaCipher.init(Cipher.ENCRYPT_MODE, publicKeyRSA);
 			 
 			 byte[] mensajeCifrado = rsaCipher.doFinal(mensaje.getBytes("UTF8"));
 			 return mensajeCifrado;
@@ -33,15 +37,16 @@ public class RSAUtil {
 		 }
 		 return null;
 	}
-	
+	*/
 	public String encriptarByte(byte[] mensaje, String pubKey) {
 		 try {
 			 
-			 Cipher rsaCipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-1AndMGF1Padding");
+			 Cipher rsaCipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
 			 RSAKeysLoader rsaKeysLoader = new RSAKeysLoader();
 			 RSAPublicKey publicKeyRSA = rsaKeysLoader.getPublicKeyPKCS1Format(pubKey);
 
-			 rsaCipher.init(Cipher.ENCRYPT_MODE, publicKeyRSA);
+			 rsaCipher.init(Cipher.ENCRYPT_MODE, publicKeyRSA, new OAEPParameterSpec("SHA-256", "MGF1", new MGF1ParameterSpec("SHA-256"), PSource.PSpecified.DEFAULT));
+			 //rsaCipher.init(Cipher.ENCRYPT_MODE, publicKeyRSA);
 			 
 			 byte[] mensajeCifrado = rsaCipher.doFinal(mensaje);
 			 String mensajeCifrado64 = Base64.getEncoder().encodeToString(mensajeCifrado);
