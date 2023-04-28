@@ -2,7 +2,6 @@ package com.culqi.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,8 +26,28 @@ public class ObjectResult {
         return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
     }
 
+    public Map<String, Object> create(Map<String, Object> body, String url, String rsaPublicKey, String rsaId ) throws Exception {
+        String jsonData = mapper.writeValueAsString(body);
+
+        EncryptAESRSA encryptAESRSA = new EncryptAESRSA();        
+        jsonData = encryptAESRSA.getJsonEncryptAESRSA(jsonData, rsaPublicKey);
+
+        String response = new ResponseHelper().create(url, jsonData, rsaId);
+        return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
+    }
+
     public Map<String, Object> update(Map<String, Object> body, String url, String id) throws Exception {
         String jsonData = mapper.writeValueAsString(body);
+        String response = new ResponseHelper().update(url, jsonData, id);
+        return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
+    }
+    
+    public Map<String, Object> update(Map<String, Object> body, String url, String id, String rsaPublicKey, String rsaId) throws Exception {
+        String jsonData = mapper.writeValueAsString(body);
+        
+        EncryptAESRSA encryptAESRSA = new EncryptAESRSA();        
+        jsonData = encryptAESRSA.getJsonEncryptAESRSA(jsonData, rsaPublicKey);
+        
         String response = new ResponseHelper().update(url, jsonData, id);
         return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
     }

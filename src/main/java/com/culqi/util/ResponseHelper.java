@@ -4,11 +4,9 @@ import com.culqi.Culqi;
 import com.culqi.model.Config;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import okhttp3.*;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -89,6 +87,26 @@ public class ResponseHelper {
         return result;
     }
 
+    public String create(String url, String jsonData, String rsaId) {
+        String result = "";
+        try {
+            String api_key = url.contains("tokens") ? Culqi.public_key : Culqi.secret_key;
+            String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
+            RequestBody body = RequestBody.create(JSON, jsonData);
+            Request request = new Request.Builder()
+                    .url(base_url+url)
+                    .header("Authorization","Bearer " + api_key)
+                    .header("x-culqi-rsa-id", rsaId)
+                    .post(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            result = exceptionError();
+        }
+        return result;
+    }
+
     public String update(String url, String jsonData, String id) {
         String result = "";
         try {
@@ -96,6 +114,24 @@ public class ResponseHelper {
             Request request = new Request.Builder()
                     .url(config.API_BASE+url+id)
                     .header("Authorization","Bearer " + Culqi.secret_key)
+                    .patch(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            result = exceptionError();
+        }
+        return result;
+    }
+    
+    public String update(String url, String jsonData, String id,  String rsaId) {
+        String result = "";
+        try {
+            RequestBody body = RequestBody.create(JSON, jsonData);
+            Request request = new Request.Builder()
+                    .url(config.API_BASE+url+id)
+                    .header("Authorization","Bearer " + Culqi.secret_key)
+                    .header("x-culqi-rsa-id", rsaId)
                     .patch(body)
                     .build();
             Response response = client.newCall(request).execute();

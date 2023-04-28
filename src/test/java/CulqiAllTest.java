@@ -1,143 +1,74 @@
-import com.culqi.Culqi;
-import com.culqi.util.CurrencyCode;
-import com.culqi.util.Reason;
 import junit.framework.TestCase;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by culqi on 24/02/17.
- */
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CulqiAllTest extends TestCase {
 
-    public Culqi init() {
-        Culqi culqi = new Culqi();
-        culqi.secret_key = "sk_test_1573b0e8079863ff";
-        return culqi;
-    }
-
-    protected Map<String, Object> tokens() throws Exception {
-        Map<String, Object> token = new HashMap<String, Object>();
-        token.put("bin", "411111");
-        return init().token.list(token);
-    }
-
-    protected Map<String, Object> orders() throws Exception {
-        return init().order.list();
-    }
-
-    protected Map<String, Object> charges() throws Exception {
-        Map<String, Object> charge = new HashMap<String, Object>();
-        charge.put("currency_code", CurrencyCode.PEN);
-        charge.put("limit",1);
-        return init().charge.list(charge);
-    }
-
-    protected Map<String, Object> plans() throws Exception {
-        Map<String, Object> plan = new HashMap<String, Object>();
-        plan.put("min_amount", 500);
-        plan.put("max_amount", 900);
-        return init().plan.list();
-    }
-
-    protected Map<String, Object> customers() throws Exception {
-        Map<String, Object> customer = new HashMap<String, Object>();
-        customer.put("country_code", "PE");
-        return init().customer.list(customer);
-    }
-
-    protected Map<String, Object> cards() throws Exception {
-        Map<String, Object> card = new HashMap<String, Object>();
-        card.put("bin", "411111");
-        return init().card.list(card);
-    }
-
-    protected Map<String, Object> subscriptions() throws Exception {
-        Map<String, Object> subscription = new HashMap<String, Object>();
-        subscription.put("min_amount", 500);
-        subscription.put("max_amount", 900);
-        return init().subscription.list(subscription);
-    }
-
-    protected Map<String, Object> refunds() throws Exception {
-        Map<String, Object> refund = new HashMap<String, Object>();
-        refund.put("reason", Reason.solicitud_comprador);
-        return init().refund.list(refund);
-    }
-
-    protected Map<String, Object> events() throws Exception {
-        return init().event.list();
-    }
-
-    protected Map<String, Object> transfers() throws Exception {
-        return init().transfer.list();
-    }
+	CulqiCRUD culqiCRUD = new CulqiCRUD();
 
     @Test
-    public void test1AllTokens() throws Exception {
-        List<Map<String, Object>> data = (List<Map<String, Object>>) tokens().get("data");
+    public void test01_allTokens() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String, Object>>) culqiCRUD.tokens().get("data");
         assert(data.size() >= 0);
     }
 
     @Test
-    public void test1AllOrders() throws Exception {
-        System.out.println(orders());
-        List<Map<String, Object>> data = (List<Map<String, Object>>) orders().get("data");
+    public void test02_allOrders() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String, Object>>) culqiCRUD.orders().get("data");
         assert (data.size() >= 0);
     }
     
     @Test
-    public void test2AllCharge() throws Exception {
-        List<Map<String, Object>> data = (List<Map<String,Object>>) charges().get("data");
+    public void test03_allCharge() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String,Object>>) culqiCRUD.charges().get("data");
         assert(data.size() >= 0);
     }
 
     @Test
-    public void test3AllPlan() throws Exception {
-        List<Map<String, Object>> data = (List<Map<String,Object>>) plans().get("data");
+    public void test04_allPlan() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String,Object>>) culqiCRUD.plans().get("data");
         assert(data.size() >= 0);
     }
 
     @Test
-    public void test4AllCustomers() throws Exception {
-        List<Map<String, Object>> data = (List<Map<String,Object>>) customers().get("data");
+    public void test05_allCustomers() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String,Object>>) culqiCRUD.customers().get("data");
         assert(data.size() >= 0);
     }
 
     @Test
-    public void test5AllCards() throws Exception {
-        List<Map<String, Object>> data = (List<Map<String,Object>>) cards().get("data");
+    public void test05_allCards() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String,Object>>) culqiCRUD.cards().get("data");
         assert(data.size() >= 0);
     }
 
     @Test
-    public void test5AllSubscriptions() throws Exception {
-        List<Map<String, Object>> data = (List<Map<String,Object>>) subscriptions().get("data");
+    public void test06_allSubscriptions() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String,Object>>) culqiCRUD.subscriptions().get("data");
         assert(data.size() >= 0);
     }
 
     @Test
-    public void test6AllRefunds() throws Exception {
-        List<Map<String, Object>> data = (List<Map<String,Object>>) refunds().get("data");
+    public void test07_allRefunds() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String,Object>>) culqiCRUD.refunds().get("data");
         assert(data.size() >= 0);
     }
 
     @Test
-    public void test7AllEvents() throws Exception {
-        List<Map<String, Object>> data = (List<Map<String,Object>>) events().get("data");
+    public void test08_allEvents() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String,Object>>) culqiCRUD.events().get("data");
         assert(data.size() >= 0);
     }
 
     @Test
-    public void test7AllTransfers() throws Exception {
-        List<Map<String, Object>> data = (List<Map<String,Object>>) transfers().get("data");
+    public void test09_allTransfers() throws Exception {
+        List<Map<String, Object>> data = (List<Map<String,Object>>) culqiCRUD.transfers().get("data");
         assert(data.size() >= 0);
     }
 
