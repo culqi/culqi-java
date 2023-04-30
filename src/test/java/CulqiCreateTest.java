@@ -77,7 +77,7 @@ public class CulqiCreateTest extends TestCase {
     
     @Test
     public void test11_createOrder() throws Exception {
-        Map<String, Object> order = culqiCRUD.createOrder(true);
+        Map<String, Object> order = culqiCRUD.createOrder(false);
         System.out.println(order);
         assertEquals("order", order.get("object").toString());
     }
