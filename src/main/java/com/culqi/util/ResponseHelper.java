@@ -71,7 +71,7 @@ public class ResponseHelper {
     public String create(String url, String jsonData) {
         String result = "";
         try {
-            String api_key = url.contains("tokens") ? Culqi.public_key : Culqi.secret_key;
+            String api_key = url.contains("tokens") ||  url.contains("confirm") ? Culqi.public_key : Culqi.secret_key;
             String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
             RequestBody body = RequestBody.create(JSON, jsonData);
             Request request = new Request.Builder()
@@ -90,7 +90,7 @@ public class ResponseHelper {
     public String create(String url, String jsonData, String rsaId) {
         String result = "";
         try {
-            String api_key = url.contains("tokens") ? Culqi.public_key : Culqi.secret_key;
+            String api_key = url.contains("tokens") ||  url.contains("confirm") ? Culqi.public_key : Culqi.secret_key;
             String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
             RequestBody body = RequestBody.create(JSON, jsonData);
             Request request = new Request.Builder()
