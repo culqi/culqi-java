@@ -185,7 +185,7 @@ public class JsonData {
 
 	protected Map<String, Object> jsonRefund(String chargeId) throws Exception {
 		Map<String, Object> refund = new HashMap<String, Object>();
-		refund.put("amount", 500);
+		refund.put("amount", 300);
 		refund.put("charge_id", chargeId);
 		refund.put("reason", Reason.solicitud_comprador);
 		return refund;
