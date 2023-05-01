@@ -45,7 +45,7 @@ public class CulqiCRUD {
     
     protected Map<String, Object> updateOrder() throws Exception {
         String id = createOrder(true).get("id").toString();
-        return init().token.update(jsondata.jsonUpdateOrder(), id);
+        return init().order.update(jsondata.jsonUpdateOrder(), id);
     }
 
     protected Map<String, Object> confirmOrderType() throws Exception {
