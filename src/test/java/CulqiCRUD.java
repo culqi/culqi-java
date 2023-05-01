@@ -17,8 +17,8 @@ public class CulqiCRUD {
 
     public Culqi init() {
         Culqi culqi = new Culqi();
-        culqi.public_key = "pk_test_5b8339daffcda28d";
-        culqi.secret_key = "sk_test_81832c3e76540e75";
+        culqi.public_key = "pk_test_387cc0e60fa9f7d4";
+        culqi.secret_key = "sk_test_ff27818fc60ff66a";
         return culqi;
     }
     
@@ -50,7 +50,7 @@ public class CulqiCRUD {
     
     protected Map<String, Object> updateOrder() throws Exception {
         String id = createOrder(true).get("id").toString();
-        return init().token.update(jsondata.jsonUpdateOrder(), id);
+        return init().order.update(jsondata.jsonUpdateOrder(), id);
     }
 
     protected Map<String, Object> confirmOrderType() throws Exception {
