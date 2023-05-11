@@ -23,6 +23,7 @@ public class ObjectResult {
     public Map<String, Object> create(Map<String, Object> body, String url) throws Exception {
         String jsonData = mapper.writeValueAsString(body);
         String response = new ResponseHelper().create(url, jsonData);
+        System.out.println("response: " + response);
         return mapper.readValue(response, new TypeReference<HashMap<String, Object>>(){});
     }
 

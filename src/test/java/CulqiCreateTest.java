@@ -13,6 +13,7 @@ public class CulqiCreateTest extends TestCase {
 	
     @Test
     public void test01_createToken() throws Exception {
+        culqiCRUD.createToken().get("object").toString();
         assertEquals("token", culqiCRUD.createToken().get("object").toString());
     }
 

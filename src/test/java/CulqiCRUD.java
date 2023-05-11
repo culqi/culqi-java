@@ -17,8 +17,8 @@ public class CulqiCRUD {
 
     public Culqi init() {
         Culqi culqi = new Culqi();
-        culqi.public_key = "pk_test_387cc0e60fa9f7d4";
-        culqi.secret_key = "sk_test_ff27818fc60ff66a";
+        culqi.public_key = "pk_live_da33560a681ff246";
+        culqi.secret_key = "sk_live_34a07dcb6d4c7e39";
         return culqi;
     }
     

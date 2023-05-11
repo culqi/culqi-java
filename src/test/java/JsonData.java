@@ -13,11 +13,11 @@ public class JsonData {
 		Map<String, Object> token = new HashMap<String, Object>();
 		Calendar date = new GregorianCalendar();
 		int year = date.get(Calendar.YEAR);
-		token.put("card_number", "4111111111111111");
+		token.put("card_number", "4557880621568322");
 		token.put("cvv", "123");
 		token.put("email", "prueba_paul@culqi.com");
-		token.put("expiration_month", "09");
-		token.put("expiration_year", "2025");
+		token.put("expiration_month", "11");
+		token.put("expiration_year", "2026");
 		return token;
 	}
 	
