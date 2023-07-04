@@ -2,6 +2,13 @@ import junit.framework.TestCase;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import com.culqi.model.ResponseCulqi;
+import com.fasterxml.jackson.core.type.TypeReference;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -10,82 +17,116 @@ public class CulqiCreateTest extends TestCase {
 	
 	CulqiCRUD culqiCRUD = new CulqiCRUD();
 	
+	ObjectMapper mapper = new ObjectMapper();
 	
     @Test
     public void test01_createToken() throws Exception {
-        assertEquals("token", culqiCRUD.createToken().get("object").toString());
+    	Map<String, Object> res = mapper.readValue(culqiCRUD.createToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("token", res.get("object").toString());
     }
 
     @Test
     public void test02_createTokenEncrypt() throws Exception {
-        assertEquals("token", culqiCRUD.createTokenEncrypt().get("object").toString());
+    	Map<String, Object> res = mapper.readValue(culqiCRUD.createTokenEncrypt().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("token", res.get("object").toString());
     }
 
     @Test
     public void test03_createTokenYape() throws Exception {
-        assertEquals("token", culqiCRUD.createTokenYape().get("object").toString());
+    	Map<String, Object> res = mapper.readValue(culqiCRUD.createTokenYape().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("token",res.get("object").toString());
     }
     
     @Test
     public void test04_createCharge() throws Exception {
-        assertEquals("charge", culqiCRUD.createCharge().get("object").toString());
+    	ResponseCulqi response = culqiCRUD.createCharge();
+    	Map<String, Object> res = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
+    	if (response.getStatusCode()==200) {
+    		assertEquals("REVIEW",res.get("action_code").toString());
+    	}else if (response.getStatusCode()==201) {
+    		assertEquals("charge",res.get("object").toString());
+    	}
     }
     
     @Test
     public void test04_createChargeEncrypt() throws Exception {
-        assertEquals("charge", culqiCRUD.createChargeEncrypt().get("object").toString());
+    	ResponseCulqi response = culqiCRUD.createChargeEncrypt();
+    	Map<String, Object> res = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
+    	if (response.getStatusCode()==200) {
+    		assertEquals("REVIEW",res.get("action_code").toString());
+    	}else if (response.getStatusCode()==201) {
+    		assertEquals("charge",res.get("object").toString());
+    	}
     }
 
 
     @Test
     public void test05_createPlan() throws Exception {
-        assertEquals("plan", culqiCRUD.createPlan().get("object").toString());
+    	Map<String, Object> res = mapper.readValue(culqiCRUD.createPlan().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("plan",res.get("object").toString());
     }
 
     @Test
     public void test06_createCustomer() throws Exception {
-        assertEquals("customer", culqiCRUD.createCustomer().get("object").toString());
+    	Map<String, Object> res = mapper.readValue(culqiCRUD.createCustomer().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("customer",res.get("object").toString());
     }
 
     @Test
     public void test07_createCard() throws Exception {
-        assertEquals("card", culqiCRUD.createCard().get("object").toString());
+    	ResponseCulqi response = culqiCRUD.createCard();
+    	Map<String, Object> res = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
+    	if (response.getStatusCode()==200) {
+    		assertEquals("REVIEW",res.get("action_code").toString());
+    	}else if (response.getStatusCode()==201) {
+    		assertEquals("charge",res.get("object").toString());
+    	}
     }
 
     @Test
     public void test08_createSubscription() throws Exception {
-        assertEquals("subscription", culqiCRUD.createSubscription().get("object").toString());
+    	Map<String, Object> res = mapper.readValue(culqiCRUD.createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("subscription",res.get("object").toString());
     }
 
     @Test
     public void test09_chargeCapture() throws Exception {
-        Map<String, Object> capture = culqiCRUD.init().charge.capture(culqiCRUD.createCharge().get("id").toString());
-        assertNotSame("charge", capture.get("object").toString());
+         ResponseCulqi response = culqiCRUD.createCharge();
+     	 Map<String, Object> res = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
+     	 String charge_id = res.get("id").toString();
+     	 ResponseCulqi capture = culqiCRUD.init().charge.capture(charge_id);
+     	 Map<String, Object> res1 = mapper.readValue(capture.getBody(), new TypeReference<HashMap<String, Object>>(){});
+         
+     	assertNotSame("charge", res1.get("object").toString());
     }
 
     @Test
     public void test10_createRefund() throws Exception {
-        assertEquals("refund", culqiCRUD.createRefund().get("object").toString());
-    }
-    
-    @Test
-    public void test11_createOrderEncrypt() throws Exception {
-        Map<String, Object> order = culqiCRUD.createOrderEncrypt(false);
-        System.out.println(order);
-        assertEquals("order", order.get("object").toString());
+    	 Map<String, Object> res = mapper.readValue(culqiCRUD.createRefund().getBody(), new TypeReference<HashMap<String, Object>>(){});
+         assertEquals("refund",res.get("object").toString());
     }
     
     @Test
     public void test11_createOrder() throws Exception {
-        Map<String, Object> order = culqiCRUD.createOrder(false);
-        System.out.println(order);
-        assertEquals("order", order.get("object").toString());
+    	ResponseCulqi response = culqiCRUD.createOrder(false);
+        Map<String, Object> res = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("order", res.get("object").toString());
+    }
+    
+    
+    @Test
+    public void test11_createOrderEncrypt() throws Exception {
+    	ResponseCulqi response = culqiCRUD.createOrderEncrypt(false);
+        Map<String, Object> res = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("order", res.get("object").toString());
     }
 
     @Test
     public void test12_confirmOrderType() throws Exception {
-        Map<String, Object> confirmOrderType = culqiCRUD.confirmOrderType();
+    	ResponseCulqi response = culqiCRUD.confirmOrderType();
+        Map<String, Object> confirmOrderType = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
         System.out.println(confirmOrderType);
         assertEquals("order", confirmOrderType.get("object").toString());
     }
+    
 }

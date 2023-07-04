@@ -1,11 +1,12 @@
-package com.culqi.model;
+package com.culqi.apioperation.service;
 
 import java.util.Map;
 
 import com.culqi.apioperation.All;
 import com.culqi.apioperation.Create;
 import com.culqi.apioperation.Find;
-import com.culqi.util.ObjectResult;
+import com.culqi.apioperation.ObjectResult;
+import com.culqi.model.ResponseCulqi;
 
 public class Generic implements All, Create, Find {
 
@@ -15,36 +16,36 @@ public class Generic implements All, Create, Find {
     	this.URL = url;
     }
 
-    public Map<String, Object> list(Map<String, Object> params) throws Exception {
+    public ResponseCulqi list(Map<String, Object> params) throws Exception {
         params = (params == null || params.size() == 0) ? null : params;
         return new ObjectResult().list(this.URL.replace("/",""), params);
     }
 
-    public Map<String, Object> list() throws Exception {
+    public ResponseCulqi list() throws Exception {
         return new ObjectResult().list(this.URL.replace("/",""), null);
     }
 
-    public Map<String, Object> create(Map<String, Object> body) throws Exception {
+    public ResponseCulqi create(Map<String, Object> body) throws Exception {
         return new ObjectResult().create(body, this.URL);
     }
 
-    public Map<String, Object> create(Map<String, Object> body, String rsaPublicKey, String rsaId) throws Exception {
+    public ResponseCulqi create(Map<String, Object> body, String rsaPublicKey, String rsaId) throws Exception {
         return new ObjectResult().create(body, this.URL, rsaPublicKey, rsaId);
     }
 
-    public Map<String, Object> get(String id) throws Exception {
+    public ResponseCulqi get(String id) throws Exception {
         return new ObjectResult().get_or_delete(this.URL, id, false);
     }
     
-    public Map<String, Object> update(Map<String, Object> body, String id) throws Exception {
+    public ResponseCulqi update(Map<String, Object> body, String id) throws Exception {
         return new ObjectResult().update(body, this.URL, id);
     }
     
-    public Map<String, Object> update(Map<String, Object> body, String id, String rsaPublicKey, String rsaId) throws Exception {
+    public ResponseCulqi update(Map<String, Object> body, String id, String rsaPublicKey, String rsaId) throws Exception {
         return new ObjectResult().update(body, this.URL, id, rsaPublicKey, rsaId);
     }
     
-    public Map<String, Object> delete(String id) throws Exception {
+    public ResponseCulqi delete(String id) throws Exception {
         return new ObjectResult().get_or_delete(this.URL, id, true);
     }
 

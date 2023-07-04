@@ -1,8 +1,9 @@
-package com.culqi.model;
-
-import com.culqi.util.ObjectResult;
+package com.culqi.apioperation.service;
 
 import java.util.Map;
+
+import com.culqi.apioperation.ObjectResult;
+import com.culqi.model.ResponseCulqi;
 
 /**
  * Created by culqi on 12/22/16.
@@ -16,11 +17,11 @@ public class Order extends Generic {
     	super(URL);
     }
 
-    public Map<String, Object> confirm(String id) throws Exception {
+    public ResponseCulqi confirm(String id) throws Exception {
         return new ObjectResult().confirm(this.URL, id);
     }
 
-    public Map<String, Object> confirm_order_type(Map<String, Object> body) throws Exception {
+    public ResponseCulqi confirm_order_type(Map<String, Object> body) throws Exception {
         return new ObjectResult().create(body, this.URL+"confirm");
     }
 

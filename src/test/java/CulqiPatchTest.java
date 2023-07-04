@@ -1,7 +1,14 @@
 import junit.framework.TestCase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
@@ -9,46 +16,54 @@ import org.junit.runners.MethodSorters;
 public class CulqiPatchTest extends TestCase {
 
 	CulqiCRUD culqiCRUD = new CulqiCRUD();
-
+	ObjectMapper mapper = new ObjectMapper();
 
 	@Test
     public void test01_updateToken() throws Exception {
-        assertEquals("token", culqiCRUD.updateToken().get("object").toString());
+		Map<String, Object> res = mapper.readValue(culqiCRUD.updateToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("token",  res.get("object").toString());
     }
 	
 	@Test
     public void test02_updateCharge() throws Exception {
-        assertEquals("charge", culqiCRUD.updateCharge().get("object").toString());
+		Map<String, Object> res = mapper.readValue(culqiCRUD.updateCharge().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("charge", res.get("object").toString());
     }
 	 
 	@Test
     public void test03_updateRefund() throws Exception {
-        assertEquals("refund", culqiCRUD.updateCharge().get("object").toString());
+		Map<String, Object> res = mapper.readValue(culqiCRUD.updateRefund().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("refund", res.get("object").toString());
     }
 	
 	@Test
     public void test04_updateCustomer() throws Exception {
-        assertEquals("customer", culqiCRUD.updateCustomer().get("object").toString());
+		Map<String, Object> res = mapper.readValue(culqiCRUD.updateCustomer().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("customer", res.get("object").toString());
     }
 	
 	@Test
     public void test05_updateCard() throws Exception {
-        assertEquals("card", culqiCRUD.updateCard().get("object").toString());
+		Map<String, Object> res = mapper.readValue(culqiCRUD.updateCard().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("card", res.get("object").toString());
     }
 	
 	@Test
     public void test06_updatePlan() throws Exception {
-        assertEquals("plan", culqiCRUD.updatePlan().get("object").toString());
+		Map<String, Object> res = mapper.readValue(culqiCRUD.updatePlan().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("plan", res.get("object").toString());
     }
 	
 	@Test
     public void test07_updateSubscription() throws Exception {
-        assertEquals("subscription", culqiCRUD.updateSubscription().get("object").toString());
+		Map<String, Object> res = mapper.readValue(culqiCRUD.updateSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("subscription", res.get("object").toString());
     }
 	
 	@Test
     public void test08_updateOrder() throws Exception {
-        assertEquals("order", culqiCRUD.updateOrder().get("object").toString());
+		Map<String, Object> res = mapper.readValue(culqiCRUD.updateOrder().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("order", res.get("object").toString());
     }
 
 }

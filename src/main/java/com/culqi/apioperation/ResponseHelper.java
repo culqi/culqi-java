@@ -1,7 +1,8 @@
-package com.culqi.util;
+package com.culqi.apioperation;
 
 import com.culqi.Culqi;
 import com.culqi.model.Config;
+import com.culqi.model.ResponseCulqi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
@@ -18,6 +19,7 @@ public class ResponseHelper {
 
     public ResponseHelper(){}
 
+    private static int GENERIC_ERROR = 502;
     Config config = new Config();
 
     OkHttpClient client = new OkHttpClient.Builder().connectTimeout(180, TimeUnit.SECONDS)
@@ -25,20 +27,14 @@ public class ResponseHelper {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    public String list(String url, String params) {
-
+    public ResponseCulqi list(String url, String params) {
         String result = "";
 
         try {
-
             HttpUrl.Builder builder = new HttpUrl.Builder();
-
             builder.scheme("https").host(Config.DOMAIN).addPathSegment("v2").addPathSegment(url);
-
             if (params != null) {
-
                 HashMap<String, Object> map = new HashMap<String, Object>();
-
                 String[] pairs = params.replace("{", "").replace("}", "").split(",");
 
                 for (int i = 0; i < pairs.length; i++) {
@@ -50,7 +46,6 @@ public class ResponseHelper {
                 for (Map.Entry<String, Object> entry : map.entrySet()) {
                     builder.addQueryParameter(entry.getKey(), entry.getValue().toString());
                 }
-
             }
 
             HttpUrl urlquery = builder.build();
@@ -60,15 +55,15 @@ public class ResponseHelper {
                     .build();
 
             Response response = client.newCall(request).execute();
-            return response.body().string();
-
+            
+            return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
             result = exceptionError();
         }
-        return result;
+        return responseCulqi(GENERIC_ERROR, result);
     }
 
-    public String create(String url, String jsonData) {
+    public ResponseCulqi create(String url, String jsonData) {System.out.println("jsonData "+jsonData);
         String result = "";
         try {
             String api_key = url.contains("tokens") ||  url.contains("confirm") ? Culqi.public_key : Culqi.secret_key;
@@ -80,14 +75,14 @@ public class ResponseHelper {
                     .post(body)
                     .build();
             Response response = client.newCall(request).execute();
-            return response.body().string();
+            return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
             result = exceptionError();
         }
-        return result;
+        return responseCulqi(GENERIC_ERROR, result);
     }
 
-    public String create(String url, String jsonData, String rsaId) {
+    public ResponseCulqi create(String url, String jsonData, String rsaId) {
         String result = "";
         try {
             String api_key = url.contains("tokens") ||  url.contains("confirm") ? Culqi.public_key : Culqi.secret_key;
@@ -100,16 +95,16 @@ public class ResponseHelper {
                     .post(body)
                     .build();
             Response response = client.newCall(request).execute();
-            return response.body().string();
+            return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
             result = exceptionError();
         }
-        return result;
+        return responseCulqi(GENERIC_ERROR, result);
     }
 
-    public String update(String url, String jsonData, String id) {
+    public ResponseCulqi update(String url, String jsonData, String id) {
         String result = "";
-        try {
+        try {System.out.println(config.API_BASE+url+id);
             RequestBody body = RequestBody.create(JSON, jsonData);
             Request request = new Request.Builder()
                     .url(config.API_BASE+url+id)
@@ -117,14 +112,14 @@ public class ResponseHelper {
                     .patch(body)
                     .build();
             Response response = client.newCall(request).execute();
-            return response.body().string();
+            return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
             result = exceptionError();
         }
-        return result;
+        return responseCulqi(GENERIC_ERROR, result);
     }
     
-    public String update(String url, String jsonData, String id,  String rsaId) {
+    public ResponseCulqi update(String url, String jsonData, String id,  String rsaId) {
         String result = "";
         try {
             RequestBody body = RequestBody.create(JSON, jsonData);
@@ -135,14 +130,14 @@ public class ResponseHelper {
                     .patch(body)
                     .build();
             Response response = client.newCall(request).execute();
-            return response.body().string();
+            return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
             result = exceptionError();
         }
-        return result;
+        return responseCulqi(GENERIC_ERROR, result);
     }
 
-    public String get_or_delete(String url, String id, boolean delete) {
+    public ResponseCulqi get_or_delete(String url, String id, boolean delete) {
         String result = "";
         try {
             Request.Builder builder = new Request.Builder();
@@ -154,14 +149,14 @@ public class ResponseHelper {
             }
             Request request = builder.build();
             Response response = client.newCall(request).execute();
-            return response.body().string();
+            return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
             result = exceptionError();
         }
-        return result;
+        return responseCulqi(GENERIC_ERROR, result);
     }
 
-    public String capture(String url, String id) throws Exception {
+    public ResponseCulqi capture(String url, String id) throws Exception {
         String result = "";
         try {
             RequestBody body = RequestBody.create(JSON, "");
@@ -171,14 +166,14 @@ public class ResponseHelper {
             builder.post(body);
             Request request = builder.build();
             Response response = client.newCall(request).execute();
-            return response.body().string();
+            return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
             result = exceptionError();
         }
-        return result;
+        return responseCulqi(GENERIC_ERROR, result);
     }
     
-    public String confirm(String url, String id) throws Exception {
+    public ResponseCulqi confirm(String url, String id) throws Exception {
         String result = "";
         try {
             RequestBody body = RequestBody.create(JSON, "");
@@ -188,11 +183,11 @@ public class ResponseHelper {
             builder.post(body);
             Request request = builder.build();
             Response response = client.newCall(request).execute();
-            return response.body().string();
+            return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
             result = exceptionError();
         }
-        return result;
+        return responseCulqi(GENERIC_ERROR, result);
     }
 
     private String exceptionError() {
@@ -212,6 +207,14 @@ public class ResponseHelper {
 
         }
         return result;
+    }
+    
+    private ResponseCulqi responseCulqi(int statusCode, String body) {
+    	ResponseCulqi res = new ResponseCulqi();
+    	res.setStatusCode(statusCode);
+        res.setBody(body);
+        System.out.println(res);
+        return res;
     }
 
 }

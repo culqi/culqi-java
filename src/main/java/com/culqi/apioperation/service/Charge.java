@@ -1,8 +1,7 @@
-package com.culqi.model;
+package com.culqi.apioperation.service;
 
-import com.culqi.util.ObjectResult;
-
-import java.util.Map;
+import com.culqi.apioperation.ObjectResult;
+import com.culqi.model.ResponseCulqi;
 
 /**
  * Created by culqi on 12/22/16.
@@ -16,7 +15,7 @@ public class Charge extends Generic {
     	super(URL);
     }
 
-    public Map<String, Object> capture(String id) throws Exception {
+    public ResponseCulqi capture(String id) throws Exception {
         return new ObjectResult().capture(this.URL, id);
     }
 
