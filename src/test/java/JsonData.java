@@ -87,7 +87,7 @@ public class JsonData {
 		Map<String, Object> metadata = new HashMap<String, Object>();
 		metadata.put("oder_id", "1234");
 		charge.put("amount", 300);
-		charge.put("capture", true);
+		charge.put("capture", false);
 		charge.put("currency_code", CurrencyCode.PEN);
 		charge.put("description", "Venta de prueba");
 		charge.put("email", "prueba45@culqi.com");

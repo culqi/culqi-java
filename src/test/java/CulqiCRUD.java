@@ -1,167 +1,189 @@
+import java.util.HashMap;
 import java.util.Map;
 
 import com.culqi.Culqi;
+import com.culqi.model.ResponseCulqi;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CulqiCRUD {
 			
 	String rsaPublicKey = "-----BEGIN PUBLIC KEY-----\n"
-			+ "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDADka0Pt4SuWlHRA6kcJIwDde\n"
-			+ "o67OYBEgQDEelmmixs9AlB/1bv446XOOE8eTJSridll2ZAn2nze7Gl2vQs0yW+4A\n"
-			+ "XmszJwugM0lxTDiPdTXdbrA4VXiXDG29VLQCAxt1+/c7bE84hMS6cymWgEjYoa6I\n"
-			+ "xX8u0ncLyiRUdZC2cwIDAQAB\n"
+			+ "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDuCmwMoEzvBk++m4rZUlZL4pDD\n"
+			+ "W++NV1tSjAOJsRv5Ermg3/ygjINNhi1gfMbfSiWloc85tJBZhXzD7JpOd7JxOOg7\n"
+			+ "CicgbZKGF/sq2geoVw4+n4j4vUZx0+a1PgStwR+BeZn2I+eAn9xOrHJD6/baJqIO\n"
+			+ "/ifGJ1e5jHeQXIR4IwIDAQAB\n"
 			+ "-----END PUBLIC KEY-----";
 	
-	String rsaId = "5243bad7-1d88-49c0-9699-f8ae156da58f"; 
+	String rsaId = "30b83fd0-8709-4fe4-86c1-fef042c3c2c3"; 
 	
 	JsonData jsondata = new JsonData();
+	
+	ObjectMapper mapper = new ObjectMapper();
 
     public Culqi init() {
         Culqi culqi = new Culqi();
-        culqi.public_key = "pk_test_387cc0e60fa9f7d4";
-        culqi.secret_key = "sk_test_ff27818fc60ff66a";
+        culqi.public_key = "pk_test_90667d0a57d45c48";
+        culqi.secret_key = "sk_test_1573b0e8079863ff";
         return culqi;
     }
     
 
-    protected Map<String, Object> createToken() throws Exception {
+    protected ResponseCulqi createToken() throws Exception {
         return init().token.create(jsondata.jsonToken());
     }
     
-    protected Map<String, Object> updateToken() throws Exception {
-        String id = createToken().get("id").toString();
+    protected ResponseCulqi updateToken() throws Exception {
+        Map<String, Object> res = mapper.readValue(createToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String id = res.get("id").toString();
         return init().token.update(jsondata.jsonUpdateToken(), id);
     }
 
-    protected Map<String, Object> createTokenEncrypt() throws Exception {
+    protected ResponseCulqi createTokenEncrypt() throws Exception {
         return init().token.create(jsondata.jsonToken(), rsaPublicKey, rsaId);
     }
 
-    protected Map<String, Object> createTokenYape() throws Exception {
+    protected ResponseCulqi createTokenYape() throws Exception {
         return init().token.createYape(jsondata.jsonTokenYape());
     }
 
-    protected Map<String, Object> createOrder(Boolean confirm) throws Exception {
+    protected ResponseCulqi createOrder(Boolean confirm) throws Exception {
         return init().order.create(jsondata.jsonOrder(confirm));
     }
     
-    protected Map<String, Object> createOrderEncrypt(Boolean confirm) throws Exception {
+    protected ResponseCulqi createOrderEncrypt(Boolean confirm) throws Exception {
         return init().order.create(jsondata.jsonOrder(confirm), rsaPublicKey, rsaId);
     }
     
-    protected Map<String, Object> updateOrder() throws Exception {
-        String id = createOrder(true).get("id").toString();
+    protected ResponseCulqi updateOrder() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createOrder(true).getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String id = res.get("id").toString();
         return init().order.update(jsondata.jsonUpdateOrder(), id);
     }
 
-    protected Map<String, Object> confirmOrderType() throws Exception {
-        String order_id = createOrder(false).get("id").toString();
+    protected ResponseCulqi confirmOrderType() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createOrder(false).getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String order_id = res.get("id").toString();
         return init().order.confirm_order_type(jsondata.jsonConfirmOrderType(order_id));
     }
 
-    protected Map<String, Object> createCharge() throws Exception {
-        String source_id = createToken().get("id").toString();
+    protected ResponseCulqi createCharge() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String source_id = res.get("id").toString();System.out.println("source_id "+source_id);
         return init().charge.create(jsondata.jsonCharge(source_id));
     }
     
-    protected Map<String, Object> createChargeEncrypt() throws Exception {
-    	String source_id = createToken().get("id").toString();
+    protected ResponseCulqi createChargeEncrypt() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String source_id = res.get("id").toString();
         return init().charge.create(jsondata.jsonCharge(source_id), rsaPublicKey, rsaId);
     }
     
-    protected Map<String, Object> updateCharge() throws Exception {
-        String id = createCharge().get("id").toString();
+    protected ResponseCulqi updateCharge() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createCharge().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String id = res.get("id").toString();
         return init().token.update(jsondata.jsonUpdateCharge(), id);
     }
     
-    protected Map<String, Object> createPlan() throws Exception {
+    protected ResponseCulqi createPlan() throws Exception {
         return init().plan.create(jsondata.jsonPlan());
     }
     
-    protected Map<String, Object> updatePlan() throws Exception {
-        String plan_id = createPlan().get("id").toString();
+    protected ResponseCulqi updatePlan() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createPlan().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String plan_id = res.get("id").toString();
         return init().plan.update(jsondata.jsonUpdatePlan(), plan_id);
     }
 
-    protected Map<String, Object> createCustomer() throws Exception {
+    protected ResponseCulqi createCustomer() throws Exception {
         return init().customer.create(jsondata.jsonCustomer());
     }
     
-    protected Map<String, Object> updateCustomer() throws Exception {
-        String id = createCustomer().get("id").toString();
+    protected ResponseCulqi updateCustomer() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createCustomer().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String id = res.get("id").toString();
         return init().customer.update(jsondata.jsonUpdateCustomer(), id);
     }
 
-    protected Map<String, Object> createCard() throws Exception {
-        String customer_id = createCustomer().get("id").toString();
-        String token_id = createToken().get("id").toString();
+    protected ResponseCulqi createCard() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createCustomer().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String customer_id = res.get("id").toString();
+        Map<String, Object> res2 = mapper.readValue(createToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String token_id = res2.get("id").toString();
         return init().card.create(jsondata.jsonCard(customer_id,token_id));
     }
     
-    protected Map<String, Object> updateCard() throws Exception {
-        String id = createCard().get("id").toString();
+    protected ResponseCulqi updateCard() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createCard().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String id = res.get("id").toString();
         return init().card.update(jsondata.jsonUpdateCard(), id);
     }
 
-    protected Map<String, Object> createSubscription() throws Exception {
-        String card_id = createCard().get("id").toString();
-        String plan_id = createPlan().get("id").toString();
+    protected ResponseCulqi createSubscription() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createCard().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String card_id = res.get("id").toString();
+        Map<String, Object> res2 = mapper.readValue(createPlan().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String plan_id = res2.get("id").toString();
         return init().subscription.create(jsondata.jsonSubscription(card_id, plan_id));
     }
     
-    protected Map<String, Object> updateSubscription() throws Exception {
-        String id = createSubscription().get("id").toString();
+    protected ResponseCulqi updateSubscription() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String id = res.get("id").toString();
         return init().subscription.update(jsondata.jsonUpdateCard(), id);
     }
 
-    protected Map<String, Object> createRefund() throws Exception {
-        String charge_id = createCharge().get("id").toString();
+    protected ResponseCulqi createRefund() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createCharge().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String charge_id = res.get("id").toString();
         return init().refund.create(jsondata.jsonRefund(charge_id));
     }
     
-    protected Map<String, Object> updateRefund() throws Exception {
-        String id = createRefund().get("id").toString();
+    protected ResponseCulqi updateRefund() throws Exception {
+    	Map<String, Object> res = mapper.readValue(createRefund().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String id = res.get("id").toString();
         return init().refund.update(jsondata.jsonUpdateRefund(), id);
     }
     
     //Listas
     
-    protected Map<String, Object> tokens() throws Exception {
+    protected ResponseCulqi tokens() throws Exception {
         return init().token.list(jsondata.jsonListTokens());
     }
 
-    protected Map<String, Object> orders() throws Exception {
+    protected ResponseCulqi orders() throws Exception {
         return init().order.list();
     }
 
-    protected Map<String, Object> charges() throws Exception {
+    protected ResponseCulqi charges() throws Exception {
         return init().charge.list(jsondata.jsonListCharges());
     }
 
-    protected Map<String, Object> plans() throws Exception {
+    protected ResponseCulqi plans() throws Exception {
         return init().plan.list();
     }
 
-    protected Map<String, Object> customers() throws Exception {
+    protected ResponseCulqi customers() throws Exception {
         return init().customer.list(jsondata.jsonListCustomers());
     }
 
-    protected Map<String, Object> cards() throws Exception {
+    protected ResponseCulqi cards() throws Exception {
         return init().card.list(jsondata.jsonListCards());
     }
 
-    protected Map<String, Object> subscriptions() throws Exception {
+    protected ResponseCulqi subscriptions() throws Exception {
         return init().subscription.list(jsondata.jsonListSubscriptions());
     }
 
-    protected Map<String, Object> refunds() throws Exception {
+    protected ResponseCulqi refunds() throws Exception {
         return init().refund.list(jsondata.jsonListRefunds());
     }
 
-    protected Map<String, Object> events() throws Exception {
+    protected ResponseCulqi events() throws Exception {
         return init().event.list();
     }
 
-    protected Map<String, Object> transfers() throws Exception {
+    protected ResponseCulqi transfers() throws Exception {
         return init().transfer.list();
     }
 }
