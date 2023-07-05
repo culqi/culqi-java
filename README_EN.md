@@ -7,7 +7,7 @@ Library of CULQI for the Java language, simple payments in your website. Use the
 
 | Current version |Culqi API|
 |----|----|
-| 2.0.0 |[v2.0](https://culqi.com/api/)|
+| 3.0.0 |[v3.0](https://culqi.com/api/)|
 
 ## Requirements
 
