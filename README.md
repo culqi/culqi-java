@@ -65,7 +65,7 @@ token.put("cvv", "123");
 token.put("email", "wm@wm.com");
 token.put("expiration_month", 9);
 token.put("expiration_year", 2020);
-Map<String, Object> token_created = culqi.token.create(token);
+ResponsCulqi response = culqi.token.create(token);
 
 ```
 
@@ -91,7 +91,7 @@ charge.put("installments", 0);
 charge.put("antifraud_details", antifraudDetails);
 charge.put("metadata", metadata);
 charge.put("source_id", token_created.get("id").toString());
-Map<String, Object> charge_created = culqi.charge.create(charge);
+ResponsCulqi response = culqi.charge.create(charge);
 
 ```
 
@@ -109,7 +109,7 @@ plan.put("limit", 4);
 plan.put("metadata", metadata);
 plan.put("name", "plan-test");
 plan.put("trial_days", 15);
-Map<String, Object> plan_created =  culqi.plan.create(plan);
+ResponsCulqi response =  culqi.plan.create(plan);
 ```
 
 #### Crear Cliente
@@ -123,7 +123,7 @@ customer.put("email","tst@culqi.com");
 customer.put("first_name","Test");
 customer.put("last_name","Cuqli");
 customer.put("phone_number",99004356);
-Map<String, Object> customer_created = culqi.customer.create(customer);
+ResponsCulqi response = culqi.customer.create(customer);
 ```
 
 #### Crear Tarjeta
@@ -132,7 +132,7 @@ Map<String, Object> customer_created = culqi.customer.create(customer);
 Map<String, Object> card = new HashMap<String, Object>();
 card.put("customer_id",customer_created.get("id").toString());
 card.put("token_id",token_created.get("id").toString());
-Map<String, Object> card_created = culqi.card.create(card);
+ResponsCulqi response = culqi.card.create(card);
 ```
 
 
@@ -142,7 +142,7 @@ Map<String, Object> card_created = culqi.card.create(card);
 Map<String, Object> subscription = new HashMap<String, Object>();
 subscription.put("card_id",card_created.get("id").toString());
 subscription.put("plan_id",plan_created.get("id").toString());
-Map<String, Object> suscription_created = culqi.subscription.create(subscription);
+ResponsCulqi response = culqi.subscription.create(subscription);
 ```
 
 #### Crear Devolución
@@ -152,7 +152,7 @@ Map<String, Object> refund = new HashMap<String, Object>();
 refund.put("amount",900);
 refund.put("charge_id",charge_created.get("id").toString());
 refund.put("reason",Reason.solicitud_comprador);
-Map<String, Object> refund_created = culqi.refund.create(refund);
+ResponsCulqi response = culqi.refund.create(refund);
 ```
 
 ## Documentación
@@ -213,7 +213,7 @@ Luego agregas la siguiente dependencia en el pom.xml
 
 ## Autor
 
-Willy Aguirre ([@marti1125](https://github.com/marti1125) - Team Culqi)
+Team Culqi
 
 ## Licencia
 
