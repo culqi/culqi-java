@@ -6,7 +6,7 @@
 
     <groupId>com.culqi</groupId>
     <artifactId>culqi-java</artifactId>
-    <version>1.1.9</version>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
 
     <name>Culqi Java</name>
