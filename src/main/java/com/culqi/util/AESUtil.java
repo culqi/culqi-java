@@ -6,34 +6,29 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.BadPaddingException;
 import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.SealedObject;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-
-import org.bouncycastle.jcajce.provider.asymmetric.RSA;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class AESUtil {
 	
+	 public static final int GCM_TAG_LENGTH = 16;
+	
 	 public static String encryptCulqi(String input, SecretKey key, IvParameterSpec iv) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException {
 		 String algorithm = "AES/CBC/PKCS5Padding";
 		 return encrypt(algorithm, input, key, iv);
+	 }
+	 
+	 public static String encryptCulqiGCM(String input, SecretKey key, GCMParameterSpec iv) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, BadPaddingException, IllegalBlockSizeException {
+		 String algorithm = "AES/GCM/NoPadding";
+		 return encryptGCM(algorithm, input, key, iv);
 	 }
 
     public static String encrypt(String algorithm, String input, SecretKey key, IvParameterSpec iv)
@@ -42,6 +37,24 @@ public class AESUtil {
         Cipher cipher = Cipher.getInstance(algorithm);
         cipher.init(Cipher.ENCRYPT_MODE, key, iv);
         byte[] cipherText = cipher.doFinal(input.getBytes());
+        return Base64.getEncoder()
+            .encodeToString(cipherText);
+    }
+    
+    public static String encryptGCM(String algorithm, String input, SecretKey key,GCMParameterSpec iv)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException,
+            InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        
+        Cipher cipher = Cipher.getInstance(algorithm);
+        cipher.init(Cipher.ENCRYPT_MODE, key, iv);
+        byte[] cipherText = cipher.doFinal(input.getBytes(StandardCharsets.UTF_8));
+        cipherText = Arrays.copyOfRange(cipherText, 0, cipherText.length - 16);
+        
+     // Concatenate the IV and encrypted message
+        //byte[] ivAndEncryptedMessage = new byte[iv.getIV().length + cipherText.length];
+        //System.arraycopy(iv, 0, ivAndEncryptedMessage, 0, 12);
+        //System.arraycopy(encryptedMessage, 0, ivAndEncryptedMessage, iv.length, encryptedMessage.length);
+        
         return Base64.getEncoder()
             .encodeToString(cipherText);
     }
@@ -55,6 +68,23 @@ public class AESUtil {
             .decode(cipherText));
         return new String(plainText);
     }
+    
+    public static String decryptGCM(String algorithm, String cipherText, SecretKey key, GCMParameterSpec iv) throws Exception
+    {
+        // Get Cipher Instance
+        Cipher cipher = Cipher.getInstance(algorithm);
+        // Create SecretKeySpec
+        SecretKeySpec keySpec = new SecretKeySpec(key.getEncoded(), "AES");
+        // Create GCMParameterSpec
+        //GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(16 * 8, IV);
+        
+        // Initialize Cipher for DECRYPT_MODE
+        cipher.init(Cipher.DECRYPT_MODE, keySpec, iv);
+        
+        byte[] plainText = cipher.doFinal(Base64.getDecoder()
+                .decode(cipherText));
+            return new String(plainText);
+    }
 
     public static SecretKey generateKey(int n) throws NoSuchAlgorithmException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
@@ -67,6 +97,12 @@ public class AESUtil {
         byte[] iv = new byte[16];
         new SecureRandom().nextBytes(iv);
         return new IvParameterSpec(iv);
+    }
+    
+    public static GCMParameterSpec generateIvGCM() {
+        byte[] iv = new byte[12];
+        new SecureRandom().nextBytes(iv);
+        return new GCMParameterSpec(GCM_TAG_LENGTH * 8,iv);
     }
 
     /*
