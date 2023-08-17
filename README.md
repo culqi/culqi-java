@@ -9,6 +9,8 @@ Nuestra Biblioteca JAVA oficial de CULQI, es compatible con la [v2.0](https://cu
 |----|----|
 | 2.0.0  |[v2.0](https://culqi.com/api/)|
 
+Nuestra biblioteca te da la posibilidad de capturar el `status_code` de la solicitud HTTP que se realiza al API de Culqi, asi como el `response` que contiene el cuerpo de la respuesta obtenida.
+
 ## Requisitos
 
 - Java 1.7+
@@ -20,6 +22,8 @@ Nuestra Biblioteca JAVA oficial de CULQI, es compatible con la [v2.0](https://cu
 ![alt tag](http://i.imgur.com/NhE6mS9.png)
 
 > Recuerda que las credenciales son enviadas al correo que registraste en el proceso de afiliación.
+
+* Para encriptar el payload debes generar un id y llave RSA  ingresando a CulqiPanel > Desarrollo  > RSA Keys
 
 ## Instalación
 
@@ -85,109 +89,65 @@ Ejemplo
 #### Crear Token
 
 ```java
-Map<String, Object> token = new HashMap<String, Object>();
-token.put("card_number", "4111111111111111");
-token.put("cvv", "123");
-token.put("email", "wm@wm.com");
-token.put("expiration_month", 9);
-token.put("expiration_year", 2020);
-Map<String, Object> token_created = culqi.token.create(token);
-
+ protected Map<String, Object> createToken() throws Exception {
+    return init().token.create(jsondata.jsonToken());
+ }
 ```
 
 #### Crear Cargo
 
 ```java
-Map<String, Object> charge = new HashMap<String, Object>();
-Map<String, Object> antifraudDetails = new HashMap<String, Object>();
-antifraudDetails.put("address", "Calle Narciso de Colina 421 Miraflores");
-antifraudDetails.put("address_city", "LIMA");
-antifraudDetails.put("country_code", "PE");
-antifraudDetails.put("first_name", "Willy");
-antifraudDetails.put("last_name", "Aguirre");
-antifraudDetails.put("phone_number", "012767623");
-Map<String, Object> metadata = new HashMap<String, Object>();
-metadata.put("oder_id", "124");
-charge.put("amount",1000);
-charge.put("capture", true);
-charge.put("currency_code",CurrencyCode.PEN);
-charge.put("description","Venta de prueba");
-charge.put("email","test@culqi.com");
-charge.put("installments", 0);
-charge.put("antifraud_details", antifraudDetails);
-charge.put("metadata", metadata);
-charge.put("source_id", token_created.get("id").toString());
-Map<String, Object> charge_created = culqi.charge.create(charge);
-
+protected Map<String, Object> createCharge() throws Exception {
+   String source_id = createToken().get("id").toString();
+   return init().charge.create(jsondata.jsonCharge(source_id));
+}
 ```
 
 #### Crear Plan
 
 ```java
-Map<String, Object> plan = new HashMap<String, Object>();
-Map<String, Object> metadata = new HashMap<String, Object>();
-metadata.put("oder_id", "124");
-plan.put("amount",1000);
-plan.put("currency_code",CurrencyCode.PEN);
-plan.put("interval","dias");
-plan.put("interval_count",30);
-plan.put("limit", 4);
-plan.put("metadata", metadata);
-plan.put("name", "plan-test");
-plan.put("trial_days", 15);
-Map<String, Object> plan_created =  culqi.plan.create(plan);
+protected Map<String, Object> createPlan() throws Exception {
+   return init().plan.create(jsondata.jsonPlan());
+}
 ```
 
 #### Crear Cliente
 
 ```java
-Map<String, Object> customer = new HashMap<String, Object>();
-customer.put("address","Av Lima 123");
-customer.put("address_city","Lima");
-customer.put("country_code","PE");
-customer.put("email","tst@culqi.com");
-customer.put("first_name","Test");
-customer.put("last_name","Cuqli");
-customer.put("phone_number",99004356);
-Map<String, Object> customer_created = culqi.customer.create(customer);
+ protected Map<String, Object> createCustomer() throws Exception {
+    return init().customer.create(jsondata.jsonCustomer());
+ }
 ```
 
 #### Crear Tarjeta
 
 ```java
-Map<String, Object> card = new HashMap<String, Object>();
-card.put("customer_id",customer_created.get("id").toString());
-card.put("token_id",token_created.get("id").toString());
-Map<String, Object> card_created = culqi.card.create(card);
+protected Map<String, Object> createCard() throws Exception {
+   String customer_id = createCustomer().get("id").toString();
+   String token_id = createToken().get("id").toString();
+   return init().card.create(jsondata.jsonCard(customer_id,token_id));
+}
 ```
 
 
 #### Crear Suscripción
 
 ```java
-Map<String, Object> subscription = new HashMap<String, Object>();
-subscription.put("card_id",card_created.get("id").toString());
-subscription.put("plan_id",plan_created.get("id").toString());
-Map<String, Object> suscription_created = culqi.subscription.create(subscription);
+ protected Map<String, Object> createSubscription() throws Exception {
+    String card_id = createCard().get("id").toString();
+    String plan_id = createPlan().get("id").toString();
+    return init().subscription.create(jsondata.jsonSubscription(card_id, plan_id));
+ }
 ```
 
 #### Crear Devolución
 
 ```java
-Map<String, Object> refund = new HashMap<String, Object>();
-refund.put("amount",900);
-refund.put("charge_id",charge_created.get("id").toString());
-refund.put("reason",Reason.solicitud_comprador);
-Map<String, Object> refund_created = culqi.refund.create(refund);
+protected Map<String, Object> createRefund() throws Exception {
+   String charge_id = createCharge().get("id").toString();
+   return init().refund.create(jsondata.jsonRefund(charge_id));
+}
 ```
-
-## Documentación
-¿Necesitas más información para integrar `culqi-java`? La documentación completa se encuentra en [https://culqi.com/docs/](https://culqi.com/docs/)
-
-
-## Changelog
-
-Todos los cambios en las versiones de esta biblioteca están listados en [CHANGELOG](CHANGELOG).
 
 ## Dependencias para el desarrollo
 
@@ -256,9 +216,17 @@ Luego agregas la siguiente dependencia en el pom.xml
 </dependency>
 ```
 
+## Documentación
+¿Necesitas más información para integrar `culqi-java`? La documentación completa se encuentra en [https://culqi.com/docs/](https://culqi.com/docs/)
+
+
+## Changelog
+
+Todos los cambios en las versiones de esta biblioteca están listados en [CHANGELOG](CHANGELOG).
+
 ## Autor
 
-Willy Aguirre ([@marti1125](https://github.com/marti1125) - Team Culqi)
+Team Culqi
 
 ## Licencia
 
