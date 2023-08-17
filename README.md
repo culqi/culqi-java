@@ -77,9 +77,8 @@ Para encriptar el payload necesitas hacer lo siguiente
 Ejemplo
 
 ```java
-    @Test
-    public void test02_createTokenEncrypt() throws Exception {
-        assertEquals("token", culqiCRUD.createTokenEncrypt().get("object").toString());
+    protected Map<String, Object> createTokenEncrypt() throws Exception {
+        return init().token.create(jsondata.jsonToken(), rsaPublicKey, rsaId);
     }
 ```
 
