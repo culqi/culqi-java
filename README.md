@@ -46,15 +46,36 @@ Luego agregar la dependencia:
 </dependency>
 ```
 
-## Ejemplos
+## Configuracion
 
-#### Inicialización
+Para empezar a enviar peticiones al API de Culqi debes configurar tu llave pública (pk), llave privada (sk).
+Para habilitar encriptación de payload debes configurar tu rsa_id y rsa_public_key.
 
 ```java
-Culqi culqi = new Culqi();
-culqi.public_key = "{LLAVE PUBLICA}";
-culqi.secret_key =  "{LLAVE SECRETA}"
+
+    String rsaPublicKey = "INSERTE_SU_LLAVE_RSA";
+	
+	String rsaId = "INSERTE_SU_RSA_ID"; 
+	
+	JsonData jsondata = new JsonData();
+
 ```
+
+### Encriptar payload
+
+Para encriptar el payload necesitas hacer lo siguiente
+
+Ejemplo
+
+```java
+    @Test
+    public void test02_createTokenEncrypt() throws Exception {
+        assertEquals("token", culqiCRUD.createTokenEncrypt().get("object").toString());
+    }
+```
+
+
+## Ejemplos
 
 #### Crear Token
 
@@ -192,6 +213,25 @@ mvn test -D test=CulqiCreateTest#test4ValidCreateCustomer
 mvn test -D test=CulqiCreateTest#test5ValidCreateCard
 mvn test -D test=CulqiCreateTest#test6ValidCreateSubscription
 mvn test -D test=CulqiCreateTest#test7ChargeCapture
+```
+
+### Ejemplo Prueba Token
+
+```java
+    @Test
+    public void test01_createToken() throws Exception {
+        culqiCRUD.createToken().get("object").toString();
+        assertEquals("token", culqiCRUD.createToken().get("object").toString());
+    }
+
+```
+
+### Ejemplo Prueba Cargo
+```java
+    @Test
+    public void test04_createCharge() throws Exception {
+        assertEquals("charge", culqiCRUD.createCharge().get("object").toString());
+    }
 ```
 
 ## ¿Cómo instalar el jar de Culqi en un proyecto Maven? 
