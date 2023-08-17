@@ -57,16 +57,16 @@ Para habilitar encriptación de payload debes configurar tu rsa_id y rsa_public_
 
 ```java
 
-        String rsaPublicKey = "-----BEGIN PUBLIC KEY-----\n"
+String rsaPublicKey = "-----BEGIN PUBLIC KEY-----\n"
 			+ "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDADka0Pt4SuWlHRA6kcJIwDde\n"
 			+ "o67OYBEgQDEelmmixs9AlB/1bv446XOOE8eTJSridll2ZAn2nze7Gl2vQs0yW+4A\n"
 			+ "XmszJwugM0lxTDiPdTXdbrA4VXiXDG29VLQCAxt1+/c7bE84hMS6cymWgEjYoa6I\n"
 			+ "xX8u0ncLyiRUdZC2cwIDAQAB\n"
 			+ "-----END PUBLIC KEY-----";
 	
-	String rsaId = "5243bad7-1d88-49c0-9699-f8ae156da58f"; 
+Sring rsaId = "5243bad7-1d88-49c0-9699-f8ae156da58f"; 
 	
-	JsonData jsondata = new JsonData();
+JsonData jsondata = new JsonData();
 
 ```
 
