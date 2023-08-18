@@ -5,11 +5,13 @@
 
 Nuestra Biblioteca JAVA oficial de CULQI, es compatible con la [v2.0](https://culqi.com/api/) del Culqi API, con el cual tendrás la posibilidad de realizar cobros con tarjetas de débito y crédito, Yape, PagoEfectivo, billeteras móviles y Cuotéalo con solo unos simples pasos de configuración.
 
+Nuestra biblioteca te da la posibilidad de capturar el `status_code` de la solicitud HTTP que se realiza al API de Culqi, así como el `response` que contiene el cuerpo de la respuesta obtenida.
+
+
 | Versión actual|Culqi API|
 |----|----|
 | 2.0.0  |[v2.0](https://culqi.com/api/)|
 
-Nuestra biblioteca te da la posibilidad de capturar el `status_code` de la solicitud HTTP que se realiza al API de Culqi, asi como el `response` que contiene el cuerpo de la respuesta obtenida.
 
 ## Requisitos
 
@@ -23,7 +25,7 @@ Nuestra biblioteca te da la posibilidad de capturar el `status_code` de la solic
 
 > Recuerda que las credenciales son enviadas al correo que registraste en el proceso de afiliación.
 
-* Para encriptar el payload debes generar un id y llave RSA  ingresando a CulqiPanel > Desarrollo  > RSA Keys
+* Para encriptar el payload debes generar un id y llave RSA  ingresando a CulqiPanel > Desarrollo  > RSA Keys.
 
 ## Instalación
 
@@ -56,7 +58,8 @@ Para empezar a enviar peticiones al API de Culqi debes configurar tu llave públ
 Para habilitar encriptación de payload debes configurar tu rsa_id y rsa_public_key.
 
 ```java
-
+culqi.public_key = "pk_test_889113cd74ecfc55";
+culqi.secret_key = "sk_test_LoSAl6rqTInlzPSJ";
 String rsaPublicKey = "-----BEGIN PUBLIC KEY-----\n"
 			+ "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDADka0Pt4SuWlHRA6kcJIwDde\n"
 			+ "o67OYBEgQDEelmmixs9AlB/1bv446XOOE8eTJSridll2ZAn2nze7Gl2vQs0yW+4A\n"
@@ -67,19 +70,18 @@ String rsaPublicKey = "-----BEGIN PUBLIC KEY-----\n"
 Sring rsaId = "5243bad7-1d88-49c0-9699-f8ae156da58f"; 
 	
 JsonData jsondata = new JsonData();
-
 ```
 
 ### Encriptar payload
 
-Para encriptar el payload necesitas hacer lo siguiente
+Para encriptar el payload necesitas pasar como parámetro el rsaPublicKey y rsaId.
 
 Ejemplo
 
 ```java
-    protected Map<String, Object> createTokenEncrypt() throws Exception {
-        return init().token.create(jsondata.jsonToken(), rsaPublicKey, rsaId);
-    }
+protected Map<String, Object> createTokenEncrypt() throws Exception {
+    return init().token.create(jsondata.jsonToken(), rsaPublicKey, rsaId);
+}
 ```
 
 
@@ -148,11 +150,6 @@ protected Map<String, Object> createRefund() throws Exception {
 }
 ```
 
-## Dependencias para el desarrollo
-
-- [okhttp3](http://square.github.io/okhttp/)
-- [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
-
 ## Build
 
 ```bash
@@ -182,20 +179,19 @@ mvn test -D test=CulqiCreateTest#test7ChargeCapture
 ### Ejemplo Prueba Token
 
 ```java
-    @Test
-    public void test01_createToken() throws Exception {
-        culqiCRUD.createToken().get("object").toString();
-        assertEquals("token", culqiCRUD.createToken().get("object").toString());
-    }
-
+@Test
+public void test01_createToken() throws Exception {
+    culqiCRUD.createToken().get("object").toString();
+    assertEquals("token", culqiCRUD.createToken().get("object").toString());
+}
 ```
 
 ### Ejemplo Prueba Cargo
 ```java
-    @Test
-    public void test04_createCharge() throws Exception {
-        assertEquals("charge", culqiCRUD.createCharge().get("object").toString());
-    }
+@Test
+public void test04_createCharge() throws Exception {
+    assertEquals("charge", culqiCRUD.createCharge().get("object").toString());
+}
 ```
 
 ## ¿Cómo instalar el jar de Culqi en un proyecto Maven? 
@@ -216,7 +212,10 @@ Luego agregas la siguiente dependencia en el pom.xml
 ```
 
 ## Documentación
-¿Necesitas más información para integrar `culqi-java`? La documentación completa se encuentra en [https://culqi.com/docs/](https://culqi.com/docs/)
+
+- [Demo Checkout V4 + Culqi 3DS](https://github.com/culqi/culqi-java-demo-checkoutv4-culqi3ds)
+- [okhttp3](http://square.github.io/okhttp/)
+- [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
 
 
 ## Changelog
