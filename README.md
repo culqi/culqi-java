@@ -3,7 +3,7 @@
 [![Code Climate](https://codeclimate.com/github/culqi/culqi-java/badges/gpa.svg)](https://codeclimate.com/github/culqi/culqi-java)
 [![Build Status](https://travis-ci.org/culqi/culqi-java.svg?branch=master)](https://travis-ci.org/culqi/culqi-java)
 
-Nuestra Biblioteca JAVA oficial de CULQI, es compatible con la [v2.0](https://culqi.com/api/) del Culqi API, con el cual tendrás la posibilidad de realizar cobros con tarjetas de débito y crédito, Yape, PagoEfectivo, billeteras móviles y Cuotéalo con solo unos simples pasos de configuración.
+Nuestra Biblioteca JAVA oficial, es compatible con la [v2.0](https://culqi.com/api/) del Culqi API, con el cual tendrás la posibilidad de realizar cobros con tarjetas de débito y crédito, Yape, PagoEfectivo, billeteras móviles y Cuotéalo con solo unos simples pasos de configuración.
 
 Nuestra biblioteca te da la posibilidad de capturar el `status_code` de la solicitud HTTP que se realiza al API de Culqi, así como el `response` que contiene el cuerpo de la respuesta obtenida.
 
@@ -167,13 +167,14 @@ mvn test
 Puede ejecutar estos unitarios independientemente
 
 ```bash
-mvn test -D test=CulqiCreateTest#test1ValidCreateToken
-mvn test -D test=CulqiCreateTest#test2ValidCreateCharge
-mvn test -D test=CulqiCreateTest#test3ValidCreatePlan
-mvn test -D test=CulqiCreateTest#test4ValidCreateCustomer
-mvn test -D test=CulqiCreateTest#test5ValidCreateCard
-mvn test -D test=CulqiCreateTest#test6ValidCreateSubscription
-mvn test -D test=CulqiCreateTest#test7ChargeCapture
+mvn test -D test=CulqiCreateTest#test01_createToken
+mvn test -D test=CulqiCreateTest#test02_createTokenEncrypt
+mvn test -D test=CulqiCreateTest#test04_createCharge
+mvn test -D test=CulqiCreateTest#test05_createPlan
+mvn test -D test=CulqiCreateTest#test06_createCustomer
+mvn test -D test=CulqiCreateTest#test07_createCard
+mvn test -D test=CulqiCreateTest#test08_createSubscription
+mvn test -D test=CulqiCreateTest#test09_chargeCapture
 ```
 
 ### Ejemplo Prueba Token
