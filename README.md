@@ -10,7 +10,7 @@ Nuestra biblioteca te da la posibilidad de capturar el `status_code` de la solic
 
 | Versión actual|Culqi API|
 |----|----|
-| 2.0.0  |[v2.0](https://culqi.com/api/)|
+| 2.0.1  |[v2.0](https://culqi.com/api/)|
 
 
 ## Requisitos
@@ -48,7 +48,7 @@ Luego agregar la dependencia:
 <dependency>
     <groupId>com.github.culqi</groupId>
     <artifactId>culqi-java</artifactId>
-    <version>v1.1.9</version>
+    <version>v2.0.1</version>
 </dependency>
 ```
 
