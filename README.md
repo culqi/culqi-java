@@ -126,18 +126,6 @@ protected Map<String, Object> createRefund() throws Exception {
 }
 ```
 
-### Crear Plan
-
-El plan es un servicio que te permite definir con qué frecuencia deseas realizar cobros a tus clientes.
-
-Un plan define el comportamiento de las suscripciones. Los planes pueden ser creados vía el [API de Plan](https://apidocs.culqi.com/#/planes#create) o desde el **CulqiPanel**.
-
-```java
-protected Map<String, Object> createPlan() throws Exception {
-   return init().plan.create(jsondata.jsonPlan());
-}
-```
-
 ### Crear Cliente
 
 El **cliente** es un servicio que te permite guardar la información de tus clientes. Es un paso necesario para generar una [tarjeta](/es/documentacion/pagos-online/recurrencia/one-click/tarjetas).
@@ -164,6 +152,17 @@ protected Map<String, Object> createCard() throws Exception {
 }
 ```
 
+### Crear Plan
+
+El plan es un servicio que te permite definir con qué frecuencia deseas realizar cobros a tus clientes.
+
+Un plan define el comportamiento de las suscripciones. Los planes pueden ser creados vía el [API de Plan](https://apidocs.culqi.com/#/planes#create) o desde el **CulqiPanel**.
+
+```java
+protected Map<String, Object> createPlan() throws Exception {
+   return init().plan.create(jsondata.jsonPlan());
+}
+```
 
 ### Crear Suscripción
 
