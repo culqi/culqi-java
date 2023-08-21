@@ -264,7 +264,7 @@ Luego agregas la siguiente dependencia en el pom.xml
 - [Demo Checkout V4 + Culqi 3DS](https://github.com/culqi/culqi-java-demo-checkoutv4-culqi3ds)
 - [okhttp3](http://square.github.io/okhttp/)
 - [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
-- [Wiki](https://github.com/culqi/culqi-ruby/wiki)
+- [Wiki](https://github.com/culqi/culqi-java/wiki)
 
 ## Changelog
 
