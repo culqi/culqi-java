@@ -1,4 +1,4 @@
-# Culqi Java
+# Culqi-Java
 
 [![Code Climate](https://codeclimate.com/github/culqi/culqi-java/badges/gpa.svg)](https://codeclimate.com/github/culqi/culqi-java)
 [![Build Status](https://travis-ci.org/culqi/culqi-java.svg?branch=master)](https://travis-ci.org/culqi/culqi-java)
@@ -85,9 +85,14 @@ protected Map<String, Object> createTokenEncrypt() throws Exception {
 ```
 
 
-## Ejemplos
+## Servicios
 
-#### Crear Token
+### Crear Token
+
+Antes de crear un Cargo o Card es necesario crear un `token` de tarjeta. 
+Lo recomendable es generar los 'tokens' con [Culqi Checkout v4](https://docs.culqi.com/es/documentacion/checkout/v4/culqi-checkout/) o [Culqi JS v4](https://docs.culqi.com/es/documentacion/culqi-js/v4/culqi-js/) **debido a que es muy importante que los datos de tarjeta sean enviados desde el dispositivo de tus clientes directamente a los servidores de Culqi**, para no poner en riesgo los datos sensibles de la tarjeta de crédito/débito.
+
+> Recuerda que cuando interactúas directamente con el [API Token](https://apidocs.culqi.com/#tag/Tokens/operation/crear-token) necesitas cumplir la normativa de PCI DSS 3.2. Por ello, te pedimos que llenes el [formulario SAQ-D](https://listings.pcisecuritystandards.org/documents/SAQ_D_v3_Merchant.pdf) y lo envíes al buzón de riesgos Culqi.
 
 ```java
  protected Map<String, Object> createToken() throws Exception {
@@ -95,7 +100,11 @@ protected Map<String, Object> createTokenEncrypt() throws Exception {
  }
 ```
 
-#### Crear Cargo
+### Crear Cargo
+
+Crear un cargo significa cobrar una venta a una tarjeta. Para esto previamente deberías generar el  `token` y enviarlo en parámetro **source_id**.
+
+Los cargos pueden ser creados vía [API de devolución](https://apidocs.culqi.com/#tag/Cargos/operation/crear-cargo).
 
 ```java
 protected Map<String, Object> createCharge() throws Exception {
@@ -104,7 +113,24 @@ protected Map<String, Object> createCharge() throws Exception {
 }
 ```
 
-#### Crear Plan
+### Crear Devolución
+
+Solicita la devolución de las compras de tus clientes (parcial o total) de forma gratuita a través del API y CulqiPanel. 
+
+Las devoluciones pueden ser creados vía [API de devolución](https://apidocs.culqi.com/#tag/Devoluciones/operation/crear-devolucion).
+
+```java
+protected Map<String, Object> createRefund() throws Exception {
+   String charge_id = createCharge().get("id").toString();
+   return init().refund.create(jsondata.jsonRefund(charge_id));
+}
+```
+
+### Crear Plan
+
+El plan es un servicio que te permite definir con qué frecuencia deseas realizar cobros a tus clientes.
+
+Un plan define el comportamiento de las suscripciones. Los planes pueden ser creados vía el [API de Plan](https://apidocs.culqi.com/#/planes#create) o desde el **CulqiPanel**.
 
 ```java
 protected Map<String, Object> createPlan() throws Exception {
@@ -112,7 +138,11 @@ protected Map<String, Object> createPlan() throws Exception {
 }
 ```
 
-#### Crear Cliente
+### Crear Cliente
+
+El **cliente** es un servicio que te permite guardar la información de tus clientes. Es un paso necesario para generar una [tarjeta](/es/documentacion/pagos-online/recurrencia/one-click/tarjetas).
+
+Los clientes pueden ser creados vía [API de cliente](https://apidocs.culqi.com/#tag/Clientes/operation/crear-cliente).
 
 ```java
  protected Map<String, Object> createCustomer() throws Exception {
@@ -120,7 +150,11 @@ protected Map<String, Object> createPlan() throws Exception {
  }
 ```
 
-#### Crear Tarjeta
+### Crear Tarjeta
+
+La **tarjeta** es un servicio que te permite guardar la información de las tarjetas de crédito o débito de tus clientes para luego realizarles cargos one click o recurrentes (cargos posteriores sin que tus clientes vuelvan a ingresar los datos de su tarjeta).
+
+Las tarjetas pueden ser creadas vía [API de tarjeta](https://apidocs.culqi.com/#tag/Tarjetas/operation/crear-tarjeta).
 
 ```java
 protected Map<String, Object> createCard() throws Exception {
@@ -131,7 +165,11 @@ protected Map<String, Object> createCard() throws Exception {
 ```
 
 
-#### Crear Suscripción
+### Crear Suscripción
+
+La suscripción es un servicio que asocia la tarjeta de un cliente con un plan establecido por el comercio.
+
+Las suscripciones pueden ser creadas vía [API de suscripción](https://apidocs.culqi.com/#tag/Suscripciones/operation/crear-suscripcion).
 
 ```java
  protected Map<String, Object> createSubscription() throws Exception {
@@ -141,14 +179,21 @@ protected Map<String, Object> createCard() throws Exception {
  }
 ```
 
-#### Crear Devolución
+### Crear Orden
+
+Es un servicio que te permite generar una orden de pago para una compra potencial.
+La orden contiene la información necesaria para la venta y es usado por el sistema de **PagoEfectivo** para realizar los pagos diferidos.
+
+Las órdenes pueden ser creadas vía [API de orden](https://apidocs.culqi.com/#tag/Ordenes/operation/crear-orden).
 
 ```java
-protected Map<String, Object> createRefund() throws Exception {
-   String charge_id = createCharge().get("id").toString();
-   return init().refund.create(jsondata.jsonRefund(charge_id));
-}
+ protected Map<String, Object> createSubscription() throws Exception {
+    String card_id = createCard().get("id").toString();
+    String plan_id = createPlan().get("id").toString();
+    return init().subscription.create(jsondata.jsonSubscription(card_id, plan_id));
+ }
 ```
+
 
 ## Build
 
@@ -214,10 +259,12 @@ Luego agregas la siguiente dependencia en el pom.xml
 
 ## Documentación
 
+- [Referencia de Documentación](https://docs.culqi.com/)
+- [Referencia de API](https://apidocs.culqi.com/)
 - [Demo Checkout V4 + Culqi 3DS](https://github.com/culqi/culqi-java-demo-checkoutv4-culqi3ds)
 - [okhttp3](http://square.github.io/okhttp/)
 - [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
-
+- [Wiki](https://github.com/culqi/culqi-ruby/wiki)
 
 ## Changelog
 
