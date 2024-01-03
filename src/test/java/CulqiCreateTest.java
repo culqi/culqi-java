@@ -22,6 +22,7 @@ public class CulqiCreateTest extends TestCase {
     @Test
     public void test01_createToken() throws Exception {
     	Map<String, Object> res = mapper.readValue(culqiCRUD.createToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        System.err.println(res);
         assertEquals("token", res.get("object").toString());
     }
 
@@ -34,6 +35,7 @@ public class CulqiCreateTest extends TestCase {
     @Test
     public void test03_createTokenYape() throws Exception {
     	Map<String, Object> res = mapper.readValue(culqiCRUD.createTokenYape().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        System.err.println(res);
         assertEquals("token",res.get("object").toString());
     }
     
@@ -42,8 +44,10 @@ public class CulqiCreateTest extends TestCase {
     	ResponseCulqi response = culqiCRUD.createCharge();
     	Map<String, Object> res = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
     	if (response.getStatusCode()==200) {
+            System.err.println(response);
     		assertEquals("REVIEW",res.get("action_code").toString());
     	}else if (response.getStatusCode()==201) {
+            System.err.println(res);
     		assertEquals("charge",res.get("object").toString());
     	}
     }

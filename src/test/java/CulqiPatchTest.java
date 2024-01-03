@@ -21,6 +21,7 @@ public class CulqiPatchTest extends TestCase {
 	@Test
     public void test01_updateToken() throws Exception {
 		Map<String, Object> res = mapper.readValue(culqiCRUD.updateToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        System.err.println(res);
         assertEquals("token",  res.get("object").toString());
     }
 	
