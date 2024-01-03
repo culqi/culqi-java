@@ -14,7 +14,7 @@ public class ChargeValidation {
         Object amountObj = data.get("amount");
         Helper.validateAmountValue(amountObj);
 
-       Helper.validateCurrencyCode((String) data.get("currency_code"));
+       Helper.validateCurrencyCode((String) data.get("currency_code").toString());
 
        String sourceId = (String) data.get("source_id");
 
@@ -31,7 +31,7 @@ public class ChargeValidation {
 
     public static void list(Map<String, Object> data) throws Exception {
         if (data.containsKey("currency_code")) {
-            Helper.validateCurrencyCode((String) data.get("currency_code"));
+            Helper.validateCurrencyCode((String) data.get("currency_code").toString());
         }
         if (data.containsKey("amount")) {
             Object amountObj = data.get("amount");

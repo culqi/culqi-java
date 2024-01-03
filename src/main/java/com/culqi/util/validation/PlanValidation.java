@@ -9,7 +9,7 @@ public class PlanValidation {
         Helper.validateValue((String) data.get("reason"), allowedValues);
         Object amountObj = data.get("amount");
         Helper.validateAmountValue(amountObj);
-        Helper.validateCurrencyCode((String) data.get("currency_code"));
+        Helper.validateCurrencyCode((String) data.get("currency_code").toString());
     }
 
     public static void list(Map<String, Object> data) throws Exception {
