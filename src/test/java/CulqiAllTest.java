@@ -22,6 +22,7 @@ public class CulqiAllTest extends TestCase {
     public void test01_allTokens() throws Exception {
     	Map<String, Object> res = mapper.readValue(culqiCRUD.tokens().getBody(), new TypeReference<HashMap<String, Object>>(){});
         List<Map<String, Object>> data = (List<Map<String, Object>>) res.get("data");
+        System.err.println(res);
         assert(data.size() >= 0);
     }
 
