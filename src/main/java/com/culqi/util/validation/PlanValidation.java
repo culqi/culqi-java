@@ -1,10 +1,11 @@
 package com.culqi.util.validation;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class PlanValidation {
     public static void create(Map<String, Object> data) throws Exception {
-        List<String> allowedValues = List.of("dias", "semanas", "meses", "años");
+        List<String> allowedValues = Arrays.asList("dias", "semanas", "meses", "años");
         Helper.validateValue((String) data.get("reason"), allowedValues);
         Object amountObj = data.get("amount");
         Helper.validateAmountValue(amountObj);
