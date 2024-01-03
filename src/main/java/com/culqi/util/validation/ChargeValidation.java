@@ -1,4 +1,5 @@
 package com.culqi.util.validation;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -63,12 +64,12 @@ public class ChargeValidation {
             }
         }
         if (data.containsKey("card_brand")) {
-            List<String> allowedBrandValues = List.of("Visa", "Mastercard", "Amex", "Diners");
+            List<String> allowedBrandValues = Arrays.asList("Visa", "Mastercard", "Amex", "Diners");
             Helper.validateValue((String) data.get("card_brand"), allowedBrandValues);
         }
 
         if (data.containsKey("card_type")) {
-            List<String> allowedCardTypeValues = List.of("credito", "debito", "internacional");
+            List<String> allowedCardTypeValues = Arrays.asList("credito", "debito", "internacional");
             Helper.validateValue((String) data.get("card_type"), allowedCardTypeValues);
         }
 
