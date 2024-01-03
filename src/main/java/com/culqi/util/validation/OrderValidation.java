@@ -27,7 +27,7 @@ public class OrderValidation {
             throw new CustomException("Invalid email.");
         }
 
-        Helper.validateCurrencyCode((String) data.get("currency_code"));
+        Helper.validateCurrencyCode((String) data.get("currency_code").toString());
 
         Object amountObj = data.get("amount");
         Helper.validateAmountValue(amountObj);
