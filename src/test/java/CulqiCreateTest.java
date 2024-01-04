@@ -84,7 +84,7 @@ public class CulqiCreateTest extends TestCase {
     	if (response.getStatusCode()==200) {
     		assertEquals("REVIEW",res.get("action_code").toString());
     	}else if (response.getStatusCode()==201) {
-    		assertEquals("charge",res.get("object").toString());
+    		assertEquals("card",res.get("object").toString());
     	}
     }
 
