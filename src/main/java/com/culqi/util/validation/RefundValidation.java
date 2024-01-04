@@ -7,7 +7,7 @@ public class RefundValidation {
     public static void create(Map<String, Object> data) throws Exception {
         Helper.validateStringStart((String) data.get("charge_id"), "chr");
         List<String> allowedReasonValues = Arrays.asList("duplicado", "fraudulento", "solicitud_comprador");
-        Helper.validateValue((String) data.get("reason"), allowedReasonValues);
+        Helper.validateValue((String) data.get("reason").toString(), allowedReasonValues);
         Object amountObj = data.get("amount");
         Helper.validateAmountValue(amountObj);
     }
