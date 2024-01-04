@@ -6,10 +6,10 @@ import com.culqi.util.CountryCodes;
 
 public class CustomerValidation {
     public static void create(Map<String, Object> data) throws Exception {
-        String first_name = (String )data.get("first_name");
-        String last_name = (String )data.get("last_name");
-        String address = (String )data.get("address");
-        String address_city = (String )data.get("address");
+        String first_name = (String) data.get("first_name");
+        String last_name = (String) data.get("last_name");
+        String address = (String) data.get("address");
+        String address_city = (String) data.get("address_city");
         if (first_name == null || first_name.isEmpty()) {
             throw new Exception("first name is empty.");
         }
@@ -24,6 +24,10 @@ public class CustomerValidation {
 
         if (address_city == null || address_city.isEmpty()) {
             throw new Exception("address_city is empty.");
+        }
+
+        if (!(data.get("phone_number") instanceof String)) {
+            throw new CustomException("Invalid 'phone_number'. It should be a string.");
         }
 
         List<String> countryCodes = CountryCodes.getCountryCodes();

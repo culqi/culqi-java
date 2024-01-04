@@ -73,6 +73,7 @@ public class CulqiCreateTest extends TestCase {
     @Test
     public void test06_createCustomer() throws Exception {
     	Map<String, Object> res = mapper.readValue(culqiCRUD.createCustomer().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        System.err.println(res);
         assertEquals("customer",res.get("object").toString());
     }
 
