@@ -11,19 +11,19 @@ public class CustomerValidation {
         String address = (String) data.get("address");
         String address_city = (String) data.get("address_city");
         if (first_name == null || first_name.isEmpty()) {
-            throw new Exception("first name is empty.");
+            throw new CustomException("first name is empty.");
         }
 
         if (last_name == null || last_name.isEmpty()) {
-            throw new Exception("last name is empty.");
+            throw new CustomException("last name is empty.");
         }
 
         if (address == null || address.isEmpty()) {
-            throw new Exception("address is empty.");
+            throw new CustomException("address is empty.");
         }
 
         if (address_city == null || address_city.isEmpty()) {
-            throw new Exception("address_city is empty.");
+            throw new CustomException("address_city is empty.");
         }
 
         if (!(data.get("phone_number") instanceof String)) {
