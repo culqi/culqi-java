@@ -48,10 +48,19 @@ public class ResponseHelper {
                 }
             }
 
+            String env = Config.X_CULQI_ENV_TEST;
+            if(Culqi.secret_key.contains("live")) {
+                env = Config.X_CULQI_ENV_LIVE;
+            }
+
             HttpUrl urlquery = builder.build();
             Request request = new Request.Builder()
                     .url(urlquery)
                     .header("Authorization","Bearer " + Culqi.secret_key)
+                    .header("x-culqi-env", env)
+                    .header("x-culqi-client", Config.X_CULQI_CLIENT)
+                    .header("x-culqi-client-version", Config.X_CULQI_CLIENT_VERSION)
+                    .header("x-api-version", Config.X_API_VERSION)
                     .build();
 
             Response response = client.newCall(request).execute();
