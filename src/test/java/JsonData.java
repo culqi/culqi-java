@@ -32,7 +32,6 @@ public class JsonData {
 	protected Map<String, Object> jsonListTokens() throws Exception {
         Map<String, Object> token = new HashMap<String, Object>();
         token.put("bin", "411111");
-        token.put("device_type", "411111");
         return token;
     }
 
