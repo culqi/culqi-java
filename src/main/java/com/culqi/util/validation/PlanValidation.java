@@ -6,7 +6,7 @@ import java.util.Map;
 public class PlanValidation {
     public static void create(Map<String, Object> data) throws Exception {
         List<String> allowedValues = Arrays.asList("dias", "semanas", "meses", "años");
-        Helper.validateValue((String) data.get("reason"), allowedValues);
+        Helper.validateValue((String) data.get("interval"), allowedValues);
         Object amountObj = data.get("amount");
         Helper.validateAmountValue(amountObj);
         Helper.validateCurrencyCode((String) data.get("currency_code").toString());
