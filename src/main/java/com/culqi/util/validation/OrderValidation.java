@@ -32,7 +32,7 @@ public class OrderValidation {
         Object amountObj = data.get("amount");
         Helper.validateAmountValue(amountObj);
 
-        if (!Helper.isFutureDate((long) data.get("expirationDate"))) {
+        if (!Helper.isFutureDate((long) data.get("expiration_date"))) {
             throw new Exception("expiration_date must be a future date.");
         }
     }
