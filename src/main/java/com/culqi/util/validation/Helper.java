@@ -76,9 +76,6 @@ public class Helper {
         } else if (amountObj instanceof String) {
             try {
                 int amount = Integer.parseInt((String) amountObj);
-                // Successfully parsed as an integer, replace the value in the data map.
-                // You can also choose to update the data map if needed.
-                // data.put("amount", amount);
             } catch (NumberFormatException e) {
                 throw new CustomException("Invalid 'amount'. It should be an integer or a string representing an integer.");
             }
