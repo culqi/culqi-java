@@ -20,7 +20,7 @@ public class OrderValidation {
         }
 
         if (phone_number == null || phone_number.isEmpty()) {
-            throw new Exception("address is empty.");
+            throw new Exception("phone_number is empty.");
         }
 
         if (!Helper.isValidEmail(email)) {

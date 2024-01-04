@@ -145,7 +145,7 @@ public class JsonData {
 		customer.put("email", "tst" + new Util().ramdonString() + "@culqi.com");
 		customer.put("first_name", "Test");
 		customer.put("last_name", "Cuqli");
-		customer.put("phone_number", 99004356);
+		customer.put("phone_number", "99004356");
 		return customer;
 	}
 	
