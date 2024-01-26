@@ -32,7 +32,16 @@ public class ResponseHelper {
 
         try {
             HttpUrl.Builder builder = new HttpUrl.Builder();
-            builder.scheme("https").host(Config.DOMAIN).addPathSegment("v2").addPathSegment(url);
+
+            builder.scheme("https").host(Config.DOMAIN).addPathSegment("v2");
+            if (url.contains("plans")) {
+                builder.addPathSegment("recurrent").addPathSegment("plans");
+            } else if (url.contains("subscriptions")) {
+                builder.addPathSegment("recurrent").addPathSegment("subscriptions");
+            } else {
+                builder.scheme("https").host(Config.DOMAIN).addPathSegment("v2").addPathSegment(url);
+            }
+
             if (params != null) {
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 String[] pairs = params.replace("{", "").replace("}", "").split(",");
@@ -81,6 +90,7 @@ public class ResponseHelper {
                 env = Config.X_CULQI_ENV_LIVE;
             }
             String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
+            url = (url.contains("plans") || url.contains("subscriptions")) ? url + "create" : url;
             RequestBody body = RequestBody.create(JSON, jsonData);
             Request request = new Request.Builder()
                     .url(base_url+url)
@@ -108,6 +118,7 @@ public class ResponseHelper {
                 env = Config.X_CULQI_ENV_LIVE;
             }
             String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
+            url = (url.contains("plans") || url.contains("subscriptions")) ? url + "create" : url;
             RequestBody body = RequestBody.create(JSON, jsonData);
             Request request = new Request.Builder()
                     .url(base_url+url)

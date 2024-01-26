@@ -30,7 +30,14 @@ public class Generic implements All, Create, Find {
             response.setBody(mapper.writeValueAsString(validationResponse));
             return response;
         }
-        return new ObjectResult().list(this.URL.replace("/",""), params);
+
+        String url = this.URL;
+        if (!url.contains("plans") || !url.contains("subscriptions")) {
+            // Realiza el replace solo si no contiene las subcadenas
+            url.replace("/", "");
+        }
+
+        return new ObjectResult().list(url, params);
     }
 
     public ResponseCulqi list() throws Exception {
@@ -64,8 +71,8 @@ public class Generic implements All, Create, Find {
     }
     
     public ResponseCulqi update(Map<String, Object> body, String id) throws Exception {
-        Map<String, String> validationResponse = verifyClassValidationUpdate(id, this.URL);
-         if (validationResponse != null) {
+        Map<String, String> validationResponse = validatePayloadUpdate(id, this.URL, body);
+        if (validationResponse != null) {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
@@ -73,10 +80,11 @@ public class Generic implements All, Create, Find {
         }
         return new ObjectResult().update(body, this.URL, id);
     }
-    
-    public ResponseCulqi update(Map<String, Object> body, String id, String rsaPublicKey, String rsaId) throws Exception {
-        Map<String, String> validationResponse = verifyClassValidationUpdate(id, this.URL);
-         if (validationResponse != null) {
+
+    public ResponseCulqi update(Map<String, Object> body, String id, String rsaPublicKey, String rsaId)
+            throws Exception {
+        Map<String, String> validationResponse = validatePayloadUpdate(id, this.URL, body);
+        if (validationResponse != null) {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
@@ -127,7 +135,26 @@ public class Generic implements All, Create, Find {
         }
         return null;
     }
-    
+
+    private static Map<String, String> validatePayloadUpdate(String id, String url, Map<String, Object> body)
+            throws Exception {
+        try {
+            if (url.contains("plans")) {
+                Helper.validateStringStart(id, "pln");
+                PlanValidation.update(body);
+            }
+            if (url.contains("subscriptions")) {
+                Helper.validateStringStart(id, "sxn");
+                System.out.println("validacion id paso");
+                SubscriptionValidation.update(body);
+            }
+        } catch (CustomException e) {
+            System.out.println(e.getErrorData());
+            return e.getErrorData();
+        }
+        return null;
+    }
+
     private static Map<String, String> verifyClassValidationUpdate(String id, String url) throws Exception {
         try {
             if (url.contains("tokens")) {
