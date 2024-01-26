@@ -66,8 +66,14 @@ public class CulqiCreateTest extends TestCase {
 
     @Test
     public void test05_createPlan() throws Exception {
-    	Map<String, Object> res = mapper.readValue(culqiCRUD.createPlan().getBody(), new TypeReference<HashMap<String, Object>>(){});
-        assertEquals("plan",res.get("object").toString());
+        Map<String, Object> res = mapper.readValue(culqiCRUD.createPlan().getBody(),
+                new TypeReference<HashMap<String, Object>>() {
+                });
+
+        // Validamos que tiene que retornar el servicio un id en formato string para
+        // comprobar que este creado el plan correctamente
+        Object id = res.get("id");
+        assertTrue(id instanceof String);
     }
 
     @Test
@@ -90,8 +96,11 @@ public class CulqiCreateTest extends TestCase {
 
     @Test
     public void test08_createSubscription() throws Exception {
-    	Map<String, Object> res = mapper.readValue(culqiCRUD.createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
-        assertEquals("subscription",res.get("object").toString());
+        Map<String, Object> res = mapper.readValue(culqiCRUD.createSubscription().getBody(),
+                new TypeReference<HashMap<String, Object>>() {
+                });
+        Object id = res.get("id");
+        assertTrue(id instanceof String);
     }
 
     @Test

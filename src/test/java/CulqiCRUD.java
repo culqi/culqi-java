@@ -24,7 +24,7 @@ public class CulqiCRUD {
     public Culqi init() {
         Culqi culqi = new Culqi();
         culqi.public_key = "pk_test_90667d0a57d45c48";
-        culqi.secret_key = "sk_test_1573b0e8079863ff";
+        culqi.secret_key = "sk_live_c2eep44e937847f8";
         return culqi;
     }
     
@@ -120,13 +120,17 @@ public class CulqiCRUD {
     }
 
     protected ResponseCulqi createSubscription() throws Exception {
-    	Map<String, Object> res = mapper.readValue(createCard().getBody(), new TypeReference<HashMap<String, Object>>(){});
-        String card_id = res.get("id").toString();
-        Map<String, Object> res2 = mapper.readValue(createPlan().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        // Map<String, Object> res = mapper.readValue(createCard().getBody(), new
+        // TypeReference<HashMap<String, Object>>(){});
+        // System.out.println("res card: "+ res);
+        // String card_id = res.get("id").toString();
+        Map<String, Object> res2 = mapper.readValue(createPlan().getBody(),
+                new TypeReference<HashMap<String, Object>>() {
+                });
         String plan_id = res2.get("id").toString();
-        return init().subscription.create(jsondata.jsonSubscription(card_id, plan_id));
+        return init().subscription.create(jsondata.jsonSubscription(plan_id));
     }
-    
+
     protected ResponseCulqi updateSubscription() throws Exception {
     	Map<String, Object> res = mapper.readValue(createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
         String id = res.get("id").toString();
@@ -160,7 +164,7 @@ public class CulqiCRUD {
     }
 
     protected ResponseCulqi plans() throws Exception {
-        return init().plan.list();
+        return init().plan.list(jsondata.jsonPlanFilter());
     }
 
     protected ResponseCulqi customers() throws Exception {

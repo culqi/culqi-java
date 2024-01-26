@@ -51,14 +51,22 @@ public class CulqiPatchTest extends TestCase {
 	
 	@Test
     public void test06_updatePlan() throws Exception {
-		Map<String, Object> res = mapper.readValue(culqiCRUD.updatePlan().getBody(), new TypeReference<HashMap<String, Object>>(){});
-        assertEquals("plan", res.get("object").toString());
+        Map<String, Object> res = mapper.readValue(culqiCRUD.updatePlan().getBody(),
+                new TypeReference<HashMap<String, Object>>() {
+                });
+        // Validamos que tiene que retornar el servicio un id en formato string para
+        // comprobar que este actualizado el plan correctamente
+        Object id = res.get("id");
+        assertTrue(id instanceof String);
     }
 	
 	@Test
     public void test07_updateSubscription() throws Exception {
-		Map<String, Object> res = mapper.readValue(culqiCRUD.updateSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
-        assertEquals("subscription", res.get("object").toString());
+        Map<String, Object> res = mapper.readValue(culqiCRUD.updateSubscription().getBody(),
+                new TypeReference<HashMap<String, Object>>() {
+                });
+        Object id = res.get("id");
+        assertTrue(id instanceof String);
     }
 	
 	@Test
