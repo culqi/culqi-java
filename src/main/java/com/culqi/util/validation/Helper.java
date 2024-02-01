@@ -112,10 +112,10 @@ public class Helper {
 
     public static void validateCurrency(String currency, int amount) throws CustomException {
         validateEnumCurrency(currency);
-        Integer MIN_AMOUNT_PEN = 1;
-        Integer MAX_AMOUNT_PEN = 100;
-        Integer MIN_AMOUNT_USD = 10;
-        Integer MAX_AMOUNT_USD = 1000;
+        Integer MIN_AMOUNT_PEN = 3;
+        Integer MAX_AMOUNT_PEN = 5000;
+        Integer MIN_AMOUNT_USD = 1;
+        Integer MAX_AMOUNT_USD = 1500;
 
         int minAmountPublicApi = MIN_AMOUNT_PEN * 100;
         int maxAmountPublicApi = MAX_AMOUNT_PEN * 100;
