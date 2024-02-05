@@ -30,11 +30,10 @@ public class SubscriptionValidation {
         }
 
         // Validate parameter: tyc
-        if (!data.containsKey("tyc") || !(data.get("tyc") instanceof String)
-                || !(Boolean.FALSE.equals(data.get("tyc"))
+        if (!data.containsKey("tyc") || !(Boolean.FALSE.equals(data.get("tyc"))
                         || Boolean.TRUE.equals(data.get("tyc")))) {
             throw new CustomException(
-                    "l campo 'tyc' es inválido o está vacío. El valor debe ser un booleano.");
+                    "El campo 'tyc' es inválido o está vacío. El valor debe ser un booleano.");
         }
 
     }
