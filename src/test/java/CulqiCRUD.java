@@ -24,7 +24,7 @@ public class CulqiCRUD {
     public Culqi init() {
         Culqi culqi = new Culqi();
         culqi.public_key = "pk_test_90667d0a57d45c48";
-        culqi.secret_key = "sk_live_c2eep44e937847f8";
+        culqi.secret_key = "sk_live_c2eec44e937847x8";
         return culqi;
     }
     
@@ -127,14 +127,21 @@ public class CulqiCRUD {
         Map<String, Object> res2 = mapper.readValue(createPlan().getBody(),
                 new TypeReference<HashMap<String, Object>>() {
                 });
+                System.out.println("Respuesta Plan: "+ res2);
         String plan_id = res2.get("id").toString();
-        return init().subscription.create(jsondata.jsonSubscription(plan_id));
+        ResponseCulqi response = init().subscription.create(jsondata.jsonSubscription(plan_id));
+
+        // Imprime la respuesta en la consola
+        System.out.println("Respuesta createSubscription: " + response);
+    
+        return response;
+        
     }
 
     protected ResponseCulqi updateSubscription() throws Exception {
-    	Map<String, Object> res = mapper.readValue(createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
-        String id = res.get("id").toString();
-        return init().subscription.update(jsondata.jsonUpdateCard(), id);
+    	//Map<String, Object> res = mapper.readValue(createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        //String id = res.get("id").toString();
+        return init().subscription.update(jsondata.jsonUpdateSubscription(), "sxn_live_neFrhLrXQvozBdWn");
     }
 
     protected ResponseCulqi createRefund() throws Exception {
