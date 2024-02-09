@@ -28,6 +28,7 @@ public class Generic implements All, Create, Find {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
+            System.out.println("Error : " + response);
             return response;
         }
 
@@ -50,6 +51,7 @@ public class Generic implements All, Create, Find {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
+            System.out.println("Error : " + response);
             return response;
         }
         return new ObjectResult().create(body, this.URL);
@@ -65,6 +67,7 @@ public class Generic implements All, Create, Find {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
+            System.out.println("Error : " + response);
             return response;
         }
         return new ObjectResult().get_or_delete(this.URL, id, false);
@@ -76,6 +79,7 @@ public class Generic implements All, Create, Find {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
+            System.out.println("Error : " + response);
             return response;
         }
         return new ObjectResult().update(body, this.URL, id);
@@ -88,6 +92,7 @@ public class Generic implements All, Create, Find {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
+            System.out.println("Error : " + response);
             return response;
         }
         return new ObjectResult().update(body, this.URL, id, rsaPublicKey, rsaId);
@@ -99,6 +104,7 @@ public class Generic implements All, Create, Find {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
+            System.out.println("Error : " + response);
             return response;
         }
         return new ObjectResult().get_or_delete(this.URL, id, true);
