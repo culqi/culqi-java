@@ -93,7 +93,7 @@ public class SubscriptionValidation {
         }
 
         if (data.containsKey("creation_date_from")) {
-            if (!Helper.validValue(data.get("creation_date_from"), false) ||
+            if (!Helper.validValue(data.get("creation_date_from"), true) ||
                     !(data.get("creation_date_from").toString().length() == 10 ||
                             data.get("creation_date_from").toString().length() == 13)) {
                 throw new CustomException(
@@ -102,7 +102,7 @@ public class SubscriptionValidation {
         }
 
         if (data.containsKey("creation_date_to")) {
-            if (!Helper.validValue(data.get("creation_date_to"), false) ||
+            if (!Helper.validValue(data.get("creation_date_to"), true) ||
                     !(data.get("creation_date_to").toString().length() == 10 ||
                             data.get("creation_date_to").toString().length() == 13)) {
                 throw new CustomException(
