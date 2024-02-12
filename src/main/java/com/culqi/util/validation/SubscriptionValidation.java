@@ -6,6 +6,14 @@ import java.util.Map;
 
 public class SubscriptionValidation {
     public static void create(Map<String, Object> data) throws Exception {
+
+        List<String> requiredFields = Arrays.asList(
+            "card_id",
+            "plan_id",
+            "tyc"
+        );
+
+        Helper.additionalValidation(data, requiredFields, null);
         Helper.validatePayloadCreateSubscription(data);
 
         Integer GENERATED_ID = 25;
@@ -108,7 +116,11 @@ public class SubscriptionValidation {
     }
 
     public static void update(Map<String, Object> data) throws Exception {
+        List<String> requiredFields = Arrays.asList(
+            "card_id"
+        );
 
+        Helper.additionalValidation(data, requiredFields, null);
         Helper.validatePayloadUpdateSubscription(data);
         Integer GENERATED_ID = 25;
         // Validate card_id format

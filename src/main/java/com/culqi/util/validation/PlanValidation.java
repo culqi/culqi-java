@@ -1,6 +1,7 @@
 package com.culqi.util.validation;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -11,6 +12,18 @@ public class PlanValidation {
 
     public static void create(Map<String, Object> data) throws Exception {
         // Validate payload
+        List<String> requiredFields = Arrays.asList(
+            "interval_unit_time",
+            "interval_count",
+            "amount",
+            "name",
+            "description",
+            "short_name",
+            "currency",
+            "initial_cycles"
+        );
+
+        Helper.additionalValidation(data, requiredFields, null);
         Helper.validatePayloadCreatePlan(data);
 
         // Validate parameter: interval_unit_time
@@ -30,7 +43,7 @@ public class PlanValidation {
 
         // Validate parameter: amount
         if (!Helper.validValue(data.get("amount"), true)) {
-            throw new CustomException("El campo 'amount' es inválido o está vacío, debe tener un valor numérico.");
+            throw new CustomException("El campo 'amount' es inválido o está vacío, debe tener un valor numérico entero.");
         }
 
         Helper.validateCurrency(data.get("currency").toString(), Integer.parseInt(data.get("amount").toString()));
@@ -104,7 +117,7 @@ public class PlanValidation {
             if (Helper.validateRangeParameters(data.get("image"), 5, 250, false) ||
                     !Pattern.matches(REGEX_IMAGE, data.get("image").toString())) {
                 throw new CustomException(
-                        "El campo 'image' es inválido o está vacío. El valor debe ser una cadena y debe ser una URL válida.");
+                        "El campo 'image' es inválido o está vacío. El valor debe ser una cadena y debe ser una URL válida de 5 a 250 caracteres.");
             }
         }
     }
@@ -166,7 +179,7 @@ public class PlanValidation {
         }
 
         if (data.containsKey("creation_date_from")) {
-            if (!Helper.validValue(data.get("creation_date_from"), false) ||
+            if (!Helper.validValue(data.get("creation_date_from"), true) ||
                     !(data.get("creation_date_from").toString().length() == 10 ||
                             data.get("creation_date_from").toString().length() == 13)) {
                 throw new CustomException(
@@ -175,7 +188,7 @@ public class PlanValidation {
         }
 
         if (data.containsKey("creation_date_to")) {
-            if (!Helper.validValue(data.get("creation_date_to"), false) ||
+            if (!Helper.validValue(data.get("creation_date_to"), true) ||
                     !(data.get("creation_date_to").toString().length() == 10 ||
                             data.get("creation_date_to").toString().length() == 13)) {
                 throw new CustomException(

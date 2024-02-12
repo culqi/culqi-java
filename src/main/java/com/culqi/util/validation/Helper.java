@@ -322,6 +322,22 @@ public class Helper {
         }
     }
 
+    public static void additionalValidation(Map<String, Object> data, List<String> requiredFields, String message) throws CustomException  {
+        for (String field : requiredFields) {
+            String errorMessage = "El campo '";
+
+            if (message != null && !message.isEmpty()) {
+                errorMessage += message + ".";
+            }
+
+            errorMessage += field + "' es requerido";
+
+            if (!data.containsKey(field) || data.get(field) == null || data.get(field).toString().isEmpty() || data.get(field).toString().equals("undefined")) {
+                throw new CustomException(errorMessage);
+            }
+        }
+    }
+
     public static String getStringParameter(Map<String, Object> data, String key) {
         return data.containsKey(key) ? String.valueOf(data.get(key)) : null;
     }
