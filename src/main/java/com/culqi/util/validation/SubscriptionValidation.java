@@ -71,12 +71,12 @@ public class SubscriptionValidation {
 
         Integer GENERATED_ID = 25;
         if (data.containsKey("plan_id")) {
-            Helper.validateStringStart((String) data.get("plan_id"), "pln");
             if (!Helper.validValue(data.get("plan_id"), false) ||
                     data.get("plan_id").toString().length() != GENERATED_ID) {
                 throw new CustomException(
                         "El campo 'plan_id' es inválido. La longitud debe ser de 25 caracteres.");
             }
+            Helper.validateStringStart((String) data.get("plan_id"), "pln");
         }
         if (data.containsKey("before")) {
             if (!Helper.validValue(data.get("before"), false) ||
@@ -112,9 +112,6 @@ public class SubscriptionValidation {
             }
         }
 
-        if (data.containsKey("creation_date_from") && data.containsKey("creation_date_to")) {
-            Helper.validateDateFilter((String) data.get("creation_date_from"), (String) data.get("creation_date_to"));
-        }
     }
 
     public static void update(Map<String, Object> data) throws Exception {
