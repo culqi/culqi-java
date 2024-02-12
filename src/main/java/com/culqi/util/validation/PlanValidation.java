@@ -87,7 +87,7 @@ public class PlanValidation {
         // Validate: initial_cycles amount
         if (!Helper.validValue(initialCycles.get("amount"), true)) {
             throw new CustomException(
-                    "El campo 'initial_cycles.amount' es inválido o está vacío, debe tener un valor numérico.");
+                    "El campo 'initial_cycles.amount' es inválido o está vacío, debe tener un valor numérico entero.");
         }
 
         // Validate: initial_cycles interval_unit_time
