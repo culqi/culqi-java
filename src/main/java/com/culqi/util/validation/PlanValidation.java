@@ -13,15 +13,14 @@ public class PlanValidation {
     public static void create(Map<String, Object> data) throws Exception {
         // Validate payload
         List<String> requiredFields = Arrays.asList(
-            "interval_unit_time",
-            "interval_count",
-            "amount",
-            "name",
-            "description",
-            "short_name",
-            "currency",
-            "initial_cycles"
-        );
+                "interval_unit_time",
+                "interval_count",
+                "amount",
+                "name",
+                "description",
+                "short_name",
+                "currency",
+                "initial_cycles");
 
         Helper.additionalValidation(data, requiredFields, null);
         Helper.validatePayloadCreatePlan(data);
@@ -43,7 +42,8 @@ public class PlanValidation {
 
         // Validate parameter: amount
         if (!Helper.validValue(data.get("amount"), true)) {
-            throw new CustomException("El campo 'amount' es inválido o está vacío, debe tener un valor numérico entero.");
+            throw new CustomException(
+                    "El campo 'amount' es inválido o está vacío, debe tener un valor numérico entero.");
         }
 
         Helper.validateCurrency(data.get("currency").toString(), Integer.parseInt(data.get("amount").toString()));
@@ -195,10 +195,6 @@ public class PlanValidation {
                         "El campo 'creation_date_to' debe tener una longitud de 10 o 13 caracteres");
             }
         }
-
-        if (data.containsKey("creation_date_from") && data.containsKey("creation_date_to")) {
-            Helper.validateDateFilter((String) data.get("creation_date_from"), (String) data.get("creation_date_to"));
-        }
     }
 
     public static void update(Map<String, Object> data) throws Exception {
@@ -243,8 +239,8 @@ public class PlanValidation {
         }
 
         // Validar parámetro: image
-         // Validate parameter: image
-         if (data.containsKey("image")) {
+        // Validate parameter: image
+        if (data.containsKey("image")) {
             if (Helper.validateRangeParameters(data.get("image"), 5, 250, false) ||
                     !Pattern.matches(REGEX_IMAGE, data.get("image").toString())) {
                 throw new CustomException(
