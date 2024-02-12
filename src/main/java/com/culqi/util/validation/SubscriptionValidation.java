@@ -95,20 +95,20 @@ public class SubscriptionValidation {
         }
 
         if (data.containsKey("creation_date_from")) {
-            if (!Helper.validValue(data.get("creation_date_from"), true) ||
-                    !(data.get("creation_date_from").toString().length() == 10 ||
-                            data.get("creation_date_from").toString().length() == 13)) {
+            Object creationDateFrom = data.get("creation_date_from");
+        
+            if (String.valueOf(creationDateFrom).length() != 10 && String.valueOf(creationDateFrom).length() != 13) {
                 throw new CustomException(
-                        "El campo 'creation_date_from' debe tener una longitud de 10 o 13 caracteres.");
+                    "El campo 'creation_date_from' debe tener una longitud diferente de 10 o 13 caracteres.");
             }
         }
 
         if (data.containsKey("creation_date_to")) {
-            if (!Helper.validValue(data.get("creation_date_to"), true) ||
-                    !(data.get("creation_date_to").toString().length() == 10 ||
-                            data.get("creation_date_to").toString().length() == 13)) {
+            Object creationDateTo = data.get("creation_date_to");
+        
+            if (String.valueOf(creationDateTo).length() != 10 && String.valueOf(creationDateTo).length() != 13) {
                 throw new CustomException(
-                        "El campo 'creation_date_to' debe tener una longitud de 10 o 13 caracteres");
+                    "El campo 'creation_date_to' debe tener una longitud diferente de 10 o 13 caracteres.");
             }
         }
 
