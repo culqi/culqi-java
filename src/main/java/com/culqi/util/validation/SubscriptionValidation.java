@@ -18,19 +18,21 @@ public class SubscriptionValidation {
 
         Integer GENERATED_ID = 25;
         // Validate card_id format
-        Helper.validateStringStart((String) data.get("card_id"), "crd");
         if (!Helper.validValue(data.get("card_id"), false) ||
                 data.get("card_id").toString().length() != GENERATED_ID) {
             throw new CustomException(
                     "El campo 'card_id' es inválido. La longitud debe ser de 25 caracteres.");
         }
+        Helper.validateStringStart((String) data.get("card_id"), "crd");
+
         // Validate plan_id format
-        Helper.validateStringStart((String) data.get("plan_id"), "pln");
         if (!Helper.validValue(data.get("plan_id"), false) ||
                 data.get("plan_id").toString().length() != GENERATED_ID) {
             throw new CustomException(
                     "El campo 'plan_id' es inválido. La longitud debe ser de 25 caracteres.");
         }
+        Helper.validateStringStart((String) data.get("plan_id"), "pln");
+
 
         // Validate parameter: metadata
         if (data.containsKey("metadata")) {
