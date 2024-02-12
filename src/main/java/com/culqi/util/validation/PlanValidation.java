@@ -64,7 +64,7 @@ public class PlanValidation {
 
         // Validate parameter: short_name
         if (!Helper.validValue(data.get("short_name"), false) ||
-                Helper.validateRangeParameters(data.get("short_name"), 5, 250, false)) {
+                Helper.validateRangeParameters(data.get("short_name"), 5, 50, false)) {
             throw new CustomException(
                     "El campo 'short_name' es inválido o está vacío. El valor debe tener un rango de 5 a 50 caracteres.");
         }
