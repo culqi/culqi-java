@@ -57,7 +57,7 @@ public class CulqiGetTest extends TestCase {
     @Test
     public void test06_findPlan() throws Exception {
     	Map<String, Object> res = mapper.readValue(culqiCRUD.createPlan().getBody(), new TypeReference<HashMap<String, Object>>(){});
-    	Map<String, Object> planFound = mapper.readValue(culqiCRUD.init().plan.get(res.get("id").toString()).getBody(), new TypeReference<HashMap<String, Object>>(){});
+        Map<String, Object> planFound = mapper.readValue(culqiCRUD.init().plan.get(res.get("id").toString()).getBody(), new TypeReference<HashMap<String, Object>>(){});
     	Object id = planFound.get("id");
         assertTrue(id instanceof String);
     }

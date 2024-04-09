@@ -55,7 +55,6 @@ public class SubscriptionValidation {
         // Validar parámetro: status
         if (data.containsKey("status")) {
             if (!SUBSCRIPTION_STATUS.contains(data.get("status"))) {
-                System.out.println("valid");
                 throw new CustomException(
                         "El filtro 'status' tiene un valor inválido o está vacío. Estos son los únicos valores permitidos: [1, 2, 3, 4, 5, 6, 8].");
             }

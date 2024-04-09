@@ -121,8 +121,8 @@ public class JsonData {
 		plan.put("after", "pln_live_qnJOtJiuGT88dAa5");
 		plan.put("min_amount", 300);
 		plan.put("max_amount", 500000);
-		//plan.put("creation_date_from", "2023-12-20T00:00:00.000Z");
-		//plan.put("creation_date_to", "2023-12-20T00:00:00.000Z");
+		//plan.put("creation_date_from", "1712673354");
+		//plan.put("creation_date_to", "1712673354");
 		return plan;
 	}
 
@@ -232,11 +232,11 @@ public class JsonData {
         return refund;
     }
 
-	protected Map<String, Object> jsonSubscription(String planId) throws Exception {
+	protected Map<String, Object> jsonSubscription(String cardId, String planId) throws Exception {
 		Map<String, Object> subscription = new HashMap<String, Object>();
 		Map<String, Object> metadata = new HashMap<String, Object>();
 		metadata.put("order_id", "124");
-		subscription.put("card_id", "crd_live_****************");
+		subscription.put("card_id", cardId);
 		subscription.put("plan_id", planId);
 		subscription.put("tyc", true);
 		subscription.put("metadata", metadata);
@@ -254,13 +254,13 @@ public class JsonData {
 
 	protected Map<String, Object> jsonListSubscriptions() throws Exception {
 		Map<String, Object> subscription = new HashMap<String, Object>();
-		subscription.put("plan_id", "pln_live_****************");
+		//subscription.put("plan_id", "pln_live_****************");
 		//subscription.put("status", 1);
 		subscription.put("limit", 100);
-		subscription.put("before", "sxn_live_****************");
-		subscription.put("after", "sxn_live_****************");
-		//subscription.put("creation_date_from", "2023-12-20T00:00:00.000Z");
-		//subscription.put("creation_date_to", "2023-12-20T00:00:00.000Z");
+		//subscription.put("before", "sxn_live_****************");
+		//subscription.put("after", "sxn_live_****************");
+		//subscription.put("creation_date_from", "1712673354");
+		//subscription.put("creation_date_to", "1712673354");
 		return subscription;
 	}
 }
