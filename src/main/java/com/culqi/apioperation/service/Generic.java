@@ -28,13 +28,11 @@ public class Generic implements All, Create, Find {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
-            System.out.println("Error : " + response);
             return response;
         }
 
         String url = this.URL;
         if (!url.contains("plans") || !url.contains("subscriptions")) {
-            // Realiza el replace solo si no contiene las subcadenas
             url.replace("/", "");
         }
 
@@ -51,7 +49,6 @@ public class Generic implements All, Create, Find {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
-            System.out.println("Error : " + response);
             return response;
         }
         return new ObjectResult().create(body, this.URL);
@@ -67,7 +64,6 @@ public class Generic implements All, Create, Find {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
-            System.out.println("Error : " + response);
             return response;
         }
         return new ObjectResult().get_or_delete(this.URL, id, false);
@@ -79,7 +75,6 @@ public class Generic implements All, Create, Find {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
-            System.out.println("Error : " + response);
             return response;
         }
         return new ObjectResult().update(body, this.URL, id);
@@ -92,7 +87,6 @@ public class Generic implements All, Create, Find {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
-            System.out.println("Error : " + response);
             return response;
         }
         return new ObjectResult().update(body, this.URL, id, rsaPublicKey, rsaId);
@@ -104,7 +98,6 @@ public class Generic implements All, Create, Find {
             ResponseCulqi response = new ResponseCulqi();
             response.setStatusCode(400);
             response.setBody(mapper.writeValueAsString(validationResponse));
-            System.out.println("Error : " + response);
             return response;
         }
         return new ObjectResult().get_or_delete(this.URL, id, true);
@@ -151,11 +144,9 @@ public class Generic implements All, Create, Find {
             }
             if (url.contains("subscriptions")) {
                 Helper.validateStringStart(id, "sxn");
-                System.out.println("validacion id paso");
                 SubscriptionValidation.update(body);
             }
         } catch (CustomException e) {
-            System.out.println(e.getErrorData());
             return e.getErrorData();
         }
         return null;

@@ -115,29 +115,18 @@ public class CulqiCRUD {
     }
 
     protected ResponseCulqi createSubscription() throws Exception {
-        // Map<String, Object> res = mapper.readValue(createCard().getBody(), new
-        // TypeReference<HashMap<String, Object>>(){});
-        // System.out.println("res card: "+ res);
-        // String card_id = res.get("id").toString();
-        Map<String, Object> res2 = mapper.readValue(createPlan().getBody(),
-                new TypeReference<HashMap<String, Object>>() {
-                });
-                System.out.println("Respuesta Plan: "+ res2);
+    	Map<String, Object> res = mapper.readValue(createCard().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String card_id = res.get("id").toString();
+        Map<String, Object> res2 = mapper.readValue(createPlan().getBody(), new TypeReference<HashMap<String, Object>>(){});
         String plan_id = res2.get("id").toString();
-        ResponseCulqi response = init().subscription.create(jsondata.jsonSubscription(plan_id));
-
-        // Imprime la respuesta en la consola
-        System.out.println("Respuesta createSubscription: " + response);
-    
-        return response;
-        
+        return init().subscription.create(jsondata.jsonSubscription(card_id, plan_id));
     }
 
     protected ResponseCulqi updateSubscription() throws Exception {
-    	//Map<String, Object> res = mapper.readValue(createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
-        //String id = res.get("id").toString();
-        return init().subscription.update(jsondata.jsonUpdateSubscription(), "sxn_live_neFrhLrXQvozBdWn");
-    }
+        Map<String, Object> res = mapper.readValue(createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String id = res.get("id").toString();
+        return init().subscription.update(jsondata.jsonUpdateSubscription(), id);
+        }
 
     protected ResponseCulqi createRefund() throws Exception {
     	Map<String, Object> res = mapper.readValue(createCharge().getBody(), new TypeReference<HashMap<String, Object>>(){});

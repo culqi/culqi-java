@@ -33,14 +33,12 @@ public class PlanValidation {
                     "El campo 'interval_unit_time' tiene un valor inválido o está vacío. Estos son los únicos valores permitidos: [ 1, 2, 3, 4, 5, 6].");
         }
 
-        // Validate parameter: interval_count
         if (Helper.validateRangeParameters(data.get("interval_count"), 0, 9999, true) ||
                 !Helper.validValue(data.get("interval_unit_time"), true)) {
             throw new CustomException(
                     "El campo 'interval_count' solo admite valores numéricos en el rango 0 a 9999.");
         }
 
-        // Validate parameter: amount
         if (!Helper.validValue(data.get("amount"), true)) {
             throw new CustomException(
                     "El campo 'amount' es inválido o está vacío, debe tener un valor numérico entero.");
@@ -48,21 +46,18 @@ public class PlanValidation {
 
         Helper.validateCurrency(data.get("currency").toString(), Integer.parseInt(data.get("amount").toString()));
 
-        // Validate parameter: name
         if (!Helper.validValue(data.get("name"), false) ||
                 Helper.validateRangeParameters(data.get("name"), 5, 50, false)) {
             throw new CustomException(
                     "El campo 'name' es inválido o está vacío. El valor debe tener un rango de 5 a 50 caracteres.");
         }
 
-        // Validate parameter: description
         if (!Helper.validValue(data.get("description"), false) ||
                 Helper.validateRangeParameters(data.get("description"), 5, 250, false)) {
             throw new CustomException(
                     "El campo 'description' es inválido o está vacío. El valor debe tener un rango de 5 a 250 caracteres.");
         }
 
-        // Validate parameter: short_name
         if (!Helper.validValue(data.get("short_name"), false) ||
                 Helper.validateRangeParameters(data.get("short_name"), 5, 50, false)) {
             throw new CustomException(
@@ -73,46 +68,38 @@ public class PlanValidation {
             throw new CustomException(
                     "El campo 'initial_cycles' es requerido.");
         }
-        // Validate parameter: currency
+
         Helper.validateEnumCurrency(data.get("currency").toString());
 
         Map<String, Object> initialCycles = (Map<String, Object>) data.get("initial_cycles");
-        // Validate parameters: initial_cycles
-        // Validate: initial_cycles count
         if (!Helper.validValue(initialCycles.get("count"), true)) {
             throw new CustomException(
                     "El campo 'initial_cycles.count' es inválido o está vacío, debe tener un valor numérico.");
         }
 
-        // Validate: initial_cycles amount
         if (!Helper.validValue(initialCycles.get("amount"), true)) {
             throw new CustomException(
                     "El campo 'initial_cycles.amount' es inválido o está vacío, debe tener un valor numérico entero.");
         }
 
-        // Validate: initial_cycles interval_unit_time
         if (!Helper.validValue(initialCycles.get("interval_unit_time"), true) ||
                 !allowedValues.contains(initialCycles.get("interval_unit_time"))) {
             throw new CustomException(
                     "El campo 'initial_cycles.interval_unit_time' tiene un valor inválido o está vacío. Estos son los únicos valores permitidos: [ 1, 2, 3, 4, 5, 6].");
         }
 
-        // Validate: initial_cycles has_initial_charge
         if (!(initialCycles.get("has_initial_charge") instanceof Boolean)) {
             throw new CustomException(
                     "El campo 'initial_cycles.has_initial_charge' es inválido o está vacío. El valor debe ser un booleano (true o false).");
         }
 
-        // Validate parameter: initial_cycles
         Helper.validateInitialCycles(initialCycles, data.get("currency").toString(),
                 Integer.parseInt(data.get("amount").toString()));
 
-        // Validate parameter: metadata
         if (data.containsKey("metadata")) {
             Helper.validateMetadataSchema((Map<String, Object>) data.get("metadata"));
         }
 
-        // Validate parameter: image
         if (data.containsKey("image")) {
             if (Helper.validateRangeParameters(data.get("image"), 5, 250, false) ||
                     !Pattern.matches(REGEX_IMAGE, data.get("image").toString())) {
@@ -124,14 +111,11 @@ public class PlanValidation {
 
     public static void list(Map<String, Object> data) throws Exception {
 
-        // Validar payload
         Helper.validatePayloadFilterPlan(data);
 
         List<Integer> PLAN_STATUS = Arrays.asList(1, 2);
-        // Validar parámetro: status
         if (data.containsKey("status")) {
             if (!PLAN_STATUS.contains(data.get("status"))) {
-                System.out.println("valid");
                 throw new CustomException(
                         "El filtro 'status' tiene un valor inválido o está vacío. Estos son los únicos valores permitidos: 1, 2.");
             }
@@ -198,10 +182,8 @@ public class PlanValidation {
     }
 
     public static void update(Map<String, Object> data) throws Exception {
-        // Validar payload
         Helper.validatePayloadUpdatePlan(data);
 
-        // Validar parámetro: name
         if (data.containsKey("name")) {
             if (!Helper.validValue(data.get("name"), false) ||
                     Helper.validateRangeParameters(data.get("name"), 5, 50, false)) {
@@ -210,7 +192,6 @@ public class PlanValidation {
             }
         }
 
-        // Validar parámetro: description
         if (data.containsKey("description")) {
             if (!Helper.validValue(data.get("description"), false) ||
                     Helper.validateRangeParameters(data.get("description"), 5, 250, false)) {
@@ -219,7 +200,6 @@ public class PlanValidation {
             }
         }
 
-        // Validar parámetro: short_name
         if (data.containsKey("shortName")) {
             if (!Helper.validValue(data.get("short_name"), false) ||
                     Helper.validateRangeParameters(data.get("short_name"), 5, 250, false)) {
@@ -229,17 +209,13 @@ public class PlanValidation {
         }
 
         List<Integer> PLAN_STATUS = Arrays.asList(1, 2);
-        // Validar parámetro: status
         if (data.containsKey("status")) {
             if (!PLAN_STATUS.contains(data.get("status"))) {
-                System.out.println("valid");
                 throw new CustomException(
                         "El filtro 'status' tiene un valor inválido o está vacío. Estos son los únicos valores permitidos: 1, 2.");
             }
         }
 
-        // Validar parámetro: image
-        // Validate parameter: image
         if (data.containsKey("image")) {
             if (Helper.validateRangeParameters(data.get("image"), 5, 250, false) ||
                     !Pattern.matches(REGEX_IMAGE, data.get("image").toString())) {
@@ -248,7 +224,6 @@ public class PlanValidation {
             }
         }
 
-        // Validar parámetro: metadata
         if (data.containsKey("metadata")) {
             Helper.validateMetadataSchema((Map<String, Object>) data.get("metadata"));
         }
