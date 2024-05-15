@@ -136,7 +136,7 @@ public class Helper {
         }
     }
 
-    public static void validateInitialCycles(Map<String, Object> initialCycles, String currency, Integer amount)
+    public static void validateInitialCycles(Map<String, Object> initialCycles)
             throws CustomException {
         boolean hasInitialCharge = (boolean) initialCycles.get("has_initial_charge");
         int payAmount = (int) initialCycles.get("amount");
@@ -148,30 +148,18 @@ public class Helper {
         }
 
         if (hasInitialCharge) {
-            validateCurrency(currency, amount);
-
-            if (amount == payAmount) {
-                throw new CustomException(
-                        "El campo 'initial_cycles.amount' es inválido o está vacío. El valor no debe ser igual al monto del plan.");
-            }
 
             if (count < 1 || count > 9999) {
                 throw new CustomException(
                         "El campo 'initial_cycles.count' solo admite valores numéricos en el rango 1 a 9999.");
             }
 
-            if (payAmount < 300 || payAmount > 500000) {
-                throw new CustomException("El campo 'initial_cycles.amount' admite valores en el rango 300 a 500000.");
-            }
         } else {
             if (count < 0 || count > 9999) {
                 throw new CustomException(
                         "El campo 'initial_cycles.count' solo admite valores numéricos en el rango 0 a 9999.");
             }
 
-            if (payAmount != 0) {
-                throw new CustomException("El campo 'initial_cycles.amount' es inválido, debe ser 0.");
-            }
         }
     }
 

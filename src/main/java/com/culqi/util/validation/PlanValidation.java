@@ -44,8 +44,6 @@ public class PlanValidation {
                     "El campo 'amount' es inválido o está vacío, debe tener un valor numérico entero.");
         }
 
-        Helper.validateCurrency(data.get("currency").toString(), Integer.parseInt(data.get("amount").toString()));
-
         if (!Helper.validValue(data.get("name"), false) ||
                 Helper.validateRangeParameters(data.get("name"), 5, 50, false)) {
             throw new CustomException(
@@ -76,6 +74,10 @@ public class PlanValidation {
             throw new CustomException(
                     "El campo 'initial_cycles.count' es inválido o está vacío, debe tener un valor numérico.");
         }
+        if (!initialCycles.containsKey("amount") || initialCycles.get("amount") == null || !(initialCycles.get("amount") instanceof Integer)) {
+            throw new CustomException(
+                    "El campo 'initial_cycles.amount' es inválido o está vacío, debe tener un valor numérico entero.");
+        }
 
         if (!Helper.validValue(initialCycles.get("amount"), true)) {
             throw new CustomException(
@@ -93,8 +95,7 @@ public class PlanValidation {
                     "El campo 'initial_cycles.has_initial_charge' es inválido o está vacío. El valor debe ser un booleano (true o false).");
         }
 
-        Helper.validateInitialCycles(initialCycles, data.get("currency").toString(),
-                Integer.parseInt(data.get("amount").toString()));
+        Helper.validateInitialCycles(initialCycles);
 
         if (data.containsKey("metadata")) {
             Helper.validateMetadataSchema((Map<String, Object>) data.get("metadata"));
@@ -122,18 +123,16 @@ public class PlanValidation {
         }
 
         if (data.containsKey("min_amount")) {
-            if (!Helper.validValue(data.get("min_amount"), true) ||
-                    Helper.validateRangeParameters(data.get("min_amount"), 300, 500000, true)) {
+            if (!Helper.validValue(data.get("min_amount"), true)) {
                 throw new CustomException(
-                        "El filtro 'min_amount' admite valores en el rango 300 a 500000.");
+                        "El filtro 'min_amount' es invalido, debe tener un valor numérico entero.");
             }
         }
 
         if (data.containsKey("max_amount")) {
-            if (!Helper.validValue(data.get("max_amount"), true) ||
-                    Helper.validateRangeParameters(data.get("max_amount"), 300, 500000, true)) {
+            if (!Helper.validValue(data.get("max_amount"), true)) {
                 throw new CustomException(
-                        "El filtro 'max_amount' admite valores en el rango 300 a 500000.");
+                        "El filtro 'max_amount' es invalido, debe tener un valor numérico entero.");
             }
         }
 
