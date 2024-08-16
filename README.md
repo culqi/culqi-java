@@ -52,7 +52,7 @@ Luego agregar la dependencia:
 </dependency>
 ```
 
-## Configuracion
+## Configuración
 
 Para empezar a enviar peticiones al API de Culqi debes configurar tu llave pública (pk), llave privada (sk).
 Para habilitar encriptación de payload debes configurar tu rsa_id y rsa_public_key.
@@ -110,6 +110,18 @@ Los cargos pueden ser creados vía [API de cargo](https://apidocs.culqi.com/#tag
 protected Map<String, Object> createCharge() throws Exception {
    String source_id = createToken().get("id").toString();
    return init().charge.create(jsondata.jsonCharge(source_id));
+}
+```
+
+Para realizar un cargo recurrente, puedes utilizar el siguiente código:
+
+```java
+protected Map<String, Object> createCharge() throws Exception {
+    String source_id = createToken().get("id").toString();
+    Map<String, String> customHeaders = new HashMap<String, String>();
+    customHeaders.put("X-Charge-Channel", "recurrent");
+
+    return init().charge.create(jsondata.jsonCharge(source_id), customHeaders);
 }
 ```
 

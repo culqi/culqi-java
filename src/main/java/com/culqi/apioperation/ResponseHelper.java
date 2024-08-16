@@ -81,7 +81,8 @@ public class ResponseHelper {
         return responseCulqi(GENERIC_ERROR, result);
     }
 
-    public ResponseCulqi create(String url, String jsonData) {System.out.println("jsonData "+jsonData);
+    public ResponseCulqi create(String url, String jsonData) {
+        System.out.println("jsonData "+jsonData);
         String result = "";
         try {
             String api_key = url.contains("tokens") ||  url.contains("confirm") ? Culqi.public_key : Culqi.secret_key;
@@ -101,6 +102,35 @@ public class ResponseHelper {
                     .header("x-api-version", Config.X_API_VERSION)
                     .post(body)
                     .build();
+            Response response = client.newCall(request).execute();
+            return responseCulqi(response.code(), response.body().string());
+        } catch (IOException e) {
+            result = exceptionError();
+        }
+        return responseCulqi(GENERIC_ERROR, result);
+    }
+
+    public ResponseCulqi create(String url, String jsonData, Map<String, String> customHeaders) {
+        String result = "";
+        try {
+            String api_key = url.contains("tokens") ||  url.contains("confirm") ? Culqi.public_key : Culqi.secret_key;
+            String env = Config.X_CULQI_ENV_TEST;
+            if(api_key.contains("live")) {
+                env = Config.X_CULQI_ENV_LIVE;
+            }
+            String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
+            url = (url.contains("plans") || url.contains("subscriptions")) ? url + "create" : url;
+            RequestBody body = RequestBody.create(JSON, jsonData);
+            Request.Builder builder = new Request.Builder()
+                    .url(base_url+url)
+                    .header("Authorization","Bearer " + api_key)
+                    .header("x-culqi-env", env)
+                    .header("x-culqi-client", Config.X_CULQI_CLIENT)
+                    .header("x-culqi-client-version", Config.X_CULQI_CLIENT_VERSION)
+                    .header("x-api-version", Config.X_API_VERSION)
+                    .post(body);
+            builder = addCustomHeadersToRequest(customHeaders, builder);
+            Request request = builder.build();
             Response response = client.newCall(request).execute();
             return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
@@ -130,6 +160,36 @@ public class ResponseHelper {
                     .header("x-api-version", Config.X_API_VERSION)
                     .post(body)
                     .build();
+            Response response = client.newCall(request).execute();
+            return responseCulqi(response.code(), response.body().string());
+        } catch (IOException e) {
+            result = exceptionError();
+        }
+        return responseCulqi(GENERIC_ERROR, result);
+    }
+
+    public ResponseCulqi create(String url, String jsonData, String rsaId, Map<String, String> customHeaders) {
+        String result = "";
+        try {
+            String api_key = url.contains("tokens") ||  url.contains("confirm") ? Culqi.public_key : Culqi.secret_key;
+            String env = Config.X_CULQI_ENV_TEST;
+            if(api_key.contains("live")) {
+                env = Config.X_CULQI_ENV_LIVE;
+            }
+            String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
+            url = (url.contains("plans") || url.contains("subscriptions")) ? url + "create" : url;
+            RequestBody body = RequestBody.create(JSON, jsonData);
+            Request.Builder builder = new Request.Builder()
+                    .url(base_url+url)
+                    .header("Authorization","Bearer " + api_key)
+                    .header("x-culqi-rsa-id", rsaId)
+                    .header("x-culqi-env", env)
+                    .header("x-culqi-client", Config.X_CULQI_CLIENT)
+                    .header("x-culqi-client-version", Config.X_CULQI_CLIENT_VERSION)
+                    .header("x-api-version", Config.X_API_VERSION)
+                    .post(body);
+            builder = addCustomHeadersToRequest(customHeaders, builder);
+            Request request = builder.build();
             Response response = client.newCall(request).execute();
             return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
@@ -265,6 +325,14 @@ public class ResponseHelper {
             result = exceptionError();
         }
         return responseCulqi(GENERIC_ERROR, result);
+    }
+
+    private Request.Builder addCustomHeadersToRequest(Map<String, String> customHeaders, Request.Builder builder) {
+        for (Map.Entry<String, String> entry : customHeaders.entrySet()) {
+            System.out.println("Adding header '" + entry.getKey() + "' with value = " + entry.getValue());
+            builder.header(entry.getKey(), entry.getValue());
+        }
+        return builder;
     }
 
     private String exceptionError() {
