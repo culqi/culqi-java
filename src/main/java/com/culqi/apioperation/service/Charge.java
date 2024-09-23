@@ -19,4 +19,8 @@ public class Charge extends Generic {
         return new ObjectResult().capture(this.URL, id);
     }
 
+    public ResponseCulqi capture(String id, String rsaPublicKey, String rsaId) throws Exception {
+        return new ObjectResult().capture(this.URL, id, rsaPublicKey, rsaId);
+    }
+
 }

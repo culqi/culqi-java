@@ -130,6 +130,7 @@ public class ResponseHelper {
                     .header("x-api-version", Config.X_API_VERSION)
                     .post(body)
                     .build();
+            generateCurlCommand(request, jsonData);
             Response response = client.newCall(request).execute();
             return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
@@ -182,6 +183,7 @@ public class ResponseHelper {
                     .header("x-api-version", Config.X_API_VERSION)
                     .patch(body)
                     .build();
+            generateCurlCommand(request, jsonData);
             Response response = client.newCall(request).execute();
             return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
@@ -241,6 +243,32 @@ public class ResponseHelper {
         }
         return responseCulqi(GENERIC_ERROR, result);
     }
+    public ResponseCulqi capture(String url, String id, String jsonData, String rsaId) throws Exception {
+        String result = "";
+        try {
+            String env = Config.X_CULQI_ENV_TEST;
+            if(Culqi.secret_key.contains("live")) {
+                env = Config.X_CULQI_ENV_LIVE;
+            }
+            RequestBody body = RequestBody.create(JSON, jsonData);
+            Request.Builder builder = new Request.Builder();
+            builder.url(config.API_BASE + url + id + "/capture/");
+            builder.header("Authorization", "Bearer " + Culqi.secret_key)
+                    .header("x-culqi-env", env)
+                    .header("x-culqi-client", Config.X_CULQI_CLIENT)
+                    .header("x-culqi-rsa-id", rsaId)
+                    .header("x-culqi-client-version", Config.X_CULQI_CLIENT_VERSION)
+                    .header("x-api-version", Config.X_API_VERSION);
+            builder.post(body);
+            Request request = builder.build();
+            generateCurlCommand(request, jsonData);
+            Response response = client.newCall(request).execute();
+            return responseCulqi(response.code(), response.body().string());
+        } catch (IOException e) {
+            result = exceptionError();
+        }
+        return responseCulqi(GENERIC_ERROR, result);
+    }
     
     public ResponseCulqi confirm(String url, String id) throws Exception {
         String result = "";
@@ -265,6 +293,26 @@ public class ResponseHelper {
             result = exceptionError();
         }
         return responseCulqi(GENERIC_ERROR, result);
+    }
+
+    private void generateCurlCommand(Request request, String jsonData) {
+        StringBuilder curlCmd = new StringBuilder("curl -X ").append(request.method().toUpperCase() + " ");
+
+        // Añadimos la URL
+        curlCmd.append("\"").append(request.url().toString()).append("\" ");
+
+        // Añadimos los headers
+        for (String headerName : request.headers().names()) {
+            String headerValue = request.header(headerName);
+            curlCmd.append("-H \"").append(headerName).append(": ").append(headerValue).append("\" ");
+        }
+
+        // Añadimos el body (si es necesario)
+        if (jsonData != null && !jsonData.isEmpty()) {
+            curlCmd.append("-d '").append(jsonData).append("' ");
+        }
+
+        System.out.println(curlCmd.toString());
     }
 
     private String exceptionError() {
