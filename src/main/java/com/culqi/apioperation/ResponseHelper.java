@@ -130,7 +130,6 @@ public class ResponseHelper {
                     .header("x-api-version", Config.X_API_VERSION)
                     .post(body)
                     .build();
-            generateCurlCommand(request, jsonData);
             Response response = client.newCall(request).execute();
             return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
@@ -183,7 +182,6 @@ public class ResponseHelper {
                     .header("x-api-version", Config.X_API_VERSION)
                     .patch(body)
                     .build();
-            generateCurlCommand(request, jsonData);
             Response response = client.newCall(request).execute();
             return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
@@ -261,7 +259,6 @@ public class ResponseHelper {
                     .header("x-api-version", Config.X_API_VERSION);
             builder.post(body);
             Request request = builder.build();
-            generateCurlCommand(request, jsonData);
             Response response = client.newCall(request).execute();
             return responseCulqi(response.code(), response.body().string());
         } catch (IOException e) {
@@ -295,7 +292,7 @@ public class ResponseHelper {
         return responseCulqi(GENERIC_ERROR, result);
     }
 
-    private void generateCurlCommand(Request request, String jsonData) {
+    private String generateCurlCommand(Request request, String jsonData) {
         StringBuilder curlCmd = new StringBuilder("curl -X ").append(request.method().toUpperCase() + " ");
 
         // Añadimos la URL
@@ -312,7 +309,7 @@ public class ResponseHelper {
             curlCmd.append("-d '").append(jsonData).append("' ");
         }
 
-        System.out.println(curlCmd.toString());
+        return curlCmd.toString();
     }
 
     private String exceptionError() {
