@@ -72,11 +72,31 @@ public class CulqiCRUD {
         String source_id = res.get("id").toString();System.out.println("source_id "+source_id);
         return init().charge.create(jsondata.jsonCharge(source_id));
     }
+
+    protected ResponseCulqi createRecurrentCharge() throws Exception {
+        	Map<String, Object> res = mapper.readValue(createToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
+            String source_id = res.get("id").toString();
+
+            Map<String, String> customHeaders = new HashMap<String, String>();
+            customHeaders.put("X-Charge-Channel", "recurrent");
+
+            return init().charge.create(jsondata.jsonCharge(source_id), customHeaders);
+    }
     
     protected ResponseCulqi createChargeEncrypt() throws Exception {
     	Map<String, Object> res = mapper.readValue(createToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
         String source_id = res.get("id").toString();
         return init().charge.create(jsondata.jsonCharge(source_id), rsaPublicKey, rsaId);
+    }
+
+    protected ResponseCulqi createRecurrentChargeEncrypt() throws Exception {
+        	Map<String, Object> res = mapper.readValue(createToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
+            String source_id = res.get("id").toString();
+
+            Map<String, String> customHeaders = new HashMap<String, String>();
+            customHeaders.put("X-Charge-Channel", "recurrent");
+
+            return init().charge.create(jsondata.jsonCharge(source_id), rsaPublicKey, rsaId, customHeaders);
     }
     
     protected ResponseCulqi updateCharge() throws Exception {
@@ -126,12 +146,12 @@ public class CulqiCRUD {
         String plan_id = res2.get("id").toString();
         return init().subscription.create(jsondata.jsonSubscription(card_id, plan_id));
     }
-    
+
     protected ResponseCulqi updateSubscription() throws Exception {
-    	Map<String, Object> res = mapper.readValue(createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        Map<String, Object> res = mapper.readValue(createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
         String id = res.get("id").toString();
-        return init().subscription.update(jsondata.jsonUpdateCard(), id);
-    }
+        return init().subscription.update(jsondata.jsonUpdateSubscription(), id);
+        }
 
     protected ResponseCulqi createRefund() throws Exception {
     	Map<String, Object> res = mapper.readValue(createCharge().getBody(), new TypeReference<HashMap<String, Object>>(){});
@@ -160,7 +180,7 @@ public class CulqiCRUD {
     }
 
     protected ResponseCulqi plans() throws Exception {
-        return init().plan.list();
+        return init().plan.list(jsondata.jsonPlanFilter());
     }
 
     protected ResponseCulqi customers() throws Exception {
