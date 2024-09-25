@@ -113,28 +113,55 @@ public class JsonData {
         return charge;
     }
 
-	protected Map<String, Object> jsonPlan() throws Exception {
+	protected Map<String, Object> jsonPlanFilter() throws Exception {
 		Map<String, Object> plan = new HashMap<String, Object>();
-		Map<String, Object> metadata = new HashMap<String, Object>();
-		metadata.put("order_id", "124");
-		plan.put("amount", 1000);
-		plan.put("currency_code", CurrencyCode.PEN);
-		plan.put("interval", "dias");
-		plan.put("interval_count", 30);
-		plan.put("limit", 4);
-		plan.put("metadata", metadata);
-		plan.put("name", "plan-" + new Util().ramdonString());
-		plan.put("trial_days", 15);
+		plan.put("status", 1);
+		plan.put("limit", 1);
+		plan.put("before","pln_live_qnJOtJiuGT88dAa5");
+		plan.put("after", "pln_live_qnJOtJiuGT88dAa5");
+		plan.put("min_amount", 300);
+		plan.put("max_amount", 500000);
+		//plan.put("creation_date_from", "1712673354");
+		//plan.put("creation_date_to", "1712673354");
 		return plan;
 	}
-	
+
+	protected Map<String, Object> jsonPlan() throws Exception {
+		Map<String, Object> plan = new HashMap<String, Object>();
+		Map<String, Object> initial_cycles = new HashMap<String, Object>();
+		Map<String, Object> metadata = new HashMap<String, Object>();
+		metadata.put("order_id", "124");
+		initial_cycles.put("count", 1);
+		initial_cycles.put("has_initial_charge", true);
+		initial_cycles.put("amount", 301);
+		initial_cycles.put("interval_unit_time", 1);
+		plan.put("name", "plan-" + new Util().ramdonString());
+		plan.put("short_name", "plan-" + new Util().ramdonString());
+		plan.put("description", "description - ");
+		plan.put("amount", 300);
+		plan.put("currency", CurrencyCode.PEN);
+		plan.put("interval_unit_time", 1);
+		plan.put("interval_count", 0);
+		plan.put("image",
+				"https://img.freepik.com/foto-gratis/resumen-bombilla-creativa-sobre-fondo-azul-brillante-ia-generativa_188544-8090.jpg");
+		plan.put("metadata", metadata);
+		plan.put("initial_cycles", initial_cycles);
+		return plan;
+	}
+
 	protected Map<String, Object> jsonUpdatePlan() throws Exception {
-        Map<String, Object> plan = new HashMap<String, Object>();
-        Map<String, Object> metadata = new HashMap<String, Object>();
-        metadata.put("oder_id", "899");
-        plan.put("metadata", metadata);
-        return plan;
-    }
+		Map<String, Object> plan = new HashMap<String, Object>();
+		Map<String, Object> metadata = new HashMap<String, Object>();
+		//metadata.put("oder_id", "899");
+		//plan.put("name", "plan-" + new Util().ramdonString());
+		//plan.put("short_name", "plan-" + new Util().ramdonString());
+		plan.put("description", "description - ");
+		plan.put("status", 1);
+		//plan.put("image",
+			//	"https://img.freepik.com/foto-gratis/resumen-bombilla-creativa-sobre-fondo-azul-brillante-ia-generativa_188544-8090.jpg");
+		plan.put("metadata", metadata);
+		return plan;
+	}
 
 	protected Map<String, Object> jsonCustomer() throws Exception {
 		Map<String, Object> customer = new HashMap<String, Object>();
@@ -205,25 +232,35 @@ public class JsonData {
         return refund;
     }
 
-	 protected Map<String, Object> jsonSubscription(String cardId, String planId) throws Exception {
-        Map<String, Object> subscription = new HashMap<String, Object>();
-        subscription.put("card_id",cardId);
-        subscription.put("plan_id",planId);
-        return subscription;
-    }
-	 
-	 protected Map<String, Object> jsonUpdateSubscription() throws Exception {
-        Map<String, Object> obj = new HashMap<String, Object>();
-        Map<String, Object> metadata = new HashMap<String, Object>();
-        metadata.put("dni", "89941525");
-        obj.put("metadata", metadata);
-        return obj;
-    }
-	 
-	 protected Map<String, Object> jsonListSubscriptions() throws Exception {
-        Map<String, Object> subscription = new HashMap<String, Object>();
-        subscription.put("min_amount", 500);
-        subscription.put("max_amount", 900);
-        return subscription;
-    }
+	protected Map<String, Object> jsonSubscription(String cardId, String planId) throws Exception {
+		Map<String, Object> subscription = new HashMap<String, Object>();
+		Map<String, Object> metadata = new HashMap<String, Object>();
+		metadata.put("order_id", "124");
+		subscription.put("card_id", cardId);
+		subscription.put("plan_id", planId);
+		subscription.put("tyc", true);
+		subscription.put("metadata", metadata);
+		return subscription;
+	}
+
+	protected Map<String, Object> jsonUpdateSubscription() throws Exception {
+		Map<String, Object> subscription = new HashMap<String, Object>();
+		Map<String, Object> metadata = new HashMap<String, Object>();
+		//metadata.put("card_id", "89941525");
+		subscription.put("card_id", "crd_live_****************");
+		subscription.put("metadata", metadata);
+		return subscription;
+	}
+
+	protected Map<String, Object> jsonListSubscriptions() throws Exception {
+		Map<String, Object> subscription = new HashMap<String, Object>();
+		//subscription.put("plan_id", "pln_live_****************");
+		//subscription.put("status", 1);
+		subscription.put("limit", 100);
+		//subscription.put("before", "sxn_live_****************");
+		//subscription.put("after", "sxn_live_****************");
+		//subscription.put("creation_date_from", "1712673354");
+		//subscription.put("creation_date_to", "1712673354");
+		return subscription;
+	}
 }

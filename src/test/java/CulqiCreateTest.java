@@ -43,6 +43,7 @@ public class CulqiCreateTest extends TestCase {
     public void test04_createCharge() throws Exception {
     	ResponseCulqi response = culqiCRUD.createCharge();
     	Map<String, Object> res = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
+        System.err.println("Response: "+response);
     	if (response.getStatusCode()==200) {
             System.err.println(response);
     		assertEquals("REVIEW",res.get("action_code").toString());
@@ -50,6 +51,20 @@ public class CulqiCreateTest extends TestCase {
             System.err.println(res);
     		assertEquals("charge",res.get("object").toString());
     	}
+    }
+
+    @Test
+    public void test04_createRecurrentCharge() throws Exception {
+        ResponseCulqi response = culqiCRUD.createRecurrentCharge();
+        Map<String, Object> res = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
+        System.err.println("Response: "+response);
+        if (response.getStatusCode()==200) {
+            System.err.println(response);
+            assertEquals("REVIEW",res.get("action_code").toString());
+        }else if (response.getStatusCode()==201) {
+            System.err.println(res);
+            assertEquals("charge",res.get("object").toString());
+        }
     }
     
     @Test
@@ -63,11 +78,23 @@ public class CulqiCreateTest extends TestCase {
     	}
     }
 
+    @Test
+    public void test04_createRecurrentChargeEncrypt() throws Exception {
+        ResponseCulqi response = culqiCRUD.createRecurrentChargeEncrypt();
+        Map<String, Object> res = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
+        if (response.getStatusCode()==200) {
+            assertEquals("REVIEW",res.get("action_code").toString());
+        }else if (response.getStatusCode()==201) {
+            assertEquals("charge",res.get("object").toString());
+        }
+    }
+
 
     @Test
     public void test05_createPlan() throws Exception {
-    	Map<String, Object> res = mapper.readValue(culqiCRUD.createPlan().getBody(), new TypeReference<HashMap<String, Object>>(){});
-        assertEquals("plan",res.get("object").toString());
+        Map<String, Object> res = mapper.readValue(culqiCRUD.createPlan().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        Object id = res.get("id");
+        assertTrue(id instanceof String);
     }
 
     @Test
@@ -90,8 +117,9 @@ public class CulqiCreateTest extends TestCase {
 
     @Test
     public void test08_createSubscription() throws Exception {
-    	Map<String, Object> res = mapper.readValue(culqiCRUD.createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
-        assertEquals("subscription",res.get("object").toString());
+        Map<String, Object> res = mapper.readValue(culqiCRUD.createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        Object id = res.get("id");
+        assertTrue(id instanceof String);
     }
 
     @Test

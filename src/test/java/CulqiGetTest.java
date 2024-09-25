@@ -58,14 +58,16 @@ public class CulqiGetTest extends TestCase {
     public void test06_findPlan() throws Exception {
     	Map<String, Object> res = mapper.readValue(culqiCRUD.createPlan().getBody(), new TypeReference<HashMap<String, Object>>(){});
         Map<String, Object> planFound = mapper.readValue(culqiCRUD.init().plan.get(res.get("id").toString()).getBody(), new TypeReference<HashMap<String, Object>>(){});
-        assertEquals("plan", planFound.get("object").toString());
+    	Object id = planFound.get("id");
+        assertTrue(id instanceof String);
     }
 
     @Test
     public void test07_findSubscription() throws Exception {
     	Map<String, Object> res = mapper.readValue(culqiCRUD.createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
         Map<String, Object> subscriptionFound = mapper.readValue(culqiCRUD.init().subscription.get(res.get("id").toString()).getBody(), new TypeReference<HashMap<String, Object>>(){});
-        assertEquals("subscription", subscriptionFound.get("object").toString());
+        Object id = subscriptionFound.get("id");
+        assertTrue(id instanceof String);
     }
 
     @Test

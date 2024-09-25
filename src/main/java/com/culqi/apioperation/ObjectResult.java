@@ -27,13 +27,32 @@ public class ObjectResult {
         return response;
     }
 
+    public ResponseCulqi create (Map<String, Object> body, String url, Map<String, String> customHeaders) throws Exception {
+        String jsonData = mapper.writeValueAsString(body);
+        ResponseCulqi response = new ResponseHelper().create(url, jsonData, customHeaders);
+        return response;
+    }
+
     public ResponseCulqi create(Map<String, Object> body, String url, String rsaPublicKey, String rsaId ) throws Exception {
         String jsonData = mapper.writeValueAsString(body);
 
         EncryptAESRSA encryptAESRSA = new EncryptAESRSA();        
         jsonData = encryptAESRSA.getJsonEncryptAESRSA(jsonData, rsaPublicKey);
 
-        ResponseCulqi response = new ResponseHelper().create(url, jsonData, rsaId);System.out.println(jsonData);
+        ResponseCulqi response = new ResponseHelper().create(url, jsonData, rsaId);
+        System.out.println(jsonData);
+        System.out.println(response.getStatusCode());
+        return response;
+    }
+
+    public ResponseCulqi create(Map<String, Object> body, String url, String rsaPublicKey, String rsaId, Map<String, String> customHeaders ) throws Exception {
+        String jsonData = mapper.writeValueAsString(body);
+
+        EncryptAESRSA encryptAESRSA = new EncryptAESRSA();
+        jsonData = encryptAESRSA.getJsonEncryptAESRSA(jsonData, rsaPublicKey);
+
+        ResponseCulqi response = new ResponseHelper().create(url, jsonData, rsaId, customHeaders);
+        System.out.println(jsonData);
         System.out.println(response.getStatusCode());
         return response;
     }
