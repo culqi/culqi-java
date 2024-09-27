@@ -84,11 +84,31 @@ public class CulqiCRUD {
         String source_id = res.get("id").toString();System.out.println("source_id "+source_id);
         return init().charge.create(jsondata.jsonCharge(source_id));
     }
+
+    protected ResponseCulqi createRecurrentCharge() throws Exception {
+        	Map<String, Object> res = mapper.readValue(createToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
+            String source_id = res.get("id").toString();
+
+            Map<String, String> customHeaders = new HashMap<String, String>();
+            customHeaders.put("X-Charge-Channel", "recurrent");
+
+            return init().charge.create(jsondata.jsonCharge(source_id), customHeaders);
+    }
     
     protected ResponseCulqi createChargeEncrypt() throws Exception {
     	Map<String, Object> res = mapper.readValue(createTokenEncrypt().getBody(), new TypeReference<HashMap<String, Object>>(){});
         String source_id = res.get("id").toString();
         return init().charge.create(jsondata.jsonCharge(source_id), rsaPublicKey, rsaId);
+    }
+
+    protected ResponseCulqi createRecurrentChargeEncrypt() throws Exception {
+        	Map<String, Object> res = mapper.readValue(createToken().getBody(), new TypeReference<HashMap<String, Object>>(){});
+            String source_id = res.get("id").toString();
+
+            Map<String, String> customHeaders = new HashMap<String, String>();
+            customHeaders.put("X-Charge-Channel", "recurrent");
+
+            return init().charge.create(jsondata.jsonCharge(source_id), rsaPublicKey, rsaId, customHeaders);
     }
     
     protected ResponseCulqi updateCharge() throws Exception {

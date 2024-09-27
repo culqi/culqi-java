@@ -54,8 +54,23 @@ public class Generic implements All, Create, Find {
         return new ObjectResult().create(body, this.URL);
     }
 
+    public ResponseCulqi create(Map<String, Object> body, Map<String, String> customHeaders ) throws Exception {
+        Map<String, String> validationResponse = verifyClassValidationCreate(body, this.URL);
+        if (validationResponse != null) {
+            ResponseCulqi response = new ResponseCulqi();
+            response.setStatusCode(400);
+            response.setBody(mapper.writeValueAsString(validationResponse));
+            return response;
+        }
+        return new ObjectResult().create(body, this.URL, customHeaders);
+    }
+
     public ResponseCulqi create(Map<String, Object> body, String rsaPublicKey, String rsaId) throws Exception {
         return new ObjectResult().create(body, this.URL, rsaPublicKey, rsaId);
+    }
+
+    public ResponseCulqi create(Map<String, Object> body, String rsaPublicKey, String rsaId, Map<String, String> customHeaders ) throws Exception {
+        return new ObjectResult().create(body, this.URL, rsaPublicKey, rsaId, customHeaders);
     }
 
     public ResponseCulqi get(String id) throws Exception {
