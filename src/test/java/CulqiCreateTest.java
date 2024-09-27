@@ -98,8 +98,22 @@ public class CulqiCreateTest extends TestCase {
     }
 
     @Test
+    public void test05_createPlanEncrypt() throws Exception {
+        Map<String, Object> res = mapper.readValue(culqiCRUD.createPlanEncrypt().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        Object id = res.get("id");
+        assertTrue(id instanceof String);
+    }
+
+    @Test
     public void test06_createCustomer() throws Exception {
     	Map<String, Object> res = mapper.readValue(culqiCRUD.createCustomer().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        System.err.println(res);
+        assertEquals("customer",res.get("object").toString());
+    }
+
+    @Test
+    public void test06_createCustomerEncrypt() throws Exception {
+        Map<String, Object> res = mapper.readValue(culqiCRUD.createCustomerEncrypt().getBody(), new TypeReference<HashMap<String, Object>>(){});
         System.err.println(res);
         assertEquals("customer",res.get("object").toString());
     }
@@ -116,8 +130,25 @@ public class CulqiCreateTest extends TestCase {
     }
 
     @Test
+    public void test07_createCardEncrypt() throws Exception {
+    	ResponseCulqi response = culqiCRUD.createCardEncrypt();
+    	Map<String, Object> res = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
+    	if (response.getStatusCode()==200) {
+    		assertEquals("REVIEW",res.get("action_code").toString());
+    	}else if (response.getStatusCode()==201) {
+    		assertEquals("card",res.get("object").toString());
+    	}
+    }
+
+    @Test
     public void test08_createSubscription() throws Exception {
         Map<String, Object> res = mapper.readValue(culqiCRUD.createSubscription().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        Object id = res.get("id");
+        assertTrue(id instanceof String);
+    }
+    @Test
+    public void test08_createSubscriptionEncrypt() throws Exception {
+        Map<String, Object> res = mapper.readValue(culqiCRUD.createSubscriptionEncrypt().getBody(), new TypeReference<HashMap<String, Object>>(){});
         Object id = res.get("id");
         assertTrue(id instanceof String);
     }
@@ -134,9 +165,26 @@ public class CulqiCreateTest extends TestCase {
     }
 
     @Test
+    public void test09_chargeCaptureEncrypt() throws Exception {
+        ResponseCulqi response = culqiCRUD.createChargeEncrypt();
+        Map<String, Object> res = mapper.readValue(response.getBody(), new TypeReference<HashMap<String, Object>>(){});
+        String charge_id = res.get("id").toString();
+        ResponseCulqi capture = culqiCRUD.init().charge.capture(charge_id, culqiCRUD.rsaPublicKey, culqiCRUD.rsaId);
+        Map<String, Object> res1 = mapper.readValue(capture.getBody(), new TypeReference<HashMap<String, Object>>(){});
+
+        assertNotSame("charge", res1.get("object").toString());
+    }
+
+    @Test
     public void test10_createRefund() throws Exception {
     	 Map<String, Object> res = mapper.readValue(culqiCRUD.createRefund().getBody(), new TypeReference<HashMap<String, Object>>(){});
          assertEquals("refund",res.get("object").toString());
+    }
+
+    @Test
+    public void test10_createRefundEncrypt() throws Exception {
+        Map<String, Object> res = mapper.readValue(culqiCRUD.createRefundEncrypt().getBody(), new TypeReference<HashMap<String, Object>>(){});
+        assertEquals("refund",res.get("object").toString());
     }
     
     @Test

@@ -243,11 +243,11 @@ public class JsonData {
 		return subscription;
 	}
 
-	protected Map<String, Object> jsonUpdateSubscription() throws Exception {
+	protected Map<String, Object> jsonUpdateSubscription(String cardRefId) throws Exception {
 		Map<String, Object> subscription = new HashMap<String, Object>();
 		Map<String, Object> metadata = new HashMap<String, Object>();
 		//metadata.put("card_id", "89941525");
-		subscription.put("card_id", "crd_live_****************");
+		subscription.put("card_id", cardRefId);
 		subscription.put("metadata", metadata);
 		return subscription;
 	}
