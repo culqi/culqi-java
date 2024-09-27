@@ -4,6 +4,7 @@ import com.culqi.model.ResponseCulqi;
 import com.culqi.util.EncryptAESRSA;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -69,7 +70,7 @@ public class ObjectResult {
         EncryptAESRSA encryptAESRSA = new EncryptAESRSA();        
         jsonData = encryptAESRSA.getJsonEncryptAESRSA(jsonData, rsaPublicKey);
         
-        ResponseCulqi response = new ResponseHelper().update(url, jsonData, id);
+        ResponseCulqi response = new ResponseHelper().update(url, jsonData, id, rsaId);
         return response;
     }
 
@@ -81,6 +82,17 @@ public class ObjectResult {
     public ResponseCulqi capture(String url, String id) throws Exception {
     	ResponseCulqi response = new ResponseHelper().capture(url, id);
     	return response;
+    }
+
+    public ResponseCulqi capture(String url, String id, String rsaPublicKey, String rsaId) throws Exception {
+        Map<String, Object> body = new HashMap<String, Object>();
+        String jsonData = mapper.writeValueAsString(body);
+
+        EncryptAESRSA encryptAESRSA = new EncryptAESRSA();
+        jsonData = encryptAESRSA.getJsonEncryptAESRSA(jsonData, rsaPublicKey);
+
+        ResponseCulqi response = new ResponseHelper().capture(url, id, jsonData, rsaId);
+        return response;
     }
     
     public ResponseCulqi confirm(String url, String id) throws Exception {
