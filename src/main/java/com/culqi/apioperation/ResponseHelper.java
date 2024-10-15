@@ -91,7 +91,7 @@ public class ResponseHelper {
             }
             String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
             url = (url.contains("plans") || url.contains("subscriptions")) ? url + "create" : url;
-            RequestBody body = RequestBody.create(JSON, jsonData);
+            RequestBody body = RequestBody.create(jsonData, JSON);
             Request request = new Request.Builder()
                     .url(base_url+url)
                     .header("Authorization","Bearer " + api_key)
@@ -119,7 +119,7 @@ public class ResponseHelper {
             }
             String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
             url = (url.contains("plans") || url.contains("subscriptions")) ? url + "create" : url;
-            RequestBody body = RequestBody.create(JSON, jsonData);
+            RequestBody body = RequestBody.create(jsonData, JSON);
             Request.Builder builder = new Request.Builder()
                     .url(base_url+url)
                     .header("Authorization","Bearer " + api_key)
@@ -148,7 +148,7 @@ public class ResponseHelper {
             }
             String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
             url = (url.contains("plans") || url.contains("subscriptions")) ? url + "create" : url;
-            RequestBody body = RequestBody.create(JSON, jsonData);
+            RequestBody body = RequestBody.create(jsonData, JSON);
             Request request = new Request.Builder()
                     .url(base_url+url)
                     .header("Authorization","Bearer " + api_key)
@@ -177,7 +177,7 @@ public class ResponseHelper {
             }
             String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
             url = (url.contains("plans") || url.contains("subscriptions")) ? url + "create" : url;
-            RequestBody body = RequestBody.create(JSON, jsonData);
+            RequestBody body = RequestBody.create(jsonData, JSON);
             Request.Builder builder = new Request.Builder()
                     .url(base_url+url)
                     .header("Authorization","Bearer " + api_key)
@@ -205,7 +205,7 @@ public class ResponseHelper {
                 env = Config.X_CULQI_ENV_LIVE;
             }
             System.out.println(config.API_BASE+url+id);
-            RequestBody body = RequestBody.create(JSON, jsonData);
+            RequestBody body = RequestBody.create(jsonData, JSON);
             Request request = new Request.Builder()
                     .url(config.API_BASE+url+id)
                     .header("Authorization","Bearer " + Culqi.secret_key)
@@ -230,7 +230,7 @@ public class ResponseHelper {
             if(Culqi.secret_key.contains("live")) {
                 env = Config.X_CULQI_ENV_LIVE;
             }
-            RequestBody body = RequestBody.create(JSON, jsonData);
+            RequestBody body = RequestBody.create(jsonData, JSON);
             Request request = new Request.Builder()
                     .url(config.API_BASE+url+id)
                     .header("Authorization","Bearer " + Culqi.secret_key)
@@ -283,7 +283,7 @@ public class ResponseHelper {
             if(Culqi.secret_key.contains("live")) {
                 env = Config.X_CULQI_ENV_LIVE;
             }
-            RequestBody body = RequestBody.create(JSON, "");
+            RequestBody body = RequestBody.create("", JSON);
             Request.Builder builder = new Request.Builder();
             builder.url(config.API_BASE + url + id + "/capture/");
             builder.header("Authorization", "Bearer " + Culqi.secret_key)
@@ -307,7 +307,7 @@ public class ResponseHelper {
             if(Culqi.secret_key.contains("live")) {
                 env = Config.X_CULQI_ENV_LIVE;
             }
-            RequestBody body = RequestBody.create(JSON, jsonData);
+            RequestBody body = RequestBody.create(jsonData, JSON);
             Request.Builder builder = new Request.Builder();
             builder.url(config.API_BASE + url + id + "/capture/");
             builder.header("Authorization", "Bearer " + Culqi.secret_key)
@@ -333,7 +333,7 @@ public class ResponseHelper {
             if(Culqi.public_key.contains("live")) {
                 env = Config.X_CULQI_ENV_LIVE;
             }
-            RequestBody body = RequestBody.create(JSON, "");
+            RequestBody body = RequestBody.create("", JSON);
             Request.Builder builder = new Request.Builder();
             builder.url(config.API_BASE+url+id+"/confirm/");
             builder.header("Authorization","Bearer " + Culqi.public_key)
@@ -359,25 +359,6 @@ public class ResponseHelper {
         return builder;
     }
 
-    private String generateCurlCommand(Request request, String jsonData) {
-        StringBuilder curlCmd = new StringBuilder("curl -X ").append(request.method().toUpperCase() + " ");
-
-        // Añadimos la URL
-        curlCmd.append("\"").append(request.url().toString()).append("\" ");
-
-        // Añadimos los headers
-        for (String headerName : request.headers().names()) {
-            String headerValue = request.header(headerName);
-            curlCmd.append("-H \"").append(headerName).append(": ").append(headerValue).append("\" ");
-        }
-
-        // Añadimos el body (si es necesario)
-        if (jsonData != null && !jsonData.isEmpty()) {
-            curlCmd.append("-d '").append(jsonData).append("' ");
-        }
-
-        return curlCmd.toString();
-    }
 
     private String exceptionError() {
         String result = "";
