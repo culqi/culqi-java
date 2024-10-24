@@ -31,15 +31,15 @@ public class ResponseHelper {
         String result = "";
 
         try {
-            HttpUrl.Builder builder = new HttpUrl.Builder();
+            HttpUrl.Builder builder = HttpUrl.parse(Config.API_BASE).newBuilder();
 
-            builder.scheme("https").host(Config.DOMAIN).addPathSegment("v2");
             if (url.contains("plans")) {
                 builder.addPathSegment("recurrent").addPathSegment("plans");
             } else if (url.contains("subscriptions")) {
                 builder.addPathSegment("recurrent").addPathSegment("subscriptions");
             } else {
-                builder.scheme("https").host(Config.DOMAIN).addPathSegment("v2").addPathSegment(url);
+                String cleanUrl = url.replaceAll("^/+", "").replaceAll("/+$", "");
+                builder.addPathSegments(cleanUrl);
             }
 
             if (params != null) {
