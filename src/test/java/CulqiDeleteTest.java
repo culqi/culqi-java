@@ -3,6 +3,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import com.culqi.model.ResponseCulqi;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -51,8 +52,9 @@ public class CulqiDeleteTest extends TestCase {
     @Test
     public void test05_deleteOrder() throws Exception {
     	Map<String, Object> res = mapper.readValue(culqiCRUD.createOrder(true).getBody(), new TypeReference<HashMap<String, Object>>(){});
-        Map<String, Object> orderDeleted = mapper.readValue(culqiCRUD.init().order.delete(res.get("id").toString()).getBody(), new TypeReference<HashMap<String, Object>>(){});
-        assertTrue(Boolean.valueOf(orderDeleted.get("deleted").toString()));
+        ResponseCulqi deleteResponse = culqiCRUD.init().order.delete(res.get("id").toString());
+        int statusCode = deleteResponse.getStatusCode();
+        assertTrue(statusCode == 204);    
     }
 
 }
