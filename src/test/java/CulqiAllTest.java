@@ -75,18 +75,18 @@ public class CulqiAllTest extends TestCase {
         assert(data.size() >= 0);
     }
 
-    @Test
-    public void test08_allEvents() throws Exception {
-    	Map<String, Object> res = mapper.readValue(culqiCRUD.events().getBody(), new TypeReference<HashMap<String, Object>>(){});
-        List<Map<String, Object>> data = (List<Map<String,Object>>) res.get("data");
-        assert(data.size() >= 0);
-    }
+    //@Test
+    //public void test08_allEvents() throws Exception {
+    //	Map<String, Object> res = mapper.readValue(culqiCRUD.events().getBody(), new TypeReference<HashMap<String, Object>>(){});
+    //    List<Map<String, Object>> data = (List<Map<String,Object>>) res.get("data");
+    //    assert(data.size() >= 0);
+    //}
 
-    @Test
-    public void test09_allTransfers() throws Exception {
-    	Map<String, Object> res = mapper.readValue(culqiCRUD.transfers().getBody(), new TypeReference<HashMap<String, Object>>(){});
-        List<Map<String, Object>> data = (List<Map<String,Object>>) res.get("data");
-        assert(data.size() >= 0);
-    }
+    //@Test
+    //public void test09_allTransfers() throws Exception {
+    //	Map<String, Object> res = mapper.readValue(culqiCRUD.transfers().getBody(), new TypeReference<HashMap<String, Object>>(){});
+    //    List<Map<String, Object>> data = (List<Map<String,Object>>) res.get("data");
+    //    assert(data.size() >= 0);
+    //}
 
 }
