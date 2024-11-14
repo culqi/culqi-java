@@ -82,11 +82,9 @@ public class ResponseHelper {
     }
 
     public ResponseCulqi create(String url, String jsonData) {
-        System.out.println("jsonData "+jsonData);
         String result = "";
         try {
             String api_key = url.contains("tokens") ||  url.contains("confirm") ? Culqi.public_key : Culqi.secret_key;
-            System.out.println(api_key);
 
             String env = Config.X_CULQI_ENV_TEST;
             if(api_key.contains("live")) {
@@ -94,9 +92,6 @@ public class ResponseHelper {
             }
             String base_url = url.contains("tokens") ? config.API_SECURE : config.API_BASE;
             url = (url.contains("plans") || url.contains("subscriptions")) ? url + "create" : url;
-
-            System.out.println("Este Create");
-            System.out.println(base_url+url);
 
             RequestBody body = RequestBody.create(JSON, jsonData);
             Request request = new Request.Builder()
