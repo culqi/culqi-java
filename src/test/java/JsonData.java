@@ -1,5 +1,3 @@
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,8 +9,6 @@ public class JsonData {
 
 	protected Map<String, Object> jsonToken() throws Exception {
 		Map<String, Object> token = new HashMap<String, Object>();
-		Calendar date = new GregorianCalendar();
-		int year = date.get(Calendar.YEAR);
 		token.put("card_number", "4111111111111111");
 		token.put("cvv", "123");
 		token.put("email", "prueba_paul@culqi.com");
@@ -31,7 +27,7 @@ public class JsonData {
 	
 	protected Map<String, Object> jsonListTokens() throws Exception {
         Map<String, Object> token = new HashMap<String, Object>();
-        token.put("bin", "411111");
+        token.put("card_brand", "Visa");
         return token;
     }
 
@@ -115,12 +111,12 @@ public class JsonData {
 
 	protected Map<String, Object> jsonPlanFilter() throws Exception {
 		Map<String, Object> plan = new HashMap<String, Object>();
-		plan.put("status", 1);
+		//plan.put("status", 1);
 		plan.put("limit", 1);
-		plan.put("before","pln_live_qnJOtJiuGT88dAa5");
-		plan.put("after", "pln_live_qnJOtJiuGT88dAa5");
-		plan.put("min_amount", 300);
-		plan.put("max_amount", 500000);
+		//plan.put("before","pln_live_qnJOtJiuGT88dAa5");
+		//plan.put("after", "pln_live_qnJOtJiuGT88dAa5");
+		//plan.put("min_amount", 300);
+		//plan.put("max_amount", 500000);
 		//plan.put("creation_date_from", "1712673354");
 		//plan.put("creation_date_to", "1712673354");
 		return plan;
@@ -164,11 +160,16 @@ public class JsonData {
 	}
 
 	protected Map<String, Object> jsonCustomer() throws Exception {
+		int maxLength = 25;
+		String baseEmail = "tst@culqi.com";
+		int randomPartLength = maxLength - baseEmail.length();
+		String randomString = new Util().ramdonStringWithLengthMax(randomPartLength);
+		String email = "tst" + randomString + "@culqi.com";
 		Map<String, Object> customer = new HashMap<String, Object>();
 		customer.put("address", "Av Lima 123");
 		customer.put("address_city", "Lima");
 		customer.put("country_code", "PE");
-		customer.put("email", "tst" + new Util().ramdonString() + "@culqi.com");
+		customer.put("email", email); // Debe ser maximo 25 caracteres
 		customer.put("first_name", "Test");
 		customer.put("last_name", "Cuqli");
 		customer.put("phone_number", "99004356");
