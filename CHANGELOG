@@ -1,3 +1,13 @@
+### versión 2.0.4 - 03-12-2024
+* Control bad request
+* Add validations recurrent
+
+### versión 2.0.3 - 03-11-2024
+* Add new test
+
+### versión 2.0.2 - 03-10-2024
+* Control erro
+
 ### versión 2.0.1 - 18-18-2023
 * Add status code
 * Add encrypt RSA
