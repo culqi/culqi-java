@@ -1,133 +1,216 @@
-# Culqi Java
+# Culqi-Java
 
 [![Code Climate](https://codeclimate.com/github/culqi/culqi-java/badges/gpa.svg)](https://codeclimate.com/github/culqi/culqi-java)
 [![Build Status](https://travis-ci.org/culqi/culqi-java.svg?branch=master)](https://travis-ci.org/culqi/culqi-java)
 
-Biblioteca de CULQI para el lenguaje Java, pagos simples en tu sitio web. Consume el Culqi API.
+Nuestra Biblioteca JAVA oficial, es compatible con la [v2.0](https://culqi.com/api/) del Culqi API, con el cual tendrás la posibilidad de realizar cobros con tarjetas de débito y crédito, Yape, PagoEfectivo, billeteras móviles y Cuotéalo con solo unos simples pasos de configuración.
+
+Nuestra biblioteca te da la posibilidad de capturar el `status_code` de la solicitud HTTP que se realiza al API de Culqi, así como el `response` que contiene el cuerpo de la respuesta obtenida.
+
 
 | Versión actual|Culqi API|
 |----|----|
-| 1.1.7 (2017-03-16) |[v2](https://culqi.com/api/)|
+| 2.0.4  |[v2.0](https://culqi.com/api/)|
+
 
 ## Requisitos
 
 - Java 1.7+
-- Credenciales de comercio en Culqi (1).
+- Afiliate [aquí](https://afiliate.culqi.com/).
+- Si vas a realizar pruebas obtén tus llaves desde [aquí](https://integ-panel.culqi.com/#/registro), si vas a realizar transacciones reales obtén tus llaves desde [aquí](https://panel.culqi.com/#/registro).
 
-## Ejemplos
+> Recuerda que para obtener tus llaves debes ingresar a tu CulqiPanel > Desarrollo > ***API Keys***.
 
+![alt tag](http://i.imgur.com/NhE6mS9.png)
 
-#### Inicialización
+> Recuerda que las credenciales son enviadas al correo que registraste en el proceso de afiliación.
 
-```java
-Culqi culqi = new Culqi();
-culqi.public_key = "{LLAVE PUBLICA}";
-culqi.secret_key =  "{LLAVE SECRETA}"
+* Para encriptar el payload debes generar un id y llave RSA  ingresando a CulqiPanel > Desarrollo  > RSA Keys.
+
+## Instalación
+
+Instalación usando Maven:
+
+Solo necesita agregar el siguiente repositorio en el archivo pom.xml
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 ```
 
-#### Crear Token
+Luego agregar la dependencia:
 
-```java
-Map<String, Object> token = new HashMap<String, Object>();
-token.put("card_number", "4111111111111111");
-token.put("cvv", "123");
-token.put("email", "wm@wm.com");
-token.put("expiration_month", 9);
-token.put("expiration_year", 2020);
-Map<String, Object> token_created = culqi.token.create(token);
-
+```xml
+<dependency>
+    <groupId>com.github.culqi</groupId>
+    <artifactId>culqi-java</artifactId>
+    <version>v2.0.4</version>
+</dependency>
 ```
 
-#### Crear Cargo
+## Configuración
+
+Para empezar a enviar peticiones al API de Culqi debes configurar tu llave pública (pk), llave privada (sk).
+Para habilitar encriptación de payload debes configurar tu rsa_id y rsa_public_key.
 
 ```java
-Map<String, Object> charge = new HashMap<String, Object>();
-Map<String, Object> metadata = new HashMap<String, Object>();
-metadata.put("oder_id", "124");
-charge.put("amount",1000);
-charge.put("capture", true);
-charge.put("currency_code",CurrencyCode.PEN);
-charge.put("description","Venta de prueba");
-charge.put("email","test@culqi.com");
-charge.put("installments", 0);
-charge.put("metadata", metadata);
-charge.put("source_id", token_created.get("id").toString());
-Map<String, Object> charge_created = culqi.charge.create(charge);
-
+culqi.public_key = "pk_test_889113cd74ecfc55";
+culqi.secret_key = "sk_test_LoSAl6rqTInlzPSJ";
+String rsaPublicKey = "-----BEGIN PUBLIC KEY-----\n"
+			+ "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDADka0Pt4SuWlHRA6kcJIwDde\n"
+			+ "o67OYBEgQDEelmmixs9AlB/1bv446XOOE8eTJSridll2ZAn2nze7Gl2vQs0yW+4A\n"
+			+ "XmszJwugM0lxTDiPdTXdbrA4VXiXDG29VLQCAxt1+/c7bE84hMS6cymWgEjYoa6I\n"
+			+ "xX8u0ncLyiRUdZC2cwIDAQAB\n"
+			+ "-----END PUBLIC KEY-----";
+	
+Sring rsaId = "5243bad7-1d88-49c0-9699-f8ae156da58f"; 
+	
+JsonData jsondata = new JsonData();
 ```
 
-#### Crear Plan
+### Encriptar payload
+
+Para encriptar el payload necesitas pasar como parámetro el rsaPublicKey y rsaId.
+
+Ejemplo
 
 ```java
-Map<String, Object> plan = new HashMap<String, Object>();
-Map<String, Object> metadata = new HashMap<String, Object>();
-metadata.put("oder_id", "124");
-plan.put("amount",1000);
-plan.put("currency_code",CurrencyCode.PEN);
-plan.put("interval","dias");
-plan.put("interval_count",30);
-plan.put("limit", 4);
-plan.put("metadata", metadata);
-plan.put("name", "plan-test");
-plan.put("trial_days", 15);
-Map<String, Object> plan_created =  culqi.plan.create(plan);
-```
-
-#### Crear Cliente
-
-```java
-Map<String, Object> customer = new HashMap<String, Object>();
-customer.put("address","Av Lima 123");
-customer.put("address_city","Lima");
-customer.put("country_code","PE");
-customer.put("email","tst@culqi.com");
-customer.put("first_name","Test");
-customer.put("last_name","Cuqli");
-customer.put("phone_number",99004356);
-Map<String, Object> customer_created = culqi.customer.create(customer);
-```
-
-#### Crear Tarjeta
-
-```java
-Map<String, Object> card = new HashMap<String, Object>();
-card.put("customer_id",customer_created.get("id").toString());
-card.put("token_id",token_created.get("id").toString());
-Map<String, Object> card_created = culqi.card.create(card);
+protected Map<String, Object> createTokenEncrypt() throws Exception {
+    return init().token.create(jsondata.jsonToken(), rsaPublicKey, rsaId);
+}
 ```
 
 
-#### Crear Suscripción
+## Servicios
+
+### Crear Token
+
+Antes de crear un Cargo o Card es necesario crear un `token` de tarjeta. 
+Lo recomendable es generar los 'tokens' con [Culqi Checkout v4](https://docs.culqi.com/es/documentacion/checkout/v4/culqi-checkout/) o [Culqi JS v4](https://docs.culqi.com/es/documentacion/culqi-js/v4/culqi-js/) **debido a que es muy importante que los datos de tarjeta sean enviados desde el dispositivo de tus clientes directamente a los servidores de Culqi**, para no poner en riesgo los datos sensibles de la tarjeta de crédito/débito.
+
+> Recuerda que cuando interactúas directamente con el [API Token](https://apidocs.culqi.com/#tag/Tokens/operation/crear-token) necesitas cumplir la normativa de PCI DSS 3.2. Por ello, te pedimos que llenes el [formulario SAQ-D](https://listings.pcisecuritystandards.org/documents/SAQ_D_v3_Merchant.pdf) y lo envíes al buzón de riesgos Culqi.
 
 ```java
-Map<String, Object> subscription = new HashMap<String, Object>();
-subscription.put("card_id",card_created.get("id").toString());
-subscription.put("plan_id",plan_created.get("id").toString());
-Map<String, Object> suscription_created = culqi.subscription.create(subscription);
+ protected Map<String, Object> createToken() throws Exception {
+    return init().token.create(jsondata.jsonToken());
+ }
 ```
 
-#### Crear Devolución
+### Crear Cargo
+
+Crear un cargo significa cobrar una venta a una tarjeta. Para esto previamente deberías generar el  `token` y enviarlo en parámetro **source_id**.
+
+Los cargos pueden ser creados vía [API de cargo](https://apidocs.culqi.com/#tag/Cargos/operation/crear-cargo).
 
 ```java
-Map<String, Object> refund = new HashMap<String, Object>();
-refund.put("amount",900);
-refund.put("charge_id",charge_created.get("id").toString());
-refund.put("reason",Reason.solicitud_comprador);
-Map<String, Object> refund_created = culqi.refund.create(refund);
+protected Map<String, Object> createCharge() throws Exception {
+   String source_id = createToken().get("id").toString();
+   return init().charge.create(jsondata.jsonCharge(source_id));
+}
 ```
 
-## Documentación
-¿Necesitas más información para integrar `culqi-java`? La documentación completa se encuentra en [https://culqi.com/docs/](https://culqi.com/docs/)
+Para realizar un cargo recurrente, puedes utilizar el siguiente código:
+
+```java
+protected Map<String, Object> createCharge() throws Exception {
+    String source_id = createToken().get("id").toString();
+    Map<String, String> customHeaders = new HashMap<String, String>();
+    customHeaders.put("X-Charge-Channel", "recurrent");
+
+    return init().charge.create(jsondata.jsonCharge(source_id), customHeaders);
+}
+```
+
+### Crear Devolución
+
+Solicita la devolución de las compras de tus clientes (parcial o total) de forma gratuita a través del API y CulqiPanel. 
+
+Las devoluciones pueden ser creados vía [API de devolución](https://apidocs.culqi.com/#tag/Devoluciones/operation/crear-devolucion).
+
+```java
+protected Map<String, Object> createRefund() throws Exception {
+   String charge_id = createCharge().get("id").toString();
+   return init().refund.create(jsondata.jsonRefund(charge_id));
+}
+```
+
+### Crear Cliente
+
+El **cliente** es un servicio que te permite guardar la información de tus clientes. Es un paso necesario para generar una [tarjeta](/es/documentacion/pagos-online/recurrencia/one-click/tarjetas).
+
+Los clientes pueden ser creados vía [API de cliente](https://apidocs.culqi.com/#tag/Clientes/operation/crear-cliente).
+
+```java
+ protected Map<String, Object> createCustomer() throws Exception {
+    return init().customer.create(jsondata.jsonCustomer());
+ }
+```
+
+### Crear Tarjeta
+
+La **tarjeta** es un servicio que te permite guardar la información de las tarjetas de crédito o débito de tus clientes para luego realizarles cargos one click o recurrentes (cargos posteriores sin que tus clientes vuelvan a ingresar los datos de su tarjeta).
+
+Las tarjetas pueden ser creadas vía [API de tarjeta](https://apidocs.culqi.com/#tag/Tarjetas/operation/crear-tarjeta).
+
+```java
+protected Map<String, Object> createCard() throws Exception {
+   String customer_id = createCustomer().get("id").toString();
+   String token_id = createToken().get("id").toString();
+   return init().card.create(jsondata.jsonCard(customer_id,token_id));
+}
+```
+
+### Crear Plan
+
+El plan es un servicio que te permite definir con qué frecuencia deseas realizar cobros a tus clientes.
+
+Un plan define el comportamiento de las suscripciones. Los planes pueden ser creados vía el [API de Plan](https://apidocs.culqi.com/#/planes#create) o desde el **CulqiPanel**.
+
+```java
+protected Map<String, Object> createPlan() throws Exception {
+   return init().plan.create(jsondata.jsonPlan());
+}
+```
+
+### Crear Suscripción
+
+La suscripción es un servicio que asocia la tarjeta de un cliente con un plan establecido por el comercio.
+
+Las suscripciones pueden ser creadas vía [API de suscripción](https://apidocs.culqi.com/#tag/Suscripciones/operation/crear-suscripcion).
+
+```java
+ protected Map<String, Object> createSubscription() throws Exception {
+    String card_id = createCard().get("id").toString();
+    String plan_id = createPlan().get("id").toString();
+    return init().subscription.create(jsondata.jsonSubscription(card_id, plan_id));
+ }
+```
+
+### Crear Orden
+
+Es un servicio que te permite generar una orden de pago para una compra potencial.
+La orden contiene la información necesaria para la venta y es usado por el sistema de **PagoEfectivo** para realizar los pagos diferidos.
+
+Las órdenes pueden ser creadas vía [API de orden](https://apidocs.culqi.com/#tag/Ordenes/operation/crear-orden).
+
+```java
+ protected Map<String, Object> createSubscription() throws Exception {
+    String card_id = createCard().get("id").toString();
+    String plan_id = createPlan().get("id").toString();
+    return init().subscription.create(jsondata.jsonSubscription(card_id, plan_id));
+ }
+```
 
 
-## Changelog
+## Build
 
-Todos los cambios en las versiones de esta biblioteca están listados en [CHANGELOG](CHANGELOG).
-
-## Dependencias para el desarrollo
-
-- [okhttp3](http://square.github.io/okhttp/)
-- [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
+```bash
+mvn package -DskipTests
+```
 
 ## Testing
 
@@ -140,18 +223,179 @@ mvn test
 Puede ejecutar estos unitarios independientemente
 
 ```bash
-mvn test -D test=CulqiCreateTest#test1ValidCreateToken
-mvn test -D test=CulqiCreateTest#test2ValidCreateCharge
-mvn test -D test=CulqiCreateTest#test3ValidCreatePlan
-mvn test -D test=CulqiCreateTest#test4ValidCreateCustomer
-mvn test -D test=CulqiCreateTest#test5ValidCreateCard
-mvn test -D test=CulqiCreateTest#test6ValidCreateSubscription
-mvn test -D test=CulqiCreateTest#test7ChargeCapture
+mvn test -D test=CulqiCreateTest#test01_createToken
+mvn test -D test=CulqiCreateTest#test02_createTokenEncrypt
+mvn test -D test=CulqiCreateTest#test04_createCharge
+mvn test -D test=CulqiCreateTest#test05_createPlan
+mvn test -D test=CulqiCreateTest#test06_createCustomer
+mvn test -D test=CulqiCreateTest#test07_createCard
+mvn test -D test=CulqiCreateTest#test08_createSubscription
+mvn test -D test=CulqiCreateTest#test09_chargeCapture
 ```
+
+### Ejemplo Prueba Token
+
+```java
+@Test
+public void test01_createToken() throws Exception {
+    culqiCRUD.createToken().get("object").toString();
+    assertEquals("token", culqiCRUD.createToken().get("object").toString());
+}
+```
+
+### Ejemplo Prueba Cargo
+```java
+@Test
+public void test04_createCharge() throws Exception {
+    assertEquals("charge", culqiCRUD.createCharge().get("object").toString());
+}
+```
+
+## ¿Cómo instalar el jar de Culqi en un proyecto Maven? 
+
+```bash
+mvn install:install-file -Dfile={dir}/culqi-java-1.1.8.jar  -DgroupId=com.culqi -DartifactId=culqi-java -Dversion={version} -Dpackaging=jar
+```
+
+
+Luego agregas la siguiente dependencia en el pom.xml
+
+```xml
+<dependency>
+    <groupId>com.culqi</groupId>
+    <artifactId>culqi-java</artifactId>
+    <version>{version}</version>
+</dependency>
+```
+
+## Documentación
+
+- [Referencia de Documentación](https://docs.culqi.com/)
+- [Referencia de API](https://apidocs.culqi.com/)
+- [Demo Checkout V4 + Culqi 3DS](https://github.com/culqi/culqi-java-demo-checkoutv4-culqi3ds)
+- [okhttp3](http://square.github.io/okhttp/)
+- [Jackson Core Databind](https://github.com/FasterXML/jackson-databind/wiki)
+- [Wiki](https://github.com/culqi/culqi-java/wiki)
+
+### Instalar Java
+Descarga Spring Tools Suite 4-4.21.0 archivo del siguiente link:
+
+```bash
+    https://cdn.spring.io/spring-tools/release/STS4/4.21.0.RELEASE/dist/e4.30/spring-tool-suite-4-4.21.0.RELEASE-e4.30.0-linux.gtk.x86_64.tar.gz
+```
+
+### Instalar jdk (Kit de Desarrollo de Java)
+Asegúrate de tener instalado el JDK 8 mediante los siguientes comandos:
+
+```bash
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk
+```
+### Configurar Variables de Entorno para Java y Maven
+Edita el archivo .bashrc con el siguiente comando:
+
+```bash
+    #Abre el archivo .bashrc 
+    nano ~/.bashrc
+```
+Añade las siguientes líneas al final del archivo:
+
+```bash
+    #Agrega las siguientes líneas al final del archivo:
+    JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+    M2_HOME=/usr/share/maven
+    PATH=$PATH:$JAVA_HOME/bin:$M2_HOME/bin
+```
+Guarda los cambios y cierra el editor (Ctrl + o >> Enter >> Ctrl + x).
+
+### Instalar Maven
+Instala Maven con el siguiente comando
+
+```bash
+sudo apt-get install maven
+```
+
+
+### Como abrir el archvio SDK
+
+Abre Spring Tools Suite y selecciona:
+```bash
+    FILE >> IMPORT >> MAVEN >> EXISTING MAVEN PROJECTS
+```
+
+### Instalar Dependencias
+Haz clic derecho en la carpeta raíz del proyecto y selecciona:
+
+```bash
+        RUN AS >> MAVEN CLEAN 
+        RUN AS >> MAVEN INSTALL
+```
+
+### Ejecutar Tests
+Haz clic derecho en la carpeta src/test/java y selecciona:
+
+```bash
+        RUN AS >> JUnit Test
+```
+Espera a que se ejecuten todas las pruebas unitarias y, luego, ejecuta cada prueba individualmente según las necesidades.
+
+```bash
+CulqiCreateTest:
+    test05_createPlan
+    test08_createSubscription
+
+CulqiDeleteTest: 
+    test01_deleteSubscription
+    test02_deletePlan
+
+CulqiGetTest:
+    test06_findPlan
+    test07_findSubscription
+
+CulqiAllTest:
+    test04_allPlan
+    test06_allSubscriptions
+```
+Click derecho en el nombre del test_0** >> RUN
+
+### Donde Encontrar los ejemplos para Pruebas
+Dentro de la estructura del proyecto, encontrarás ejemplos de pruebas que puedes utilizar para verificar el funcionamiento del SDK. Sigue estos pasos para acceder y ejecutar los ejemplos:
+
+# Ubicación de los Ejemplos:
+* Haz clic derecho en la carpeta src/test/java.
+* Abre el archivo CulqiCRUD.java.
+* En la linea 27 puedes configurar el secreto:
+
+```bash
+    culqi.secret_key = "sk_live_************";
+```
+
+* Haz clic derecho en la carpeta src/test/java.
+* Abre el archivo JsonData.java.
+
+* Ejemplo de JSON:
+En el archivo JsonData.java, encontrarás ejemplos de datos en formato JSON que se utilizan en las pruebas. Puedes modificar estos datos según tus necesidades.
+
+```bash
+php examples/plan/02-create-plan.php
+    Crear Plan: jsonPlan
+    Actualizar Plan: jsonUpdatePlan
+    All Plan: jsonPlanFilter
+
+    Crear Subscription: jsonSubscription
+    Actualizar Subscription: jsonUpdateSubscription
+    All Subscription: jsonListSubscriptions
+```
+Modifica estos ejemplos según tus necesidades y asegúrate de tener configuradas correctamente tus credenciales de Culqi antes de ejecutar las pruebas.
+
+
+## Changelog
+
+Todos los cambios en las versiones de esta biblioteca están listados en [CHANGELOG](CHANGELOG).
 
 ## Autor
 
-Willy Aguirre ([@marti1125](https://github.com/marti1125) - Team Culqi)
+Team Culqi
 
 ## Licencia
 
