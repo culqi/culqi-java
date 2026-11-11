@@ -52,6 +52,12 @@ Luego agregar la dependencia:
 </dependency>
 ```
 
+## Configurar las pruebas y ejemplos
+
+Las pruebas y ejemplos realizan llamadas reales a la API de Culqi. Usa tus propias llaves de prueba (`pk_test_` y `sk_test_`) y reemplaza localmente los placeholders de este README y del código. No hagas commit de llaves ni las compartas.
+
+Para encriptación de payload, configura tu propio `INSERTE_SU_RSA_ID` y `INSERTE_SU_LLAVE_RSA`.
+
 ## Configuración
 
 Para empezar a enviar peticiones al API de Culqi debes configurar tu llave pública (pk), llave privada (sk).
@@ -62,7 +68,7 @@ culqi.public_key = "INSERTE_SU_LLAVE_PUBLICA";
 culqi.secret_key = "INSERTE_SU_LLAVE_PRIVADA";
 String rsaPublicKey = "INSERTE_SU_LLAVE_RSA";
 	
-Sring rsaId = "INSERTE_SU_RSA_ID"; 
+String rsaId = "INSERTE_SU_RSA_ID";
 	
 JsonData jsondata = new JsonData();
 ```
